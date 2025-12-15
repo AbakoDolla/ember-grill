@@ -1,22 +1,25 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { ShoppingCart, Menu, X, Flame } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
-
-const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/menu', label: 'Menu' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
-];
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const { items } = useCart();
+  const { t } = useTranslation();
   const cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
+
+  const navLinks = [
+    { href: '/', label: t('common.home') },
+    { href: '/menu', label: t('common.menu') },
+    { href: '/about', label: t('common.about') },
+    { href: '/contact', label: t('common.contact') },
+  ];
 
   return (
     <motion.nav
@@ -33,7 +36,7 @@ export default function Navbar() {
               <Flame className="w-6 h-6 text-primary-foreground" />
             </div>
             <span className="font-display font-bold text-xl text-foreground hidden sm:block">
-              Braise<span className="text-fire">Royale</span>
+              BRAZZA<span className="text-fire">FLAME</span>
             </span>
           </Link>
 
@@ -62,6 +65,8 @@ export default function Navbar() {
 
           {/* Actions */}
           <div className="flex items-center gap-3">
+            <LanguageSwitcher />
+            
             <Link to="/cart">
               <Button variant="glass" size="icon" className="relative">
                 <ShoppingCart className="w-5 h-5" />
@@ -77,9 +82,11 @@ export default function Navbar() {
               </Button>
             </Link>
             
-            <Button variant="fire" size="sm" className="hidden sm:flex">
-              Order Now
-            </Button>
+            <Link to="/menu">
+              <Button variant="fire" size="sm" className="hidden sm:flex">
+                {t('common.orderNow')}
+              </Button>
+            </Link>
 
             {/* Mobile Menu Toggle */}
             <Button
@@ -118,9 +125,11 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ))}
-                <Button variant="fire" className="mt-2 w-full">
-                  Order Now
-                </Button>
+                <Link to="/menu" onClick={() => setIsOpen(false)}>
+                  <Button variant="fire" className="mt-2 w-full">
+                    {t('common.orderNow')}
+                  </Button>
+                </Link>
               </div>
             </motion.div>
           )}

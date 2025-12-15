@@ -6,74 +6,75 @@
 
 @layer base {
   :root {
-    /* Obsidian Dark Base */
-    --background: 220 15% 6%;
-    --foreground: 40 20% 95%;
+    /* BRAZZAFLAME Color Palette */
+    /* Noir Charbon Base #0E0E0E */
+    --background: 0 0% 5%;
+    --foreground: 40 10% 96%;
 
-    /* Cards with depth */
-    --card: 220 15% 10%;
-    --card-foreground: 40 20% 95%;
+    /* Gris Fumée Cards #2A2A2A */
+    --card: 0 0% 16%;
+    --card-foreground: 40 10% 96%;
 
     /* Popover */
-    --popover: 220 15% 8%;
-    --popover-foreground: 40 20% 95%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 40 10% 96%;
 
-    /* Fire Orange Primary */
-    --primary: 18 100% 60%;
-    --primary-foreground: 220 15% 6%;
+    /* Orange Braise Primary #FF6A00 */
+    --primary: 25 100% 50%;
+    --primary-foreground: 0 0% 5%;
 
-    /* Ember Red Secondary */
-    --secondary: 8 85% 45%;
-    --secondary-foreground: 40 20% 95%;
+    /* Rouge Feu Secondary #C4161C */
+    --secondary: 358 80% 43%;
+    --secondary-foreground: 40 10% 96%;
 
     /* Muted Charcoal */
-    --muted: 220 10% 18%;
-    --muted-foreground: 220 10% 55%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 55%;
 
     /* Gold Accent */
     --accent: 45 100% 55%;
-    --accent-foreground: 220 15% 6%;
+    --accent-foreground: 0 0% 5%;
 
     /* Fresh Green */
     --fresh: 145 60% 50%;
-    --fresh-foreground: 220 15% 6%;
+    --fresh-foreground: 0 0% 5%;
 
     /* Destructive */
     --destructive: 0 84% 50%;
-    --destructive-foreground: 40 20% 95%;
+    --destructive-foreground: 40 10% 96%;
 
     /* Borders & Inputs */
-    --border: 220 10% 20%;
-    --input: 220 10% 15%;
-    --ring: 18 100% 60%;
+    --border: 0 0% 22%;
+    --input: 0 0% 18%;
+    --ring: 25 100% 50%;
 
     --radius: 1rem;
 
     /* Glass effect colors */
-    --glass: 220 15% 12% / 0.7;
-    --glass-border: 40 20% 95% / 0.1;
-    --glass-highlight: 40 20% 95% / 0.05;
+    --glass: 0 0% 14% / 0.8;
+    --glass-border: 40 10% 96% / 0.1;
+    --glass-highlight: 40 10% 96% / 0.05;
 
     /* Glow effects */
-    --glow-primary: 18 100% 60% / 0.4;
+    --glow-primary: 25 100% 50% / 0.4;
     --glow-accent: 45 100% 55% / 0.3;
-    --glow-ember: 8 85% 45% / 0.5;
+    --glow-ember: 358 80% 43% / 0.5;
 
     /* Gradients */
-    --gradient-fire: linear-gradient(135deg, hsl(18 100% 60%), hsl(8 85% 45%), hsl(0 80% 35%));
+    --gradient-fire: linear-gradient(135deg, hsl(25 100% 50%), hsl(358 80% 43%), hsl(0 80% 30%));
     --gradient-gold: linear-gradient(135deg, hsl(45 100% 55%), hsl(35 100% 45%));
-    --gradient-dark: linear-gradient(180deg, hsl(220 15% 8%), hsl(220 15% 4%));
-    --gradient-glass: linear-gradient(135deg, hsl(var(--glass)), hsl(220 15% 8% / 0.5));
+    --gradient-dark: linear-gradient(180deg, hsl(0 0% 8%), hsl(0 0% 4%));
+    --gradient-glass: linear-gradient(135deg, hsl(var(--glass)), hsl(0 0% 8% / 0.5));
 
     /* Sidebar */
-    --sidebar-background: 220 15% 8%;
-    --sidebar-foreground: 40 20% 95%;
-    --sidebar-primary: 18 100% 60%;
-    --sidebar-primary-foreground: 220 15% 6%;
-    --sidebar-accent: 220 10% 15%;
-    --sidebar-accent-foreground: 40 20% 95%;
-    --sidebar-border: 220 10% 20%;
-    --sidebar-ring: 18 100% 60%;
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 40 10% 96%;
+    --sidebar-primary: 25 100% 50%;
+    --sidebar-primary-foreground: 0 0% 5%;
+    --sidebar-accent: 0 0% 18%;
+    --sidebar-accent-foreground: 40 10% 96%;
+    --sidebar-border: 0 0% 22%;
+    --sidebar-ring: 25 100% 50%;
   }
 }
 
@@ -101,12 +102,12 @@
   /* Glass morphism card */
   .glass-card {
     @apply relative overflow-hidden rounded-2xl;
-    background: linear-gradient(135deg, hsl(220 15% 12% / 0.8), hsl(220 15% 8% / 0.6));
+    background: linear-gradient(135deg, hsl(0 0% 14% / 0.8), hsl(0 0% 10% / 0.6));
     backdrop-filter: blur(20px);
-    border: 1px solid hsl(40 20% 95% / 0.1);
+    border: 1px solid hsl(40 10% 96% / 0.1);
     box-shadow: 
       0 8px 32px hsl(0 0% 0% / 0.3),
-      inset 0 1px 0 hsl(40 20% 95% / 0.05);
+      inset 0 1px 0 hsl(40 10% 96% / 0.05);
   }
 
   .glass-card::before {
@@ -116,15 +117,15 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(40 20% 95% / 0.2), transparent);
+    background: linear-gradient(90deg, transparent, hsl(40 10% 96% / 0.2), transparent);
   }
 
   /* Fire glow effect */
   .fire-glow {
     box-shadow: 
-      0 0 20px hsl(18 100% 60% / 0.3),
-      0 0 40px hsl(8 85% 45% / 0.2),
-      0 0 60px hsl(0 80% 35% / 0.1);
+      0 0 20px hsl(25 100% 50% / 0.3),
+      0 0 40px hsl(358 80% 43% / 0.2),
+      0 0 60px hsl(0 80% 30% / 0.1);
   }
 
   .fire-glow-hover {
@@ -133,9 +134,9 @@
 
   .fire-glow-hover:hover {
     box-shadow: 
-      0 0 30px hsl(18 100% 60% / 0.5),
-      0 0 60px hsl(8 85% 45% / 0.3),
-      0 0 90px hsl(0 80% 35% / 0.2);
+      0 0 30px hsl(25 100% 50% / 0.5),
+      0 0 60px hsl(358 80% 43% / 0.3),
+      0 0 90px hsl(0 80% 30% / 0.2);
   }
 
   /* Gold shimmer */
@@ -157,7 +158,7 @@
 
   /* Fire text gradient */
   .text-fire {
-    background: linear-gradient(135deg, hsl(18 100% 60%), hsl(8 85% 50%), hsl(45 100% 55%));
+    background: linear-gradient(135deg, hsl(25 100% 50%), hsl(358 80% 50%), hsl(45 100% 55%));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

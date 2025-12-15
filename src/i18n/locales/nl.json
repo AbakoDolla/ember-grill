@@ -1,0 +1,106 @@
+{
+  "common": {
+    "orderNow": "Bestel Nu",
+    "viewMenu": "Bekijk Menu",
+    "addToCart": "Toevoegen",
+    "cart": "Winkelwagen",
+    "home": "Home",
+    "menu": "Menu",
+    "about": "Over Ons",
+    "contact": "Contact",
+    "search": "Zoeken...",
+    "popular": "Populair",
+    "new": "Nieuw",
+    "spiceLevel": "Pittig Niveau"
+  },
+  "hero": {
+    "badge": "Premium Afrikaanse Grill",
+    "title1": "Vurig",
+    "title2": "Gegrilde",
+    "title3": "Smaken Warm Bezorgd",
+    "description": "Ervaar de authentieke smaak van Afrikaanse gegrilde vis, premium rundvlees en traditionele braise. Bezorgd in heel België.",
+    "howItWorks": "Hoe Het Werkt",
+    "stats": {
+      "customers": "Tevreden Klanten",
+      "rating": "Beoordeling",
+      "delivery": "Gem. Bezorging"
+    }
+  },
+  "features": {
+    "title": "Waarom Kiezen voor",
+    "subtitle": "Wij brengen de hitte van authentiek Afrikaans grillen naar uw huis",
+    "charcoal": {
+      "title": "Houtskool Gegrild",
+      "description": "Authentiek koken op open vuur voor rokerige perfectie"
+    },
+    "delivery": {
+      "title": "Snelle Bezorging",
+      "description": "30-45 minuten warm aan uw deur"
+    },
+    "belgium": {
+      "title": "Heel België",
+      "description": "Bezorging in alle grote Belgische steden"
+    },
+    "quality": {
+      "title": "Premium Kwaliteit",
+      "description": "Alleen de beste stukken en versste vangsten"
+    }
+  },
+  "favorites": {
+    "title": "Klanten",
+    "titleHighlight": "Favorieten",
+    "subtitle": "De gerechten die onze klanten blijven bestellen",
+    "viewAll": "Bekijk Volledig Menu"
+  },
+  "cta": {
+    "title": "Klaar om het",
+    "titleHighlight": "Vuur",
+    "description": "Bestel nu en ervaar de meest authentieke Afrikaanse grill in België. Eerste bestelling? Krijg 15% korting met code FIRSTFLAME."
+  },
+  "categories": {
+    "all": "Alle Gerechten",
+    "fish": "Gegrilde Vis",
+    "beef": "Premium Rundvlees",
+    "braise": "Afrikaanse Braise",
+    "sides": "Bijgerechten"
+  },
+  "cart": {
+    "title": "Uw Winkelwagen",
+    "empty": "Uw winkelwagen is leeg",
+    "emptyDescription": "Voeg heerlijke items van ons menu toe om te beginnen",
+    "browseMenu": "Bekijk Menu",
+    "orderSummary": "Bestellingsoverzicht",
+    "subtotal": "Subtotaal",
+    "deliveryFee": "Bezorgkosten",
+    "total": "Totaal",
+    "checkout": "Afrekenen",
+    "continueShopping": "Verder Winkelen"
+  },
+  "footer": {
+    "description": "Premium gegrilde vis, rundvlees en Afrikaanse braise warm bezorgd aan uw deur in heel België.",
+    "quickLinks": "Snelle Links",
+    "support": "Ondersteuning",
+    "contactUs": "Contact",
+    "faq": "FAQ",
+    "trackOrder": "Bestelling Volgen",
+    "privacy": "Privacybeleid",
+    "locations": "Locaties",
+    "catering": "Catering",
+    "openDaily": "Dagelijks Open",
+    "madeWith": "Gemaakt met",
+    "inBelgium": "in België",
+    "rights": "Alle rechten voorbehouden."
+  },
+  "about": {
+    "title": "Ons Verhaal",
+    "mission": "Onze Missie",
+    "values": "Onze Waarden"
+  },
+  "contact": {
+    "title": "Neem Contact Op",
+    "name": "Naam",
+    "email": "E-mail",
+    "message": "Bericht",
+    "send": "Versturen"
+  }
+}

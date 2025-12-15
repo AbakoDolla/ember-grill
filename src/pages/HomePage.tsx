@@ -68,9 +68,9 @@ export default function HomePage() {
                 transition={{ delay: 0.3 }}
                 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
               >
-                Fire-Kissed
+                BRAZZA
                 <br />
-                <span className="text-fire">Flavors</span>
+                <span className="text-fire">FLAME</span>
                 <br />
                 Delivered Hot
               </motion.h1>
@@ -164,7 +164,7 @@ export default function HomePage() {
             className="text-center mb-12"
           >
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-              Why Choose <span className="text-fire">BraiseRoyale</span>
+              Why Choose <span className="text-fire">BRAZZAFLAME</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               We bring the heat of authentic African grilling right to your home
