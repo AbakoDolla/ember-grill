@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ShoppingCart, Menu, X, Flame } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { Label } from 'recharts';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -82,7 +83,7 @@ export default function Navbar() {
               </Button>
             </Link>
             
-            <Link to="/menu">
+            <Link to="/auth">
               <Button variant="fire" size="sm" className="hidden sm:flex">
                 {t('common.orderNow')}
               </Button>
@@ -125,7 +126,7 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ))}
-                <Link to="/menu" onClick={() => setIsOpen(false)}>
+                <Link to="/auth" onClick={() => setIsOpen(false)}>
                   <Button variant="fire" className="mt-2 w-full">
                     {t('common.orderNow')}
                   </Button>

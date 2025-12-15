@@ -11,7 +11,7 @@ import CartPage from "@/pages/CartPage";
 import AboutPage from "@/pages/AboutPage";
 import ContactPage from "@/pages/ContactPage";
 import NotFound from "./pages/NotFound";
-import AuthPage from "./pages/Auth";
+import AuthScreen from "./pages/Auth";
 
 const queryClient = new QueryClient();
 
@@ -38,8 +38,8 @@ const App = () => (
             <Route path="/cart" element={<CartPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/auth" element={<AuthScreen />} />
             <Route path="*" element={<NotFound />} />
-            <Route path="/auth" element={<AuthPage />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
