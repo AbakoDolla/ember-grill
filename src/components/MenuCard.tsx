@@ -42,12 +42,16 @@ export default function MenuCard({ item, index }: MenuCardProps) {
         <div className="relative h-48 md:h-56 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent z-10" />
           
-          {/* Placeholder gradient for image */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/10" />
+          {/* Actual Image */}
+          <img 
+            src={item.image} 
+            alt={item.name} 
+            className="w-full h-full object-cover"
+          />
           
-          {/* Decorative food icon */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-6xl opacity-50 group-hover:scale-110 transition-transform duration-500">
+          {/* Decorative food icon overlay */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <span className="text-6xl opacity-20 group-hover:scale-110 transition-transform duration-500">
               {item.category === 'fish' ? '🐟' : item.category === 'beef' ? '🥩' : item.category === 'braise' ? '🍗' : '🍚'}
             </span>
           </div>

@@ -63,10 +63,12 @@ export default function CartPage() {
               >
                 <Card variant="glass" className="p-4 md:p-6">
                   <div className="flex gap-4">
-                    {/* Image placeholder */}
-                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center shrink-0">
-                      <span className="text-3xl">🔥</span>
-                    </div>
+                    {/* Image */}
+                    <img 
+                      src={item.image} 
+                      alt={item.name} 
+                      className="w-20 h-20 md:w-24 md:h-24 rounded-xl object-cover shrink-0"
+                    />
 
                     <div className="flex-1 min-w-0">
                       <h3 className="font-display font-bold text-lg truncate">

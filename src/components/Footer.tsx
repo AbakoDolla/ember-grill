@@ -138,7 +138,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-muted-foreground text-sm">
-            © 2024 BRAZZAFLAME. {t('footer.rights')}
+            © 2025 BRAZZAFLAME. {t('footer.rights')}
           </p>
           <p className="text-muted-foreground text-sm flex items-center gap-1">
             {t('footer.madeWith')} <Flame className="w-4 h-4 text-primary" /> {t('footer.inBelgium')}
