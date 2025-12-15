@@ -1,0 +1,106 @@
+{
+  "common": {
+    "orderNow": "Order Now",
+    "viewMenu": "View Menu",
+    "addToCart": "Add to Cart",
+    "cart": "Cart",
+    "home": "Home",
+    "menu": "Menu",
+    "about": "About",
+    "contact": "Contact",
+    "search": "Search...",
+    "popular": "Popular",
+    "new": "New",
+    "spiceLevel": "Spice Level"
+  },
+  "hero": {
+    "badge": "Premium African Grill",
+    "title1": "Fire-Kissed",
+    "title2": "Flavors",
+    "title3": "Delivered Hot",
+    "description": "Experience the authentic taste of African grilled fish, premium beef, and traditional braise. Delivered across Belgium.",
+    "howItWorks": "How It Works",
+    "stats": {
+      "customers": "Happy Customers",
+      "rating": "Rating",
+      "delivery": "Avg Delivery"
+    }
+  },
+  "features": {
+    "title": "Why Choose",
+    "subtitle": "We bring the heat of authentic African grilling right to your home",
+    "charcoal": {
+      "title": "Charcoal Grilled",
+      "description": "Authentic open-flame cooking for that smoky perfection"
+    },
+    "delivery": {
+      "title": "Fast Delivery",
+      "description": "30-45 minutes hot to your doorstep"
+    },
+    "belgium": {
+      "title": "All Belgium",
+      "description": "Delivering across major Belgian cities"
+    },
+    "quality": {
+      "title": "Premium Quality",
+      "description": "Only the finest cuts and freshest catches"
+    }
+  },
+  "favorites": {
+    "title": "Customer",
+    "titleHighlight": "Favorites",
+    "subtitle": "The dishes our customers can't stop ordering",
+    "viewAll": "View Full Menu"
+  },
+  "cta": {
+    "title": "Ready to Taste the",
+    "titleHighlight": "Fire",
+    "description": "Order now and experience the most authentic African grill in Belgium. First order? Get 15% off with code FIRSTFLAME."
+  },
+  "categories": {
+    "all": "All Dishes",
+    "fish": "Grilled Fish",
+    "beef": "Premium Beef",
+    "braise": "African Braise",
+    "sides": "Sides"
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty",
+    "emptyDescription": "Add some delicious items from our menu to get started",
+    "browseMenu": "Browse Menu",
+    "orderSummary": "Order Summary",
+    "subtotal": "Subtotal",
+    "deliveryFee": "Delivery Fee",
+    "total": "Total",
+    "checkout": "Proceed to Checkout",
+    "continueShopping": "Continue Shopping"
+  },
+  "footer": {
+    "description": "Premium grilled fish, beef, and African braise delivered hot to your door across Belgium.",
+    "quickLinks": "Quick Links",
+    "support": "Support",
+    "contactUs": "Contact Us",
+    "faq": "FAQ",
+    "trackOrder": "Track Order",
+    "privacy": "Privacy Policy",
+    "locations": "Locations",
+    "catering": "Catering",
+    "openDaily": "Open Daily",
+    "madeWith": "Made with",
+    "inBelgium": "in Belgium",
+    "rights": "All rights reserved."
+  },
+  "about": {
+    "title": "Our Story",
+    "mission": "Our Mission",
+    "values": "Our Values"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send"
+  }
+}

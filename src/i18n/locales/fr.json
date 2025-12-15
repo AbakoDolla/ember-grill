@@ -1,0 +1,106 @@
+{
+  "common": {
+    "orderNow": "Commander",
+    "viewMenu": "Voir le Menu",
+    "addToCart": "Ajouter au Panier",
+    "cart": "Panier",
+    "home": "Accueil",
+    "menu": "Menu",
+    "about": "À Propos",
+    "contact": "Contact",
+    "search": "Rechercher...",
+    "popular": "Populaire",
+    "new": "Nouveau",
+    "spiceLevel": "Niveau Piment"
+  },
+  "hero": {
+    "badge": "Grillade Africaine Premium",
+    "title1": "Saveurs",
+    "title2": "Enflammées",
+    "title3": "Livrées Chaudes",
+    "description": "Découvrez le goût authentique du poisson grillé africain, du bœuf premium et de la braise traditionnelle. Livré partout en Belgique.",
+    "howItWorks": "Comment Ça Marche",
+    "stats": {
+      "customers": "Clients Satisfaits",
+      "rating": "Note",
+      "delivery": "Livraison Moy."
+    }
+  },
+  "features": {
+    "title": "Pourquoi Choisir",
+    "subtitle": "Nous apportons la chaleur de la grillade africaine authentique chez vous",
+    "charcoal": {
+      "title": "Grillé au Charbon",
+      "description": "Cuisson authentique à la flamme pour une perfection fumée"
+    },
+    "delivery": {
+      "title": "Livraison Rapide",
+      "description": "30-45 minutes, chaud à votre porte"
+    },
+    "belgium": {
+      "title": "Toute la Belgique",
+      "description": "Livraison dans les grandes villes belges"
+    },
+    "quality": {
+      "title": "Qualité Premium",
+      "description": "Uniquement les meilleures coupes et les prises les plus fraîches"
+    }
+  },
+  "favorites": {
+    "title": "Favoris des",
+    "titleHighlight": "Clients",
+    "subtitle": "Les plats que nos clients ne cessent de commander",
+    "viewAll": "Voir le Menu Complet"
+  },
+  "cta": {
+    "title": "Prêt à Goûter le",
+    "titleHighlight": "Feu",
+    "description": "Commandez maintenant et découvrez la grillade africaine la plus authentique de Belgique. Première commande? Obtenez 15% de réduction avec le code FIRSTFLAME."
+  },
+  "categories": {
+    "all": "Tous les Plats",
+    "fish": "Poisson Grillé",
+    "beef": "Bœuf Premium",
+    "braise": "Braise Africaine",
+    "sides": "Accompagnements"
+  },
+  "cart": {
+    "title": "Votre Panier",
+    "empty": "Votre panier est vide",
+    "emptyDescription": "Ajoutez de délicieux plats de notre menu pour commencer",
+    "browseMenu": "Parcourir le Menu",
+    "orderSummary": "Résumé de Commande",
+    "subtotal": "Sous-total",
+    "deliveryFee": "Frais de Livraison",
+    "total": "Total",
+    "checkout": "Passer à la Caisse",
+    "continueShopping": "Continuer les Achats"
+  },
+  "footer": {
+    "description": "Poisson grillé premium, bœuf et braise africaine livrés chauds à votre porte dans toute la Belgique.",
+    "quickLinks": "Liens Rapides",
+    "support": "Support",
+    "contactUs": "Nous Contacter",
+    "faq": "FAQ",
+    "trackOrder": "Suivre Commande",
+    "privacy": "Politique de Confidentialité",
+    "locations": "Emplacements",
+    "catering": "Traiteur",
+    "openDaily": "Ouvert Tous les Jours",
+    "madeWith": "Fait avec",
+    "inBelgium": "en Belgique",
+    "rights": "Tous droits réservés."
+  },
+  "about": {
+    "title": "Notre Histoire",
+    "mission": "Notre Mission",
+    "values": "Nos Valeurs"
+  },
+  "contact": {
+    "title": "Contactez-Nous",
+    "name": "Nom",
+    "email": "Email",
+    "message": "Message",
+    "send": "Envoyer"
+  }
+}

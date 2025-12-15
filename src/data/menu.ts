@@ -1,3 +1,16 @@
+import grilledTilapia from '@/assets/food/grilled-tilapia.jpg';
+import smokedCatfish from '@/assets/food/smoked-catfish.jpg';
+import grilledMackerel from '@/assets/food/grilled-mackerel.jpg';
+import suyaBeef from '@/assets/food/suya-beef.jpg';
+import beefBrochette from '@/assets/food/beef-brochette.jpg';
+import grilledRibeye from '@/assets/food/grilled-ribeye.jpg';
+import pouletBraise from '@/assets/food/poulet-braise.jpg';
+import porcBraise from '@/assets/food/porc-braise.jpg';
+import plantainFries from '@/assets/food/plantain-fries.jpg';
+import attieke from '@/assets/food/attieke.jpg';
+import jollofRice from '@/assets/food/jollof-rice.jpg';
+import grilledCorn from '@/assets/food/grilled-corn.jpg';
+
 export interface MenuItem {
   id: string;
   name: string;
@@ -16,7 +29,7 @@ export const menuItems: MenuItem[] = [
     name: 'Grilled Tilapia Royale',
     description: 'Fresh tilapia marinated in our signature African spice blend, grilled to perfection over open flames. Served with plantains and attiéké.',
     price: 24.99,
-    image: '/images/grilled-tilapia.jpg',
+    image: grilledTilapia,
     category: 'fish',
     spiceLevel: 2,
     popular: true,
@@ -26,7 +39,7 @@ export const menuItems: MenuItem[] = [
     name: 'Smoked Catfish Deluxe',
     description: 'Slow-smoked catfish infused with hickory and palm wood, glazed with a tangy pepper sauce.',
     price: 22.99,
-    image: '/images/smoked-catfish.jpg',
+    image: smokedCatfish,
     category: 'fish',
     spiceLevel: 2,
   },
@@ -35,7 +48,7 @@ export const menuItems: MenuItem[] = [
     name: 'Flame-Kissed Mackerel',
     description: 'Whole mackerel charred with herbs and citrus, served with spicy green pepper sauce.',
     price: 19.99,
-    image: '/images/grilled-mackerel.jpg',
+    image: grilledMackerel,
     category: 'fish',
     spiceLevel: 3,
     new: true,
@@ -45,7 +58,7 @@ export const menuItems: MenuItem[] = [
     name: 'Suya Beef Skewers',
     description: 'Tender beef strips coated in ground peanut spice mix, grilled on charcoal. A Nigerian street food classic.',
     price: 18.99,
-    image: '/images/suya-beef.jpg',
+    image: suyaBeef,
     category: 'beef',
     spiceLevel: 3,
     popular: true,
@@ -55,7 +68,7 @@ export const menuItems: MenuItem[] = [
     name: 'Premium Beef Brochettes',
     description: 'Cubed prime beef marinated in ginger and garlic, flame-grilled with bell peppers and onions.',
     price: 26.99,
-    image: '/images/beef-brochette.jpg',
+    image: beefBrochette,
     category: 'beef',
     spiceLevel: 1,
   },
@@ -64,7 +77,7 @@ export const menuItems: MenuItem[] = [
     name: 'African Spiced Ribeye',
     description: 'Thick-cut ribeye rubbed with our secret blend of 12 African spices, seared and rested to perfection.',
     price: 34.99,
-    image: '/images/grilled-ribeye.jpg',
+    image: grilledRibeye,
     category: 'beef',
     spiceLevel: 2,
     new: true,
@@ -74,7 +87,7 @@ export const menuItems: MenuItem[] = [
     name: 'Poulet Braisé Supreme',
     description: 'Cameroonian braised chicken, crispy on the outside, juicy inside. Marinated for 24 hours in African aromatics.',
     price: 21.99,
-    image: '/images/poulet-braise.jpg',
+    image: pouletBraise,
     category: 'braise',
     spiceLevel: 2,
     popular: true,
@@ -84,7 +97,7 @@ export const menuItems: MenuItem[] = [
     name: 'Porc Braisé Gold',
     description: 'Succulent pork pieces slow-braised with scotch bonnet peppers and palm oil until caramelized.',
     price: 23.99,
-    image: '/images/porc-braise.jpg',
+    image: porcBraise,
     category: 'braise',
     spiceLevel: 3,
   },
@@ -93,7 +106,7 @@ export const menuItems: MenuItem[] = [
     name: 'Crispy Plantain Frites',
     description: 'Golden fried ripe plantains, perfectly caramelized. A sweet and savory side.',
     price: 6.99,
-    image: '/images/plantain-fries.jpg',
+    image: plantainFries,
     category: 'sides',
     spiceLevel: 1,
   },
@@ -102,7 +115,7 @@ export const menuItems: MenuItem[] = [
     name: 'Premium Attiéké',
     description: 'Traditional Ivorian fermented cassava couscous, light and fluffy.',
     price: 5.99,
-    image: '/images/attieke.jpg',
+    image: attieke,
     category: 'sides',
     spiceLevel: 1,
   },
@@ -111,7 +124,7 @@ export const menuItems: MenuItem[] = [
     name: 'Signature Jollof Rice',
     description: 'Our award-winning tomato rice, slow-cooked with smoky party flavor.',
     price: 8.99,
-    image: '/images/jollof-rice.jpg',
+    image: jollofRice,
     category: 'sides',
     spiceLevel: 2,
     popular: true,
@@ -121,7 +134,7 @@ export const menuItems: MenuItem[] = [
     name: 'Fire-Roasted Corn',
     description: 'Sweet corn grilled over charcoal, brushed with spiced butter and lime.',
     price: 4.99,
-    image: '/images/grilled-corn.jpg',
+    image: grilledCorn,
     category: 'sides',
     spiceLevel: 1,
   },
