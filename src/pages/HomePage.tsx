@@ -90,7 +90,7 @@ export default function HomePage() {
                 transition={{ delay: 0.5 }}
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
-                <Link to="/menu">
+                <Link to="/auth">
                   <Button variant="hero" size="xl">
                     View Menu
                     <ArrowRight className="w-5 h-5" />
@@ -245,7 +245,7 @@ export default function HomePage() {
               <p className="text-muted-foreground max-w-xl mx-auto mb-8">
                 Order now and experience the most authentic African grill in Belgium. First order? Get 15% off with code FIRSTFLAME.
               </p>
-              <Link to="/menu">
+              <Link to="/auth">
                 <Button variant="hero" size="xl">
                   Order Now
                   <ArrowRight className="w-5 h-5" />

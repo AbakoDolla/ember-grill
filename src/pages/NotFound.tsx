@@ -31,7 +31,7 @@ const NotFound = () => {
           Oops! This page got burned to a crisp.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to="/">
+          <Link to="/home">
             <Button variant="hero" size="lg">
               <Home className="w-5 h-5" />
               Return Home

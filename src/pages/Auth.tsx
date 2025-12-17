@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function AuthScreen() {
+  const navigate = useNavigate(); // ✅ CORRECT PLACE
+
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
@@ -14,11 +17,14 @@ export default function AuthScreen() {
     if (isLogin) {
       console.log('Login:', { email: formData.email, password: formData.password });
       alert('Welcome back to BRAZZAFLAME! 🔥');
+      navigate('/menu');
     } else {
       console.log('Signup:', formData);
       alert('Welcome to BRAZZAFLAME! 🔥');
+      navigate('/menu');
     }
   };
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

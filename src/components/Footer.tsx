@@ -42,7 +42,7 @@ export default function Footer() {
             viewport={{ once: true }}
             className="space-y-4"
           >
-            <Link to="/" className="flex items-center gap-2">
+            <Link to="/home" className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-fire">
                 <Flame className="w-6 h-6 text-primary-foreground" />
               </div>

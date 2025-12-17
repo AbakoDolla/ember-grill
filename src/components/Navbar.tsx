@@ -16,7 +16,6 @@ export default function Navbar() {
   const cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const navLinks = [
-    { href: '/', label: t('common.home') },
     { href: '/menu', label: t('common.menu') },
     { href: '/about', label: t('common.about') },
     { href: '/contact', label: t('common.contact') },

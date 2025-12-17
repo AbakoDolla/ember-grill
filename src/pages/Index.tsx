@@ -1,7 +1,7 @@
-import HomePage from './HomePage';
+import AuthScreen from './Auth';
 
 const Index = () => {
-  return <HomePage />;
+  return <AuthScreen />;
 };
 
 export default Index;
