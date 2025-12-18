@@ -2,11 +2,13 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { useTranslation } from 'react-i18next';
 import { useCart } from '@/contexts/CartContext';
 import Footer from '@/components/Footer';
 import { Minus, Plus, Trash2, ArrowRight, ShoppingBag } from 'lucide-react';
 
 export default function CartPage() {
+  const { t } = useTranslation();
   const { items, updateQuantity, removeItem, total } = useCart();
 
   const deliveryFee = total > 50 ? 0 : 4.99;
@@ -23,14 +25,14 @@ export default function CartPage() {
           >
             <ShoppingBag className="w-20 h-20 text-muted-foreground mx-auto mb-6" />
             <h1 className="font-display text-3xl md:text-4xl font-bold mb-4">
-              Your Cart is Empty
+              {t('cart.empty')}
             </h1>
             <p className="text-muted-foreground mb-8">
-              Looks like you haven't added any fire-grilled goodness yet.
+              {t('cart.emptyDescription')}
             </p>
             <Link to="/menu">
               <Button variant="hero" size="lg">
-                Browse Menu
+                {t('cart.browseMenu')}
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
@@ -48,7 +50,7 @@ export default function CartPage() {
           animate={{ opacity: 1, y: 0 }}
           className="font-display text-3xl md:text-4xl font-bold mb-8 text-center"
         >
-          Your <span className="text-fire">Cart</span>
+          {t('cart.title')} <span className="text-fire">{t('common.cart')}</span>
         </motion.h1>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -123,32 +125,32 @@ export default function CartPage() {
             transition={{ delay: 0.2 }}
           >
             <Card variant="fire" className="p-6 sticky top-28">
-              <h2 className="font-display font-bold text-xl mb-6">Order Summary</h2>
+              <h2 className="font-display font-bold text-xl mb-6">{t('cart.orderSummary')}</h2>
 
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-muted-foreground">
-                  <span>Subtotal</span>
+                  <span>{t('cart.subtotal')}</span>
                   <span>€{total.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-muted-foreground">
-                  <span>Delivery</span>
-                  <span>{deliveryFee === 0 ? 'Free' : `€${deliveryFee.toFixed(2)}`}</span>
+                  <span>{t('cart.deliveryFee')}</span>
+                  <span>{deliveryFee === 0 ? t('cart.freeDelivery') : `€${deliveryFee.toFixed(2)}`}</span>
                 </div>
                 {deliveryFee > 0 && (
                   <p className="text-fresh text-sm">
-                    Add €{(50 - total).toFixed(2)} more for free delivery
+                    {t('cart.addForFreeDelivery', { amount: (50 - total).toFixed(2) })}
                   </p>
                 )}
                 <div className="border-t border-border pt-3">
                   <div className="flex justify-between font-display font-bold text-xl">
-                    <span>Total</span>
+                    <span>{t('cart.total')}</span>
                     <span className="text-primary">€{grandTotal.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
 
               <Button variant="hero" className="w-full" size="lg">
-                Checkout
+                {t('cart.checkout')}
                 <ArrowRight className="w-5 h-5" />
               </Button>
 

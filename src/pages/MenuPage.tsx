@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { useTranslation } from 'react-i18next';
 import { menuItems, categories, MenuItem } from '@/data/menu';
 import MenuCard from '@/components/MenuCard';
 import Footer from '@/components/Footer';
@@ -8,6 +9,7 @@ import { Search, SlidersHorizontal } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
 export default function MenuPage() {
+  const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -29,10 +31,10 @@ export default function MenuPage() {
             className="text-center mb-8"
           >
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              Our <span className="text-fire">Menu</span>
+              Our <span className="text-fire">{t('common.menu')}</span>
             </h1>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Explore our selection of fire-grilled delicacies, crafted with passion and authentic African flavors
+              {t('menu.description')}
             </p>
           </motion.div>
 
@@ -47,7 +49,7 @@ export default function MenuPage() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Search dishes..."
+                placeholder={t('common.search')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-12 h-12 bg-card border-border rounded-xl"

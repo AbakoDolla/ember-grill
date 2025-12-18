@@ -72,6 +72,8 @@
     "orderSummary": "Order Summary",
     "subtotal": "Subtotal",
     "deliveryFee": "Delivery Fee",
+    "freeDelivery": "Free",
+    "addForFreeDelivery": "Add €{{amount}} more for free delivery",
     "total": "Total",
     "checkout": "Proceed to Checkout",
     "continueShopping": "Continue Shopping"
@@ -96,11 +98,8 @@
     "mission": "Our Mission",
     "values": "Our Values"
   },
-  "contact": {
-    "title": "Contact Us",
-    "name": "Name",
-    "email": "Email",
-    "message": "Message",
-    "send": "Send"
+  "menu": {
+    "title": "Our Menu",
+    "description": "Explore our selection of fire-grilled delicacies, crafted with passion and authentic African flavors"
   }
 }

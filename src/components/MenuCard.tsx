@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useTranslation } from 'react-i18next';
 import { MenuItem } from '@/data/menu';
 import { useCart } from '@/contexts/CartContext';
 import { Plus, Flame } from 'lucide-react';
@@ -12,6 +13,7 @@ interface MenuCardProps {
 }
 
 export default function MenuCard({ item, index }: MenuCardProps) {
+  const { t } = useTranslation();
   const { addItem } = useCart();
 
   const handleAddToCart = () => {
@@ -60,12 +62,12 @@ export default function MenuCard({ item, index }: MenuCardProps) {
           <div className="absolute top-3 left-3 z-20 flex gap-2">
             {item.popular && (
               <span className="px-2 py-1 bg-primary text-primary-foreground text-xs font-bold rounded-lg shadow-fire">
-                Popular
+                {t('common.popular')}
               </span>
             )}
             {item.new && (
               <span className="px-2 py-1 bg-accent text-accent-foreground text-xs font-bold rounded-lg shadow-gold">
-                New
+                {t('common.new')}
               </span>
             )}
           </div>
@@ -104,7 +106,7 @@ export default function MenuCard({ item, index }: MenuCardProps) {
               className="group/btn"
             >
               <Plus className="w-4 h-4 group-hover/btn:rotate-90 transition-transform duration-300" />
-              Add
+              {t('common.addToCart')}
             </Button>
           </div>
         </CardContent>

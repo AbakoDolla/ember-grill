@@ -72,6 +72,8 @@
     "orderSummary": "Résumé de Commande",
     "subtotal": "Sous-total",
     "deliveryFee": "Frais de Livraison",
+    "freeDelivery": "Gratuit",
+    "addForFreeDelivery": "Ajoutez €{{amount}} de plus pour la livraison gratuite",
     "total": "Total",
     "checkout": "Passer à la Caisse",
     "continueShopping": "Continuer les Achats"
@@ -96,11 +98,8 @@
     "mission": "Notre Mission",
     "values": "Nos Valeurs"
   },
-  "contact": {
-    "title": "Contactez-Nous",
-    "name": "Nom",
-    "email": "Email",
-    "message": "Message",
-    "send": "Envoyer"
+  "menu": {
+    "title": "Notre Menu",
+    "description": "Découvrez notre sélection de délices grillés au feu, élaborés avec passion et saveurs africaines authentiques"
   }
 }

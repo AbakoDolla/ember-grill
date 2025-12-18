@@ -2,37 +2,39 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Flame, Clock, Truck, Star } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import FireParticles from '@/components/FireParticles';
 import Food3D from '@/components/Food3D';
 import MenuCard from '@/components/MenuCard';
 import Footer from '@/components/Footer';
 import { menuItems } from '@/data/menu';
 
-const features = [
-  {
-    icon: Flame,
-    title: 'Charcoal Grilled',
-    description: 'Authentic open-flame cooking for that smoky perfection',
-  },
-  {
-    icon: Clock,
-    title: 'Fast Delivery',
-    description: '30-45 minutes hot to your doorstep',
-  },
-  {
-    icon: Truck,
-    title: 'All Belgium',
-    description: 'Delivering across major Belgian cities',
-  },
-  {
-    icon: Star,
-    title: 'Premium Quality',
-    description: 'Only the finest cuts and freshest catches',
-  },
-];
-
 export default function HomePage() {
+  const { t } = useTranslation();
   const popularItems = menuItems.filter((item) => item.popular).slice(0, 4);
+
+  const features = [
+    {
+      icon: Flame,
+      title: t('features.charcoal.title'),
+      description: t('features.charcoal.description'),
+    },
+    {
+      icon: Clock,
+      title: t('features.delivery.title'),
+      description: t('features.delivery.description'),
+    },
+    {
+      icon: Truck,
+      title: t('features.belgium.title'),
+      description: t('features.belgium.description'),
+    },
+    {
+      icon: Star,
+      title: t('features.quality.title'),
+      description: t('features.quality.description'),
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
@@ -59,7 +61,7 @@ export default function HomePage() {
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
               >
                 <Flame className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium text-primary">Premium African Grill</span>
+                <span className="text-sm font-medium text-primary">{t('hero.badge')}</span>
               </motion.div>
               
               <motion.h1
@@ -70,9 +72,9 @@ export default function HomePage() {
               >
                 BRAZZA
                 <br />
-                <span className="text-fire">FLAME</span>
+                <span className="text-fire">{t('hero.title2')}</span>
                 <br />
-                Delivered Hot
+                {t('hero.title3')}
               </motion.h1>
               
               <motion.p
@@ -81,7 +83,7 @@ export default function HomePage() {
                 transition={{ delay: 0.4 }}
                 className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto lg:mx-0 mb-8"
               >
-                Experience the authentic taste of African grilled fish, premium beef, and traditional braise. Delivered across Belgium.
+                {t('hero.description')}
               </motion.p>
               
               <motion.div
@@ -92,12 +94,12 @@ export default function HomePage() {
               >
                 <Link to="/auth">
                   <Button variant="hero" size="xl">
-                    View Menu
+                    {t('common.viewMenu')}
                     <ArrowRight className="w-5 h-5" />
                   </Button>
                 </Link>
                 <Button variant="heroOutline" size="xl">
-                  How It Works
+                  {t('hero.howItWorks')}
                 </Button>
               </motion.div>
 
@@ -109,9 +111,9 @@ export default function HomePage() {
                 className="flex justify-center lg:justify-start gap-8 md:gap-12 mt-12"
               >
                 {[
-                  { value: '10K+', label: 'Happy Customers' },
-                  { value: '4.9', label: 'Rating' },
-                  { value: '30min', label: 'Avg Delivery' },
+                  { value: '10K+', label: t('hero.stats.customers') },
+                  { value: '4.9', label: t('hero.stats.rating') },
+                  { value: '30min', label: t('hero.stats.delivery') },
                 ].map((stat, i) => (
                   <div key={i} className="text-center lg:text-left">
                     <div className="font-display text-2xl md:text-3xl font-bold text-foreground">
@@ -164,10 +166,10 @@ export default function HomePage() {
             className="text-center mb-12"
           >
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-              Why Choose <span className="text-fire">BRAZZAFLAME</span>
+              {t('features.title')} <span className="text-fire">BRAZZAFLAME</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              We bring the heat of authentic African grilling right to your home
+              {t('features.subtitle')}
             </p>
           </motion.div>
 
@@ -203,15 +205,15 @@ export default function HomePage() {
           >
             <div>
               <h2 className="font-display text-3xl md:text-4xl font-bold mb-2">
-                Customer <span className="text-fire">Favorites</span>
+                {t('favorites.title')} <span className="text-fire">{t('favorites.titleHighlight')}</span>
               </h2>
               <p className="text-muted-foreground">
-                The dishes our customers can't stop ordering
+                {t('favorites.subtitle')}
               </p>
             </div>
             <Link to="/menu">
               <Button variant="outline" className="group">
-                View Full Menu
+                {t('favorites.viewAll')}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>

@@ -72,6 +72,8 @@
     "orderSummary": "Bestellingsoverzicht",
     "subtotal": "Subtotaal",
     "deliveryFee": "Bezorgkosten",
+    "freeDelivery": "Gratis",
+    "addForFreeDelivery": "Voeg €{{amount}} meer toe voor gratis bezorging",
     "total": "Totaal",
     "checkout": "Afrekenen",
     "continueShopping": "Verder Winkelen"
@@ -95,6 +97,10 @@
     "title": "Ons Verhaal",
     "mission": "Onze Missie",
     "values": "Onze Waarden"
+  },
+  "menu": {
+    "title": "Ons Menu",
+    "description": "Ontdek onze selectie van vuur-gegrilde delicatessen, gemaakt met passie en authentieke Afrikaanse smaken"
   },
   "contact": {
     "title": "Neem Contact Op",
