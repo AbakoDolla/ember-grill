@@ -102,11 +102,39 @@
     "title": "Ons Menu",
     "description": "Ontdek onze selectie van vuur-gegrilde delicatessen, gemaakt met passie en authentieke Afrikaanse smaken"
   },
+  "cart": {
+    "addedToCart": "toegevoegd aan winkelwagen",
+    "readyWhenYouAre": "Klaar wanneer u dat bent!",
+    "empty": "Uw winkelwagen is leeg",
+    "emptyDescription": "Voeg enkele heerlijke gerechten van ons menu toe om te beginnen",
+    "browseMenu": "Menu Bekijken",
+    "subtotal": "Subtotaal",
+    "delivery": "Bezorging",
+    "free": "Gratis",
+    "total": "Totaal",
+    "checkout": "Afrekenen",
+    "continueShopping": "Verder Winkelen"
+  },
   "contact": {
     "title": "Neem Contact Op",
     "name": "Naam",
     "email": "E-mail",
     "message": "Bericht",
     "send": "Versturen"
+  },
+  "footer": {
+    "description": "Premium Afrikaanse Grill die authentieke smaken levert in heel België",
+    "quickLinks": "Snelle Links",
+    "locations": "Locaties",
+    "catering": "Catering",
+    "support": "Ondersteuning",
+    "contactUs": "Neem Contact Op",
+    "faq": "FAQ",
+    "privacy": "Privacybeleid",
+    "terms": "Gebruiksvoorwaarden",
+    "followUs": "Volg Ons",
+    "madeWith": "Gemaakt met",
+    "inBelgium": "in België",
+    "rights": "Alle rechten voorbehouden."
   }
 }

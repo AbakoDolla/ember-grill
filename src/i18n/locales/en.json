@@ -101,5 +101,33 @@
   "menu": {
     "title": "Our Menu",
     "description": "Explore our selection of fire-grilled delicacies, crafted with passion and authentic African flavors"
+  },
+  "cart": {
+    "addedToCart": "added to cart",
+    "readyWhenYouAre": "Ready when you are!",
+    "empty": "Your cart is empty",
+    "emptyDescription": "Add some delicious items from our menu to get started",
+    "browseMenu": "Browse Menu",
+    "subtotal": "Subtotal",
+    "delivery": "Delivery",
+    "free": "Free",
+    "total": "Total",
+    "checkout": "Checkout",
+    "continueShopping": "Continue Shopping"
+  },
+  "footer": {
+    "description": "Premium African Grill delivering authentic flavors across Belgium",
+    "quickLinks": "Quick Links",
+    "locations": "Locations",
+    "catering": "Catering",
+    "support": "Support",
+    "contactUs": "Contact Us",
+    "faq": "FAQ",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "followUs": "Follow Us",
+    "madeWith": "Made with",
+    "inBelgium": "in Belgium",
+    "rights": "All rights reserved."
   }
 }

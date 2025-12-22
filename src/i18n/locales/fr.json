@@ -101,5 +101,33 @@
   "menu": {
     "title": "Notre Menu",
     "description": "Découvrez notre sélection de délices grillés au feu, élaborés avec passion et saveurs africaines authentiques"
+  },
+  "cart": {
+    "addedToCart": "ajouté au panier",
+    "readyWhenYouAre": "Prêt quand vous l'êtes !",
+    "empty": "Votre panier est vide",
+    "emptyDescription": "Ajoutez quelques délicieux plats de notre menu pour commencer",
+    "browseMenu": "Parcourir le Menu",
+    "subtotal": "Sous-total",
+    "delivery": "Livraison",
+    "free": "Gratuit",
+    "total": "Total",
+    "checkout": "Commander",
+    "continueShopping": "Continuer les Achats"
+  },
+  "footer": {
+    "description": "Grillade Africaine Premium livrant des saveurs authentiques partout en Belgique",
+    "quickLinks": "Liens Rapides",
+    "locations": "Emplacements",
+    "catering": "Traiteur",
+    "support": "Support",
+    "contactUs": "Nous Contacter",
+    "faq": "FAQ",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisation",
+    "followUs": "Suivez-nous",
+    "madeWith": "Fait avec",
+    "inBelgium": "en Belgique",
+    "rights": "Tous droits réservés."
   }
 }

@@ -23,8 +23,8 @@ export default function MenuCard({ item, index }: MenuCardProps) {
       price: item.price,
       image: item.image,
     });
-    toast.success(`${item.name} added to cart`, {
-      description: 'Ready when you are!',
+    toast.success(`${item.name} ${t('cart.addedToCart')}`, {
+      description: t('cart.readyWhenYouAre'),
     });
   };
 
