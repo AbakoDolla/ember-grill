@@ -94,9 +94,30 @@
     "rights": "Tous droits réservés."
   },
   "about": {
-    "title": "Notre Histoire",
+    "title": "L'Histoire Derrière",
+    "brand": "BraiseRoyale",
     "mission": "Notre Mission",
-    "values": "Nos Valeurs"
+    "values": "Nos Valeurs",
+    "authenticFire": {
+      "title": "Feu Authentique",
+      "description": "Chaque plat est grillé sur du vrai charbon de bois, capturant l'essence de la cuisine africaine traditionnelle."
+    },
+    "communityFirst": {
+      "title": "Communauté d'Abord",
+      "description": "Nous soutenons les fournisseurs locaux et rassemblons la diaspora africaine à travers la nourriture."
+    },
+    "premiumQuality": {
+      "title": "Qualité Premium",
+      "description": "Seuls les meilleurs ingrédients arrivent dans votre assiette. Aucun compromis, jamais."
+    },
+    "madeWithLove": {
+      "title": "Fait avec Amour",
+      "description": "Chaque recette a été transmise de génération en génération et préparée avec soin."
+    },
+    "team": "Notre Équipe",
+    "founder": "Fondateur & Chef Principal",
+    "grillMaster": "Maître Grill",
+    "operations": "Opérations"
   },
   "menu": {
     "title": "Notre Menu",
@@ -129,5 +150,23 @@
     "madeWith": "Fait avec",
     "inBelgium": "en Belgique",
     "rights": "Tous droits réservés."
+  },
+  "auth": {
+    "signIn": "Se Connecter",
+    "signUp": "S'Inscrire",
+    "email": "Email",
+    "password": "Mot de Passe",
+    "confirmPassword": "Confirmer le Mot de Passe",
+    "name": "Nom Complet",
+    "passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères",
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "checkEmail": "Vérifiez votre email pour confirmer votre compte !",
+    "unexpectedError": "Une erreur inattendue s'est produite",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "welcomeBack": "Bon retour !",
+    "createAccount": "Créez votre compte",
+    "signingIn": "Connexion en cours...",
+    "creatingAccount": "Création du compte..."
   }
 }

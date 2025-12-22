@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 export default function AuthScreen() {
   const navigate = useNavigate();
   const location = useLocation();
   const { signIn, signUp, user } = useAuth();
+  const { t } = useTranslation();
 
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
@@ -43,12 +45,12 @@ export default function AuthScreen() {
       } else {
         // Inscription
         if (formData.password !== formData.confirmPassword) {
-          setError('Les mots de passe ne correspondent pas');
+          setError(t('auth.passwordMismatch'));
           return;
         }
 
         if (formData.password.length < 6) {
-          setError('Le mot de passe doit contenir au moins 6 caractères');
+          setError(t('auth.passwordTooShort'));
           return;
         }
 
@@ -56,11 +58,11 @@ export default function AuthScreen() {
         if (error) {
           setError(error);
         } else {
-          setError('Vérifiez votre email pour confirmer votre compte !');
+          setError(t('auth.checkEmail'));
         }
       }
     } catch (err) {
-      setError('Une erreur inattendue s\'est produite');
+      setError(t('auth.unexpectedError'));
     } finally {
       setLoading(false);
     }

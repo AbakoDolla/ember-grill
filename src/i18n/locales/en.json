@@ -94,9 +94,30 @@
     "rights": "All rights reserved."
   },
   "about": {
-    "title": "Our Story",
+    "title": "The Story Behind",
+    "brand": "BraiseRoyale",
     "mission": "Our Mission",
-    "values": "Our Values"
+    "values": "Our Values",
+    "authenticFire": {
+      "title": "Authentic Fire",
+      "description": "Every dish is grilled over real charcoal, capturing the essence of traditional African cooking."
+    },
+    "communityFirst": {
+      "title": "Community First",
+      "description": "We support local suppliers and bring the African diaspora together through food."
+    },
+    "premiumQuality": {
+      "title": "Premium Quality",
+      "description": "Only the finest ingredients make it to your plate. No compromises, ever."
+    },
+    "madeWithLove": {
+      "title": "Made with Love",
+      "description": "Each recipe has been passed down through generations and prepared with care."
+    },
+    "team": "Our Team",
+    "founder": "Founder & Head Chef",
+    "grillMaster": "Grill Master",
+    "operations": "Operations"
   },
   "menu": {
     "title": "Our Menu",
@@ -129,5 +150,23 @@
     "madeWith": "Made with",
     "inBelgium": "in Belgium",
     "rights": "All rights reserved."
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "name": "Full Name",
+    "passwordTooShort": "Password must be at least 6 characters",
+    "passwordMismatch": "Passwords do not match",
+    "checkEmail": "Check your email to confirm your account!",
+    "unexpectedError": "An unexpected error occurred",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "welcomeBack": "Welcome back!",
+    "createAccount": "Create your account",
+    "signingIn": "Signing in...",
+    "creatingAccount": "Creating account..."
   }
 }

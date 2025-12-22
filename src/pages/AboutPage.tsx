@@ -1,39 +1,42 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Footer from '@/components/Footer';
 import { Flame, Users, Award, Heart, ArrowRight } from 'lucide-react';
 
-const values = [
-  {
-    icon: Flame,
-    title: 'Authentic Fire',
-    description: 'Every dish is grilled over real charcoal, capturing the essence of traditional African cooking.',
-  },
-  {
-    icon: Users,
-    title: 'Community First',
-    description: 'We support local suppliers and bring the African diaspora together through food.',
-  },
-  {
-    icon: Award,
-    title: 'Premium Quality',
-    description: 'Only the finest ingredients make it to your plate. No compromises, ever.',
-  },
-  {
-    icon: Heart,
-    title: 'Made with Love',
-    description: 'Each recipe has been passed down through generations and prepared with care.',
-  },
-];
-
-const team = [
-  { name: 'Amara Diallo', role: 'Founder & Head Chef', emoji: '👨‍🍳' },
-  { name: 'Kofi Mensah', role: 'Grill Master', emoji: '🔥' },
-  { name: 'Fatima Ndiaye', role: 'Operations', emoji: '📋' },
-];
-
 export default function AboutPage() {
+  const { t } = useTranslation();
+
+  const values = [
+    {
+      icon: Flame,
+      title: t('about.authenticFire.title'),
+      description: t('about.authenticFire.description'),
+    },
+    {
+      icon: Users,
+      title: t('about.communityFirst.title'),
+      description: t('about.communityFirst.description'),
+    },
+    {
+      icon: Award,
+      title: t('about.premiumQuality.title'),
+      description: t('about.premiumQuality.description'),
+    },
+    {
+      icon: Heart,
+      title: t('about.madeWithLove.title'),
+      description: t('about.madeWithLove.description'),
+    },
+  ];
+
+  const team = [
+    { name: 'Amara Diallo', role: t('about.founder'), emoji: '👨‍🍳' },
+    { name: 'Kofi Mensah', role: t('about.grillMaster'), emoji: '🔥' },
+    { name: 'Fatima Ndiaye', role: t('about.operations'), emoji: '📋' },
+  ];
+
   return (
     <div className="min-h-screen bg-background pt-24 pb-12">
       {/* Hero */}
@@ -44,9 +47,9 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
           >
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              The Story Behind
+              {t('about.title')}
               <br />
-              <span className="text-fire">BraiseRoyale</span>
+              <span className="text-fire">{t('about.brand')}</span>
             </h1>
             <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
               Born from a passion for authentic African flavors and a dream to share them with Belgium. This is our journey.
