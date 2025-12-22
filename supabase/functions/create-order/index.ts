@@ -1,6 +1,13 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
+interface CartItem {
+  id: string
+  name: string
+  price: number
+  quantity: number
+}
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -26,8 +33,8 @@ serve(async (req) => {
     const { customerData, cartItems, deliveryAddress, specialInstructions, promotionCode } = await req.json()
 
     // Calculate totals
-    let subtotal = cartItems.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0)
-    let deliveryFee = subtotal > 50 ? 0 : 4.99
+    const subtotal = cartItems.reduce((sum: number, item: CartItem) => sum + (item.price * item.quantity), 0)
+    const deliveryFee = subtotal > 50 ? 0 : 4.99
     let discount = 0
 
     // Apply promotion if provided
@@ -94,7 +101,7 @@ serve(async (req) => {
     if (orderError) throw orderError
 
     // Create order items
-    const orderItems = cartItems.map((item: any) => ({
+    const orderItems = cartItems.map((item: CartItem) => ({
       order_id: order.id,
       menu_item_id: item.id,
       quantity: item.quantity,

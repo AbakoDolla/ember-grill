@@ -53,7 +53,7 @@ export function useOrders(customerId?: string) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     if (!customerId) return
 
     try {
@@ -75,7 +75,7 @@ export function useOrders(customerId?: string) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [customerId])
 
   const createOrder = async (
     customerData: { email: string; firstName?: string; lastName?: string; phone?: string },
@@ -161,7 +161,7 @@ export function useOrders(customerId?: string) {
     if (customerId) {
       fetchOrders()
     }
-  }, [customerId])
+  }, [customerId, fetchOrders])
 
   return {
     orders,

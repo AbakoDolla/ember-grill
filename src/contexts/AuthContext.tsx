@@ -68,12 +68,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setLoading(false)
 
         // Création du profil pour les nouveaux inscrits
-        if (event === 'SIGNED_UP' as any) {
+        if (event === 'SIGNED_UP') {
           await createProfile(session!.user)
         }
 
         // Notification de bienvenue pour les nouvelles connexions
-        if (event === 'SIGNED_IN' as any) {
+        if (event === 'SIGNED_IN') {
           const lastSignIn = localStorage.getItem('lastWelcomeShown')
           const now = Date.now()
           if (!lastSignIn || now - parseInt(lastSignIn) > 5 * 60 * 1000) {
@@ -102,7 +102,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       const { data, error } = await supabase
         .from('profiles')
-        .insert([newProfile] as any)
+        .insert([newProfile] as Database['public']['Tables']['profiles']['Insert'][])
 
       if (error && error.code !== '23505') console.error('Error creating profile:', error)
       else if (!error) console.log('Profile created successfully:', data)

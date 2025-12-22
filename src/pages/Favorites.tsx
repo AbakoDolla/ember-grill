@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -42,13 +42,7 @@ export default function FavoritesPage() {
   const [loading, setLoading] = useState(true)
   const [animatingItems, setAnimatingItems] = useState<Set<string>>(new Set())
 
-  useEffect(() => {
-    if (user) {
-      fetchFavorites()
-    }
-  }, [user])
-
-  const fetchFavorites = async () => {
+  const fetchFavorites = useCallback(async () => {
     try {
       setLoading(true)
       // Pour l'instant, simulons des favoris car la table n'existe pas encore
@@ -115,7 +109,13 @@ export default function FavoritesPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [toast])
+
+  useEffect(() => {
+    if (user) {
+      fetchFavorites()
+    }
+  }, [user, fetchFavorites])
 
   const handleAddToCart = (item: FavoriteItem['menu_item']) => {
     addItem({

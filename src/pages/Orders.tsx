@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -42,13 +42,7 @@ export default function OrdersPage() {
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('all')
 
-  useEffect(() => {
-    if (user) {
-      fetchOrders()
-    }
-  }, [user])
-
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     try {
       setLoading(true)
       const { data, error } = await supabase
@@ -74,7 +68,13 @@ export default function OrdersPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [user?.id])
+
+  useEffect(() => {
+    if (user) {
+      fetchOrders()
+    }
+  }, [user, fetchOrders])
 
   const getStatusIcon = (status: string) => {
     switch (status) {
