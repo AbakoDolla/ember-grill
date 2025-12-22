@@ -192,7 +192,7 @@ export function useRestaurantSettings() {
     if (!settings) return false
 
     const now = new Date()
-    const dayOfWeek = now.toLocaleLowerCase('en-US', { weekday: 'long' })
+    const dayOfWeek = now.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase()
     const currentTime = now.getHours() * 100 + now.getMinutes()
 
     const hours = settings.opening_hours?.[dayOfWeek]

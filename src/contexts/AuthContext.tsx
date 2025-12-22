@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import supabase from '@/lib/supabase'
-import { User, Session } from '@supabase/supabase-js'
+import { User, Session, AuthChangeEvent } from '@supabase/supabase-js'
 
 interface AuthContextType {
   user: User | null
@@ -57,12 +57,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setLoading(false)
 
         // Créer le profil si c'est un nouvel utilisateur
-        if (event === 'SIGNED_UP' && session?.user) {
+        if (event === 'SIGNED_UP' as AuthChangeEvent && session?.user) {
           await createProfile(session.user)
         }
 
         // Notification de bienvenue pour les nouvelles connexions
-        if (event === 'SIGNED_IN' && session?.user) {
+        if (event === 'SIGNED_IN' as AuthChangeEvent && session?.user) {
           // Vérifier si c'est la première connexion récente (moins de 5 minutes)
           const lastSignIn = localStorage.getItem('lastWelcomeShown')
           const now = Date.now()
@@ -81,15 +81,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const { error } = await supabase
         .from('profiles')
-        .insert([
-          {
-            id: user.id,
-            email: user.email,
-            first_name: user.user_metadata?.name || '',
-            last_name: '',
-            role: 'customer'
-          }
-        ])
+        .insert({
+          id: user.id,
+          email: user.email!,
+          first_name: user.user_metadata?.name || '',
+          last_name: '',
+          role: 'customer'
+        })
 
       if (error && error.code !== '23505') { // Ignore duplicate key error
         console.error('Error creating profile:', error)

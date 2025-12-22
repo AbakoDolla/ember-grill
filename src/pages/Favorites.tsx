@@ -122,8 +122,7 @@ export default function FavoritesPage() {
       id: item.id,
       name: item.name,
       price: item.price,
-      image: item.image_url || '',
-      quantity: 1
+      image: item.image_url || ''
     })
 
     // Animation

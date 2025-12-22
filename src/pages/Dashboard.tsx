@@ -69,11 +69,11 @@ export default function Dashboard() {
         .limit(5)
 
       if (ordersData) {
-        setOrders(ordersData)
+        setOrders(ordersData as Order[])
         setStats(prev => ({
           ...prev,
           totalOrders: ordersData.length,
-          totalSpent: ordersData.reduce((sum, order) => sum + order.total_amount, 0)
+          totalSpent: ordersData.reduce((sum, order) => sum + (order as Order).total_amount, 0)
         }))
       }
 
