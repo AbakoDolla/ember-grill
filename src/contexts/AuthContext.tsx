@@ -6,7 +6,17 @@ import { Database } from '@/types/database'
 // ------------------------
 // Typage de la table profiles
 // ------------------------
-type Profile = Database['public']['Tables']['profiles']['Insert']
+type ProfileInsert = {
+  id: string
+  email: string
+  first_name?: string
+  last_name?: string
+  phone?: string
+  role?: 'customer' | 'admin' | 'staff'
+  avatar_url?: string
+  created_at?: string
+  updated_at?: string
+}
 
 // Typage du contexte d'authentification
 interface AuthContextType {
@@ -68,12 +78,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setLoading(false)
 
         // Création du profil pour les nouveaux inscrits
-        if (event === 'SIGNED_UP') {
+        if (event === 'SIGNED_UP' as AuthChangeEvent) {
           await createProfile(session!.user)
         }
 
         // Notification de bienvenue pour les nouvelles connexions
-        if (event === 'SIGNED_IN') {
+        if (event === 'SIGNED_IN' as AuthChangeEvent) {
           const lastSignIn = localStorage.getItem('lastWelcomeShown')
           const now = Date.now()
           if (!lastSignIn || now - parseInt(lastSignIn) > 5 * 60 * 1000) {
@@ -92,7 +102,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // ------------------------
   const createProfile = async (user: User) => {
     try {
-      const newProfile: Profile = {
+      const newProfile: ProfileInsert = {
         id: user.id,
         email: user.email!,
         first_name: user.user_metadata?.name || '',
@@ -102,7 +112,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       const { data, error } = await supabase
         .from('profiles')
-        .insert([newProfile] as Database['public']['Tables']['profiles']['Insert'][])
+        .insert([newProfile] as any)
 
       if (error && error.code !== '23505') console.error('Error creating profile:', error)
       else if (!error) console.log('Profile created successfully:', data)
