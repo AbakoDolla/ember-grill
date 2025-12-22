@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { supabase } from '@/lib/supabase'
+import supabase from '@/lib/supabase'
 import { Database } from '@/types/database'
 
 type OrderItemInsert = Database['public']['Tables']['order_items']['Insert']

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '@/lib/supabase'
+import supabase from '@/lib/supabase'
 import { Database } from '@/types/database'
 
 type MenuItem = Database['public']['Tables']['menu_items']['Row']
