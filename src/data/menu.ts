@@ -1,15 +1,14 @@
 import grilledTilapia from '@/assets/food/grilled-tilapia.jpg';
 import smokedCatfish from '@/assets/food/smoked-catfish.jpg';
 import grilledMackerel from '@/assets/food/grilled-mackerel.jpg';
-import suyaBeef from '@/assets/food/suya-beef.jpg';
-import beefBrochette from '@/assets/food/beef-brochette.jpg';
-import grilledRibeye from '@/assets/food/grilled-ribeye.jpg';
-import pouletBraise from '@/assets/food/poulet-braise.jpg';
-import porcBraise from '@/assets/food/porc-braise.jpg';
-import plantainFries from '@/assets/food/plantain-fries.jpg';
-import attieke from '@/assets/food/attieke.jpg';
-import jollofRice from '@/assets/food/jollof-rice.jpg';
-import grilledCorn from '@/assets/food/grilled-corn.jpg';
+import asset1 from '@/assets/food/asset-461481331362410496.jpg';
+import asset2 from '@/assets/food/asset-461481331362410497.jpg';
+import asset3 from '@/assets/food/asset-461481331362410498.jpg';
+import asset4 from '@/assets/food/asset-461481331362410499.jpg';
+import asset5 from '@/assets/food/asset-461482020239118341.jpg';
+import asset6 from '@/assets/food/asset-461482020239118342.jpg';
+import asset7 from '@/assets/food/asset-461482020239118343.png';
+import asset8 from '@/assets/food/asset-461482020239118344.jpg';
 
 export interface MenuItem {
   id: string;
@@ -26,8 +25,8 @@ export interface MenuItem {
 export const menuItems: MenuItem[] = [
   {
     id: 'grilled-tilapia',
-    name: 'Grilled Tilapia Royale',
-    description: 'Fresh tilapia marinated in our signature African spice blend, grilled to perfection over open flames. Served with plantains and attiéké.',
+    name: 'Tilapia Braisé Camerounais',
+    description: 'Tilapia frais du Cameroun, braisé lentement selon les méthodes traditionnelles ancestrales. Une tendreté incomparable et un goût authentique des eaux camerounaises.',
     price: 24.99,
     image: grilledTilapia,
     category: 'fish',
@@ -36,8 +35,8 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: 'smoked-catfish',
-    name: 'Smoked Catfish Deluxe',
-    description: 'Slow-smoked catfish infused with hickory and palm wood, glazed with a tangy pepper sauce.',
+    name: 'Capitaine Braisé Camerounais',
+    description: 'Capitaine frais du Cameroun, braisé avec un mélange secret d\'épices africaines traditionnelles. Une explosion de saveurs ancestrales et une texture fondante.',
     price: 22.99,
     image: smokedCatfish,
     category: 'fish',
@@ -45,8 +44,8 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: 'grilled-mackerel',
-    name: 'Flame-Kissed Mackerel',
-    description: 'Whole mackerel charred with herbs and citrus, served with spicy green pepper sauce.',
+    name: 'Maquereau Braisé Camerounais',
+    description: 'Maquereau frais du Cameroun, braisé avec des herbes aromatiques et du citron selon les recettes ancestrales. Une fraîcheur garantie et un goût authentique.',
     price: 19.99,
     image: grilledMackerel,
     category: 'fish',
@@ -54,96 +53,82 @@ export const menuItems: MenuItem[] = [
     new: true,
   },
   {
-    id: 'suya-beef',
-    name: 'Suya Beef Skewers',
-    description: 'Tender beef strips coated in ground peanut spice mix, grilled on charcoal. A Nigerian street food classic.',
-    price: 18.99,
-    image: suyaBeef,
-    category: 'beef',
-    spiceLevel: 3,
-    popular: true,
-  },
-  {
-    id: 'beef-brochette',
-    name: 'Premium Beef Brochettes',
-    description: 'Cubed prime beef marinated in ginger and garlic, flame-grilled with bell peppers and onions.',
+    id: 'braised-capitaine-royal',
+    name: 'Capitaine Braisé Royal',
+    description: 'Capitaine premium du Cameroun, braisé lentement avec un mélange secret d\'épices traditionnelles. Une texture fondante et des saveurs ancestrales exceptionnelles.',
     price: 26.99,
-    image: beefBrochette,
-    category: 'beef',
-    spiceLevel: 1,
-  },
-  {
-    id: 'grilled-ribeye',
-    name: 'African Spiced Ribeye',
-    description: 'Thick-cut ribeye rubbed with our secret blend of 12 African spices, seared and rested to perfection.',
-    price: 34.99,
-    image: grilledRibeye,
-    category: 'beef',
-    spiceLevel: 2,
-    new: true,
-  },
-  {
-    id: 'poulet-braise',
-    name: 'Poulet Braisé Supreme',
-    description: 'Cameroonian braised chicken, crispy on the outside, juicy inside. Marinated for 24 hours in African aromatics.',
-    price: 21.99,
-    image: pouletBraise,
-    category: 'braise',
+    image: asset1,
+    category: 'fish',
     spiceLevel: 2,
     popular: true,
   },
   {
-    id: 'porc-braise',
-    name: 'Porc Braisé Gold',
-    description: 'Succulent pork pieces slow-braised with scotch bonnet peppers and palm oil until caramelized.',
+    id: 'braised-tilapia-gourmet',
+    name: 'Tilapia Braisé Gourmet',
+    description: 'Tilapia d\'élevage camerounais de qualité supérieure, braisé avec des aromates locaux. Une chair tendre et juteuse, parfaite pour les palais raffinés.',
     price: 23.99,
-    image: porcBraise,
-    category: 'braise',
+    image: asset2,
+    category: 'fish',
+    spiceLevel: 1,
+  },
+  {
+    id: 'braised-mackerel-spicy',
+    name: 'Maquereau Braisé Épicé',
+    description: 'Maquereau sauvage du Cameroun, braisé avec des piments locaux et des épices traditionnelles. Un équilibre parfait entre douceur et piquant.',
+    price: 21.99,
+    image: asset3,
+    category: 'fish',
     spiceLevel: 3,
   },
   {
-    id: 'plantain-fries',
-    name: 'Crispy Plantain Frites',
-    description: 'Golden fried ripe plantains, perfectly caramelized. A sweet and savory side.',
-    price: 6.99,
-    image: plantainFries,
-    category: 'sides',
+    id: 'braised-catfish-deluxe',
+    name: 'Capitaine Braisé Deluxe',
+    description: 'Capitaine de rivière camerounais, braisé avec une marinade aux herbes sauvages. Une expérience gustative authentique des traditions culinaires locales.',
+    price: 27.99,
+    image: asset4,
+    category: 'fish',
+    spiceLevel: 2,
+  },
+  {
+    id: 'braised-tilapia-traditional',
+    name: 'Tilapia Braisé Traditionnel',
+    description: 'Tilapia préparé selon les méthodes ancestrales camerounaises, braisé lentement pour préserver tous les arômes naturels. Un classique revisité.',
+    price: 24.99,
+    image: asset5,
+    category: 'fish',
+    spiceLevel: 2,
+  },
+  {
+    id: 'braised-mackerel-herbs',
+    name: 'Maquereau Braisé aux Herbes',
+    description: 'Maquereau frais braisé avec un bouquet d\'herbes aromatiques camerounaises. Une préparation légère et savoureuse, respectueuse des traditions.',
+    price: 22.99,
+    image: asset6,
+    category: 'fish',
     spiceLevel: 1,
   },
   {
-    id: 'attieke',
-    name: 'Premium Attiéké',
-    description: 'Traditional Ivorian fermented cassava couscous, light and fluffy.',
-    price: 5.99,
-    image: attieke,
-    category: 'sides',
-    spiceLevel: 1,
-  },
-  {
-    id: 'jollof-rice',
-    name: 'Signature Jollof Rice',
-    description: 'Our award-winning tomato rice, slow-cooked with smoky party flavor.',
-    price: 8.99,
-    image: jollofRice,
-    category: 'sides',
+    id: 'braised-catfish-signature',
+    name: 'Capitaine Braisé Signature',
+    description: 'Notre recette signature de capitaine braisé, inspirée des meilleures traditions culinaires camerounaises. Une explosion de saveurs authentiques.',
+    price: 28.99,
+    image: asset7,
+    category: 'fish',
     spiceLevel: 2,
     popular: true,
   },
   {
-    id: 'grilled-corn',
-    name: 'Fire-Roasted Corn',
-    description: 'Sweet corn grilled over charcoal, brushed with spiced butter and lime.',
-    price: 4.99,
-    image: grilledCorn,
-    category: 'sides',
-    spiceLevel: 1,
+    id: 'braised-tilapia-premium',
+    name: 'Tilapia Braisé Premium',
+    description: 'Tilapia de qualité premium du Cameroun, braisé avec soin selon les méthodes traditionnelles. Une texture parfaite et un goût incomparable.',
+    price: 25.99,
+    image: asset8,
+    category: 'fish',
+    spiceLevel: 2,
   },
 ];
 
 export const categories = [
-  { id: 'all', label: 'All Dishes', icon: '🔥' },
-  { id: 'fish', label: 'Grilled Fish', icon: '🐟' },
-  { id: 'beef', label: 'Premium Beef', icon: '🥩' },
-  { id: 'braise', label: 'African Braise', icon: '🍗' },
-  { id: 'sides', label: 'Sides', icon: '🍚' },
+  { id: 'all', label: 'Tous les Poissons', icon: '🐟' },
+  { id: 'fish', label: 'Poissons Braisés', icon: '🐟' },
 ];

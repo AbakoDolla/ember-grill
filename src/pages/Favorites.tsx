@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useCart } from '@/contexts/CartContext'
+import { useTranslation } from 'react-i18next'
 import supabase from '@/lib/supabase'
 
 interface FavoriteItem {
@@ -38,6 +39,7 @@ export default function FavoritesPage() {
   const { user } = useAuth()
   const { addItem } = useCart()
   const { toast } = useToast()
+  const { t } = useTranslation()
   const [favorites, setFavorites] = useState<FavoriteItem[]>([])
   const [loading, setLoading] = useState(true)
   const [animatingItems, setAnimatingItems] = useState<Set<string>>(new Set())
@@ -203,10 +205,10 @@ export default function FavoritesPage() {
         >
           <div className="flex items-center gap-3 mb-4">
             <Heart className="h-8 w-8 text-red-500" />
-            <h1 className="text-3xl font-bold">Mes Plats Favoris</h1>
+            <h1 className="text-3xl font-bold">{t('favorites.title')}</h1>
           </div>
           <p className="text-muted-foreground">
-            Vos plats préférés pour commander en un clic
+            {t('favorites.subtitle')}
           </p>
         </motion.div>
 
@@ -219,14 +221,14 @@ export default function FavoritesPage() {
               className="text-center py-16"
             >
               <Heart className="h-20 w-20 text-muted-foreground mx-auto mb-6" />
-              <h3 className="text-xl font-medium mb-2">Aucun favori encore</h3>
+              <h3 className="text-xl font-medium mb-2">{t('favorites.empty')}</h3>
               <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-                Ajoutez vos plats préférés depuis le menu pour les retrouver facilement ici
+                {t('favorites.emptyDescription')}
               </p>
               <Button asChild size="lg">
                 <a href="/menu">
                   <Plus className="h-5 w-5 mr-2" />
-                  Explorer le menu
+                  {t('common.viewMenu')}
                 </a>
               </Button>
             </motion.div>

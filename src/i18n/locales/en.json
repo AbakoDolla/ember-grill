@@ -14,36 +14,36 @@
     "spiceLevel": "Spice Level"
   },
   "hero": {
-    "badge": "Premium African Grill",
-    "title1": "Fire-Kissed",
-    "title2": "Flavors",
-    "title3": "Delivered Hot",
-    "description": "Experience the authentic taste of African grilled fish, premium beef, and traditional braise. Delivered across Belgium.",
-    "howItWorks": "How It Works",
+    "badge": "Authentic Cameroonian Braise",
+    "title1": "Local",
+    "title2": "Fish",
+    "title3": "Braised to Perfection",
+    "description": "Experience the authentic taste of local Cameroonian fish braised according to ancestral traditions. Delivered across Belgium after one week advance order.",
+    "howItWorks": "How to Order",
     "stats": {
       "customers": "Happy Customers",
       "rating": "Rating",
-      "delivery": "Avg Delivery"
+      "delivery": "Preparation"
     }
   },
   "features": {
     "title": "Why Choose",
-    "subtitle": "We bring the heat of authentic African grilling right to your home",
+    "subtitle": "We bring the authenticity of Cameroonian braising right to your home",
     "charcoal": {
-      "title": "Charcoal Grilled",
-      "description": "Authentic open-flame cooking for that smoky perfection"
+      "title": "Traditional Braising",
+      "description": "Slow and savory cooking according to ancestral Cameroonian methods"
     },
     "delivery": {
-      "title": "Fast Delivery",
-      "description": "30-45 minutes hot to your doorstep"
+      "title": "Advance Orders",
+      "description": "Reserve your braised fish one week in advance for guaranteed freshness"
     },
     "belgium": {
-      "title": "All Belgium",
-      "description": "Delivering across major Belgian cities"
+      "title": "Delivery in Belgium",
+      "description": "Delivery service across Belgium for your braised Cameroonian fish"
     },
     "quality": {
-      "title": "Premium Quality",
-      "description": "Only the finest cuts and freshest catches"
+      "title": "Cameroonian Fish",
+      "description": "Rigorous selection of the freshest local fish from Cameroon"
     }
   },
   "favorites": {
@@ -54,15 +54,15 @@
   },
   "cta": {
     "title": "Ready to Taste the",
-    "titleHighlight": "Fire",
-    "description": "Order now and experience the most authentic African grill in Belgium. First order? Get 15% off with code FIRSTFLAME."
+    "titleHighlight": "Braise",
+    "description": "Order now and experience the most authentic local Cameroonian fish braised. Advance order of one week required for optimal freshness."
   },
   "categories": {
-    "all": "All Dishes",
-    "fish": "Grilled Fish",
-    "beef": "Premium Beef",
-    "braise": "African Braise",
-    "sides": "Sides"
+    "all": "All Fish",
+    "fish": "Braised Fish",
+    "beef": "Braised Fish",
+    "braise": "Cameroonian Braise",
+    "sides": "Braised Fish"
   },
   "cart": {
     "title": "Your Cart",
@@ -79,7 +79,7 @@
     "continueShopping": "Continue Shopping"
   },
   "footer": {
-    "description": "Premium grilled fish, beef, and African braise delivered hot to your door across Belgium.",
+    "description": "Local Cameroonian fish braised according to ancestral traditions, delivered fresh to your door across Belgium after one week advance order.",
     "quickLinks": "Quick Links",
     "support": "Support",
     "contactUs": "Contact Us",
@@ -95,20 +95,20 @@
   },
   "about": {
     "title": "The Story Behind",
-    "brand": "BraiseRoyale",
+    "brand": "BrazaFish carole",
     "mission": "Our Mission",
     "values": "Our Values",
     "authenticFire": {
-      "title": "Authentic Fire",
-      "description": "Every dish is grilled over real charcoal, capturing the essence of traditional African cooking."
+      "title": "Authentic Braise",
+      "description": "Every fish is braised according to traditional Cameroonian methods, capturing the essence of ancestral cuisine."
     },
     "communityFirst": {
-      "title": "Community First",
-      "description": "We support local suppliers and bring the African diaspora together through food."
+      "title": "Cameroonian Community",
+      "description": "We support local fishermen and bring the Cameroonian diaspora together through our braised fish."
     },
     "premiumQuality": {
       "title": "Premium Quality",
-      "description": "Only the finest ingredients make it to your plate. No compromises, ever."
+      "description": "Only the finest local fish from Cameroon make it to your plate. No compromises, ever."
     },
     "madeWithLove": {
       "title": "Made with Love",
@@ -116,12 +116,22 @@
     },
     "team": "Our Team",
     "founder": "Founder & Head Chef",
-    "grillMaster": "Grill Master",
+    "grillMaster": "Braise Master",
     "operations": "Operations"
+  },
+  "story": {
+    "subtitle": "Born from a passion for authentic local Cameroonian fish flavors and a dream to share them. This is our journey.",
+    "title": "From Cameroon Rivers to World Tables",
+    "p1": "BraiseRoyale began in 2019 when our founder, Amara Diallo, missed the smoky, fire-kissed flavors of his grandmother's cooking in Cameroon. What started as weekend braises for friends quickly became the most sought-after Cameroonian braise.",
+    "p2": "Today, we serve thousands of customers, bringing the authentic taste of local Cameroonian fish braised to your doorstep. Every fish is hand-selected, every braise is slow-cooked with love.",
+    "p3": "Our mission is simple: to make world-class Cameroonian cuisine accessible to everyone, delivered fresh and delicious, without compromising on tradition or taste."
   },
   "menu": {
     "title": "Our Menu",
-    "description": "Explore our selection of fire-grilled delicacies, crafted with passion and authentic African flavors"
+    "description": "Explore our selection of local Cameroonian fish braised according to ancestral traditions, crafted with passion and authentic flavors",
+    "filters": "Filters",
+    "noDishes": "No dishes found matching your search.",
+    "clearFilters": "Clear filters"
   },
   "cart": {
     "addedToCart": "added to cart",
@@ -137,7 +147,7 @@
     "continueShopping": "Continue Shopping"
   },
   "footer": {
-    "description": "Premium African Grill delivering authentic flavors across Belgium",
+    "description": "Specialized in local Cameroonian fish braised, delivered fresh in Belgium after one week advance order",
     "quickLinks": "Quick Links",
     "locations": "Locations",
     "catering": "Catering",
@@ -168,5 +178,42 @@
     "createAccount": "Create your account",
     "signingIn": "Signing in...",
     "creatingAccount": "Creating account..."
+  },
+  "favorites": {
+    "title": "Your Favorite Dishes",
+    "subtitle": "Your favorite dishes to order with one click",
+    "empty": "No favorite dishes",
+    "emptyDescription": "Add dishes to your favorites from the menu",
+    "remove": "Remove from favorites"
+  },
+  "orders": {
+    "title": "Your Orders",
+    "empty": "No orders",
+    "emptyDescription": "You haven't placed any orders yet",
+    "orderNow": "Order now",
+    "orderAgain": "Order again",
+    "status": {
+      "pending": "Pending",
+      "preparing": "Preparing",
+      "ready": "Ready",
+      "delivered": "Delivered"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "quickOrder": "Order now",
+    "favoritesTitle": "Your Favorite Dishes",
+    "favoritesSubtitle": "Your favorite dishes to order faster",
+    "recentOrders": "Recent Orders",
+    "orderAgain": "Order again",
+    "settings": {
+      "title": "Settings",
+      "account": "Account Settings",
+      "notifications": "Notifications",
+      "privacy": "Privacy",
+      "language": "Language & Region",
+      "security": "Security",
+      "dangerZone": "Danger Zone"
+    }
   }
 }

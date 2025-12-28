@@ -20,6 +20,7 @@ import {
   Star,
   TrendingUp
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import supabase from '@/lib/supabase'
 
 interface Order {
@@ -41,6 +42,7 @@ interface Favorite {
 
 export default function Dashboard() {
   const { user } = useAuth()
+  const { t } = useTranslation()
   const [orders, setOrders] = useState<Order[]>([])
   const [favorites, setFavorites] = useState<Favorite[]>([])
   const [stats, setStats] = useState({
@@ -144,7 +146,7 @@ export default function Dashboard() {
             </Avatar>
             <div>
               <h1 className="text-3xl font-bold">
-                Bienvenue, {user?.user_metadata?.name || 'Cher Client'} ! 👋
+                {t('dashboard.welcome')}, {user?.user_metadata?.name || 'Cher Client'} ! 👋
               </h1>
               <p className="text-muted-foreground">
                 Gérez vos commandes et découvrez nos plats préférés
@@ -191,18 +193,22 @@ export default function Dashboard() {
 
         {/* Main Content */}
         <Tabs defaultValue="orders" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="orders" className="flex items-center gap-2">
               <ShoppingBag className="h-4 w-4" />
-              Mes Commandes
+              {t('orders.title')}
             </TabsTrigger>
             <TabsTrigger value="favorites" className="flex items-center gap-2">
               <Heart className="h-4 w-4" />
-              Favoris
+              {t('favorites.title')}
             </TabsTrigger>
             <TabsTrigger value="profile" className="flex items-center gap-2">
               <User className="h-4 w-4" />
               Profil
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="flex items-center gap-2">
+              <Settings className="h-4 w-4" />
+              Paramètres
             </TabsTrigger>
           </TabsList>
 
@@ -212,7 +218,7 @@ export default function Dashboard() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <ShoppingBag className="h-5 w-5" />
-                  Historique des Commandes
+                  {t('dashboard.recentOrders')}
                 </CardTitle>
                 <CardDescription>
                   Vos dernières commandes chez BrazzaFlame
@@ -222,9 +228,9 @@ export default function Dashboard() {
                 {orders.length === 0 ? (
                   <div className="text-center py-8">
                     <ShoppingBag className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <p className="text-muted-foreground">Aucune commande trouvée</p>
+                    <p className="text-muted-foreground">{t('orders.empty')}</p>
                     <Button className="mt-4" asChild>
-                      <a href="/menu">Commander maintenant</a>
+                      <a href="/menu">{t('dashboard.quickOrder')}</a>
                     </Button>
                   </div>
                 ) : (
@@ -267,10 +273,10 @@ export default function Dashboard() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Heart className="h-5 w-5" />
-                  Plats Favoris
+                  {t('dashboard.favoritesTitle')}
                 </CardTitle>
                 <CardDescription>
-                  Vos plats préférés pour commander plus rapidement
+                  {t('dashboard.favoritesSubtitle')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -292,7 +298,7 @@ export default function Dashboard() {
                         </div>
                       </div>
                       <Button size="sm" className="w-full mt-3">
-                        Commander à nouveau
+                        {t('dashboard.orderAgain')}
                       </Button>
                     </motion.div>
                   ))}
@@ -362,6 +368,153 @@ export default function Dashboard() {
                     <MapPin className="h-4 w-4 mr-2" />
                     Adresses de livraison
                   </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Settings Tab */}
+          <TabsContent value="settings" className="space-y-6">
+            {/* Account Settings */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Settings className="h-5 w-5" />
+                  Paramètres du Compte
+                </CardTitle>
+                <CardDescription>
+                  Gérez vos préférences et paramètres de compte
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Notifications */}
+                <div className="space-y-4">
+                  <h4 className="font-medium">Notifications</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium">Commandes</p>
+                        <p className="text-sm text-muted-foreground">Notifications sur l'état de vos commandes</p>
+                      </div>
+                      <Button variant="outline" size="sm">Activé</Button>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium">Promotions</p>
+                        <p className="text-sm text-muted-foreground">Offres spéciales et réductions</p>
+                      </div>
+                      <Button variant="outline" size="sm">Activé</Button>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium">Nouveaux plats</p>
+                        <p className="text-sm text-muted-foreground">Découvrez nos nouveaux plats</p>
+                      </div>
+                      <Button variant="outline" size="sm">Activé</Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Privacy */}
+                <div className="space-y-4">
+                  <h4 className="font-medium">Confidentialité</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium">Données personnelles</p>
+                        <p className="text-sm text-muted-foreground">Gérez vos données personnelles</p>
+                      </div>
+                      <Button variant="outline" size="sm">Voir</Button>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium">Historique des commandes</p>
+                        <p className="text-sm text-muted-foreground">Téléchargez votre historique</p>
+                      </div>
+                      <Button variant="outline" size="sm">Télécharger</Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Language & Region */}
+                <div className="space-y-4">
+                  <h4 className="font-medium">Langue et Région</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium">Langue</p>
+                        <p className="text-sm text-muted-foreground">Langue de l'interface</p>
+                      </div>
+                      <Button variant="outline" size="sm">Français</Button>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium">Région</p>
+                        <p className="text-sm text-muted-foreground">Votre région de livraison</p>
+                      </div>
+                      <Button variant="outline" size="sm">Bruxelles</Button>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Security Settings */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <User className="h-5 w-5" />
+                  Sécurité
+                </CardTitle>
+                <CardDescription>
+                  Gérez la sécurité de votre compte
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium">Mot de passe</p>
+                      <p className="text-sm text-muted-foreground">Dernière modification il y a 3 mois</p>
+                    </div>
+                    <Button variant="outline" size="sm">Changer</Button>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium">Authentification à deux facteurs</p>
+                      <p className="text-sm text-muted-foreground">Ajoutez une couche de sécurité</p>
+                    </div>
+                    <Button variant="outline" size="sm">Activer</Button>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium">Sessions actives</p>
+                      <p className="text-sm text-muted-foreground">Gérez vos sessions connectées</p>
+                    </div>
+                    <Button variant="outline" size="sm">Voir</Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Danger Zone */}
+            <Card className="border-red-200">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-red-600">
+                  <Flame className="h-5 w-5" />
+                  Zone de Danger
+                </CardTitle>
+                <CardDescription>
+                  Actions irréversibles pour votre compte
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between p-4 border border-red-200 rounded-lg">
+                  <div>
+                    <p className="font-medium text-red-600">Supprimer le compte</p>
+                    <p className="text-sm text-muted-foreground">Suppression permanente de votre compte et données</p>
+                  </div>
+                  <Button variant="destructive" size="sm">Supprimer</Button>
                 </div>
               </CardContent>
             </Card>

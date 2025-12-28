@@ -7,6 +7,7 @@ import { ShoppingCart, Menu, X, Flame, User, LogOut, Settings } from 'lucide-rea
 import { useCart } from '@/contexts/CartContext';
 import { useAuth } from '@/contexts/AuthContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import logo from '@/assets/logo.jpg';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -47,13 +48,37 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto">
         <div className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl px-4 md:px-6 py-3 flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-fire">
-              <Flame className="w-6 h-6 text-primary-foreground" />
+          <Link to="/" className="flex items-center gap-6 group relative">
+            {/* Logo avec effets visuels */}
+            <div className="relative">
+              <img 
+                src={logo} 
+                alt="BrazaFish Logo" 
+                className="w-20 h-20 md:w-24 md:h-24 object-cover rounded-full drop-shadow-lg transition-transform duration-300 group-hover:scale-105 border-4 border-white/20"
+              />
+              {/* Effet de brillance */}
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-400/20 via-red-500/10 to-yellow-400/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             </div>
-            <span className="font-display font-bold text-xl text-foreground hidden sm:block">
-              BRAZZA<span className="text-fire">FLAME</span>
-            </span>
+            
+            {/* Nom de la marque */}
+            <div className="flex flex-col">
+              <div className="flex items-baseline gap-2">
+                <span className="font-display font-black text-2xl md:text-3xl bg-gradient-to-r from-orange-600 via-red-600 to-yellow-600 bg-clip-text text-transparent leading-none">
+                  BrazaFish
+                </span>
+                <span className="font-display font-bold text-lg md:text-xl text-blue-600 leading-none">
+                  Carole
+                </span>
+              </div>
+              <span className="text-xs text-muted-foreground font-medium tracking-wide uppercase">
+                Poisson Braisé Camerounais
+              </span>
+            </div>
+            
+            {/* Particules décoratives */}
+            <div className="absolute -top-2 -right-2 w-2 h-2 bg-orange-500 rounded-full animate-pulse opacity-60"></div>
+            <div className="absolute -bottom-1 -right-4 w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse opacity-40" style={{animationDelay: '0.5s'}}></div>
+            <div className="absolute top-1 -left-3 w-1 h-1 bg-yellow-500 rounded-full animate-pulse opacity-50" style={{animationDelay: '1s'}}></div>
           </Link>
 
           {/* Desktop Navigation */}

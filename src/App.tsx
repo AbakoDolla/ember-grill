@@ -7,6 +7,7 @@ import { CartProvider } from "@/contexts/CartContext";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import WelcomeCelebration from "@/components/WelcomeCelebration";
+import { Suspense } from "react";
 
 import MainLayout from "@/layout/MainLayout";
 
@@ -98,7 +99,9 @@ const AppContent = () => {
 
 const App = () => (
   <AuthProvider>
-    <AppContent />
+    <Suspense fallback={<div>Loading...</div>}>
+      <AppContent />
+    </Suspense>
   </AuthProvider>
 );
 

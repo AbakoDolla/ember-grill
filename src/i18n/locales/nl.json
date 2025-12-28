@@ -14,36 +14,36 @@
     "spiceLevel": "Pittig Niveau"
   },
   "hero": {
-    "badge": "Premium Afrikaanse Grill",
-    "title1": "Vurig",
-    "title2": "Gegrilde",
-    "title3": "Smaken Warm Bezorgd",
-    "description": "Ervaar de authentieke smaak van Afrikaanse gegrilde vis, premium rundvlees en traditionele braise. Bezorgd in heel België.",
-    "howItWorks": "Hoe Het Werkt",
+    "badge": "Authentieke Kameroense Braise",
+    "title1": "Lokale",
+    "title2": "Vis",
+    "title3": "Perfect Gebraiseerd",
+    "description": "Ervaar de authentieke smaak van lokale Kameroense vis gebraiseerd volgens voorouderlijke tradities. Bezorgd in heel België na bestelling een week van tevoren.",
+    "howItWorks": "Hoe Bestellen",
     "stats": {
       "customers": "Tevreden Klanten",
       "rating": "Beoordeling",
-      "delivery": "Gem. Bezorging"
+      "delivery": "Bereiding"
     }
   },
   "features": {
     "title": "Waarom Kiezen voor",
-    "subtitle": "Wij brengen de hitte van authentiek Afrikaans grillen naar uw huis",
+    "subtitle": "Wij brengen de authenticiteit van Kameroense braising naar uw huis",
     "charcoal": {
-      "title": "Houtskool Gegrild",
-      "description": "Authentiek koken op open vuur voor rokerige perfectie"
+      "title": "Traditionele Braising",
+      "description": "Langzame en smakelijke bereiding volgens voorouderlijke Kameroense methoden"
     },
     "delivery": {
-      "title": "Snelle Bezorging",
-      "description": "30-45 minuten warm aan uw deur"
+      "title": "Vooraf Bestellen",
+      "description": "Reserveer uw gebraiseerde vis een week van tevoren voor gegarandeerde versheid"
     },
     "belgium": {
-      "title": "Heel België",
-      "description": "Bezorging in alle grote Belgische steden"
+      "title": "Bezorging in België",
+      "description": "Bezorgservice in heel België voor uw gebraiseerde Kameroense vis"
     },
     "quality": {
-      "title": "Premium Kwaliteit",
-      "description": "Alleen de beste stukken en versste vangsten"
+      "title": "Kameroense Vis",
+      "description": "Strenge selectie van de versste lokale vis uit Kameroen"
     }
   },
   "favorites": {
@@ -55,14 +55,14 @@
   "cta": {
     "title": "Klaar om het",
     "titleHighlight": "Vuur",
-    "description": "Bestel nu en ervaar de meest authentieke Afrikaanse grill in België. Eerste bestelling? Krijg 15% korting met code FIRSTFLAME."
+    "description": "Bestel nu en ervaar de meest authentieke lokale Kameroense vis gebraiseerd. Vooraf bestellen van een week vereist voor optimale versheid."
   },
   "categories": {
-    "all": "Alle Gerechten",
-    "fish": "Gegrilde Vis",
-    "beef": "Premium Rundvlees",
-    "braise": "Afrikaanse Braise",
-    "sides": "Bijgerechten"
+    "all": "Alle Vis",
+    "fish": "Gebraiseerde Vis",
+    "beef": "Gebraiseerde Vis",
+    "braise": "Kameroense Braise",
+    "sides": "Gebraiseerde Vis"
   },
   "cart": {
     "title": "Uw Winkelwagen",
@@ -79,7 +79,7 @@
     "continueShopping": "Verder Winkelen"
   },
   "footer": {
-    "description": "Premium gegrilde vis, rundvlees en Afrikaanse braise warm bezorgd aan uw deur in heel België.",
+    "description": "Lokale Kameroense vis gebraiseerd volgens voorouderlijke tradities, vers bezorgd aan uw deur in heel België na bestelling een week van tevoren.",
     "quickLinks": "Snelle Links",
     "support": "Ondersteuning",
     "contactUs": "Contact",
@@ -95,20 +95,20 @@
   },
   "about": {
     "title": "Het Verhaal Achter",
-    "brand": "BraiseRoyale",
+    "brand": "BrazaFish carole",
     "mission": "Onze Missie",
     "values": "Onze Waarden",
     "authenticFire": {
-      "title": "Authentiek Vuur",
-      "description": "Elk gerecht wordt gegrild op echt houtskool, waardoor de essentie van traditionele Afrikaanse keuken wordt vastgelegd."
+      "title": "Authentieke Braise",
+      "description": "Elke vis wordt gebraiseerd volgens traditionele Kameroense methoden, waardoor de essentie van voorouderlijke keuken wordt vastgelegd."
     },
     "communityFirst": {
-      "title": "Gemeenschap Eerst",
-      "description": "We ondersteunen lokale leveranciers en brengen de Afrikaanse diaspora samen door voedsel."
+      "title": "Kameroense Gemeenschap",
+      "description": "We ondersteunen lokale vissers en brengen de Kameroense diaspora samen door onze gebraiseerde vis."
     },
     "premiumQuality": {
       "title": "Premium Kwaliteit",
-      "description": "Alleen de beste ingrediënten komen op uw bord. Geen compromissen, ooit."
+      "description": "Alleen de beste lokale vis uit Kameroen komt op uw bord. Geen compromissen, ooit."
     },
     "madeWithLove": {
       "title": "Gemaakt met Liefde",
@@ -116,12 +116,22 @@
     },
     "team": "Ons Team",
     "founder": "Oprichter & Hoofdchef",
-    "grillMaster": "Grillmeester",
+    "grillMaster": "Braise Meester",
     "operations": "Operaties"
+  },
+  "story": {
+    "subtitle": "Geboren uit een passie voor authentieke smaken van lokale Kameroense vis en een droom om ze te delen. Dit is onze reis.",
+    "title": "Van Kameroense Rivieren naar Wereldtafels",
+    "p1": "BraiseRoyale begon in 2019 toen onze oprichter, Amara Diallo, de rokerige, vuur-gezoende smaken van de keuken van zijn grootmoeder in Kameroen miste. Wat begon als weekendbraises voor vrienden werd snel de meest gezochte Kameroense braise.",
+    "p2": "Vandaag bedienen we duizenden klanten, en brengen we de authentieke smaak van lokale Kameroense vis gebraiseerd aan uw deur. Elke vis wordt met de hand geselecteerd, elke braise wordt langzaam gekookt met liefde.",
+    "p3": "Onze missie is eenvoudig: maak wereldklasse Kameroense keuken toegankelijk voor iedereen, vers en heerlijk geleverd, zonder concessies te doen aan traditie of smaak."
   },
   "menu": {
     "title": "Ons Menu",
-    "description": "Ontdek onze selectie van vuur-gegrilde delicatessen, gemaakt met passie en authentieke Afrikaanse smaken"
+    "description": "Ontdek onze selectie van lokale Kameroense vis gebraiseerd volgens voorouderlijke tradities, gemaakt met passie en authentieke smaken",
+    "filters": "Filters",
+    "noDishes": "Geen gerechten gevonden die overeenkomen met uw zoekopdracht.",
+    "clearFilters": "Filters wissen"
   },
   "cart": {
     "addedToCart": "toegevoegd aan winkelwagen",
@@ -144,7 +154,7 @@
     "send": "Versturen"
   },
   "footer": {
-    "description": "Premium Afrikaanse Grill die authentieke smaken levert in heel België",
+    "description": "Gespecialiseerd in lokale Kameroense vis gebraiseerd, vers bezorgd in België na bestelling een week van tevoren",
     "quickLinks": "Snelle Links",
     "locations": "Locaties",
     "catering": "Catering",
@@ -175,5 +185,42 @@
     "createAccount": "Maak uw account aan",
     "signingIn": "Aanmelden...",
     "creatingAccount": "Account aanmaken..."
+  },
+  "favorites": {
+    "title": "Uw Favoriete Gerechten",
+    "subtitle": "Uw favoriete gerechten om met één klik te bestellen",
+    "empty": "Geen favoriete gerechten",
+    "emptyDescription": "Voeg gerechten toe aan uw favorieten vanuit het menu",
+    "remove": "Verwijderen uit favorieten"
+  },
+  "orders": {
+    "title": "Uw Bestellingen",
+    "empty": "Geen bestellingen",
+    "emptyDescription": "U heeft nog geen bestellingen geplaatst",
+    "orderNow": "Nu bestellen",
+    "orderAgain": "Opnieuw bestellen",
+    "status": {
+      "pending": "In afwachting",
+      "preparing": "Aan het bereiden",
+      "ready": "Klaar",
+      "delivered": "Geleverd"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welkom",
+    "quickOrder": "Nu bestellen",
+    "favoritesTitle": "Uw Favoriete Gerechten",
+    "favoritesSubtitle": "Uw favoriete gerechten om sneller te bestellen",
+    "recentOrders": "Recente Bestellingen",
+    "orderAgain": "Opnieuw bestellen",
+    "settings": {
+      "title": "Instellingen",
+      "account": "Account Instellingen",
+      "notifications": "Meldingen",
+      "privacy": "Privacy",
+      "language": "Taal & Regio",
+      "security": "Beveiliging",
+      "dangerZone": "Gevarenzone"
+    }
   }
 }

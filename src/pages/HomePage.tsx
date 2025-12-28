@@ -242,14 +242,14 @@ export default function HomePage() {
             <div className="relative z-10">
               <Flame className="w-12 h-12 text-primary mx-auto mb-6" />
               <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-                Ready to Taste the <span className="text-fire">Fire</span>?
+                {t('cta.title')} <span className="text-fire">{t('cta.titleHighlight')}</span>?
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-                Order now and experience the most authentic African grill in Belgium. First order? Get 15% off with code FIRSTFLAME.
+                {t('cta.description')}
               </p>
               <Link to="/auth">
                 <Button variant="hero" size="xl">
-                  Order Now
+                  {t('common.orderNow')}
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
