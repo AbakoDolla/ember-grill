@@ -14,36 +14,36 @@
     "spiceLevel": "Niveau Piment"
   },
   "hero": {
-    "badge": "Grillade Africaine Premium",
-    "title1": "Saveurs",
-    "title2": "Enflammées",
-    "title3": "Livrées Chaudes",
-    "description": "Découvrez le goût authentique du poisson grillé africain, du bœuf premium et de la braise traditionnelle. Livré partout en Belgique.",
-    "howItWorks": "Comment Ça Marche",
+    "badge": "Braise Camerounaise Authentique",
+    "title1": "Poissons",
+    "title2": "Locaux",
+    "title3": "Braisés à la Perfection",
+    "description": "Découvrez le goût authentique des poissons locaux du Cameroun braisés selon les traditions ancestrales. Livré partout en Belgique après commande préalable d'une semaine.",
+    "howItWorks": "Comment Commander",
     "stats": {
       "customers": "Clients Satisfaits",
       "rating": "Note",
-      "delivery": "Livraison Moy."
+      "delivery": "Préparation"
     }
   },
   "features": {
     "title": "Pourquoi Choisir",
-    "subtitle": "Nous apportons la chaleur de la grillade africaine authentique chez vous",
+    "subtitle": "Nous apportons l'authenticité de la braise camerounaise directement chez vous",
     "charcoal": {
-      "title": "Grillé au Charbon",
-      "description": "Cuisson authentique à la flamme pour une perfection fumée"
+      "title": "Braisé Traditionnel",
+      "description": "Cuisson lente et savoureuse selon les méthodes ancestrales camerounaises"
     },
     "delivery": {
-      "title": "Livraison Rapide",
-      "description": "30-45 minutes, chaud à votre porte"
+      "title": "Commande à l'Avance",
+      "description": "Réservez votre poisson braisé une semaine à l'avance pour une fraîcheur garantie"
     },
     "belgium": {
-      "title": "Toute la Belgique",
-      "description": "Livraison dans les grandes villes belges"
+      "title": "Livraison en Belgique",
+      "description": "Service de livraison partout en Belgique pour vos poissons braisés du Cameroun"
     },
     "quality": {
-      "title": "Qualité Premium",
-      "description": "Uniquement les meilleures coupes et les prises les plus fraîches"
+      "title": "Poissons du Cameroun",
+      "description": "Sélection rigoureuse des meilleurs poissons locaux frais du Cameroun"
     }
   },
   "favorites": {
@@ -53,16 +53,16 @@
     "viewAll": "Voir le Menu Complet"
   },
   "cta": {
-    "title": "Prêt à Goûter le",
-    "titleHighlight": "Feu",
-    "description": "Commandez maintenant et découvrez la grillade africaine la plus authentique de Belgique. Première commande? Obtenez 15% de réduction avec le code FIRSTFLAME."
+    "title": "Prêt à Goûter la",
+    "titleHighlight": "Braise",
+    "description": "Commandez maintenant et découvrez les poissons locaux du Cameroun braisés les plus authentiques. Commande préalable d'une semaine requise pour une fraîcheur optimale."
   },
   "categories": {
-    "all": "Tous les Plats",
-    "fish": "Poisson Grillé",
-    "beef": "Bœuf Premium",
-    "braise": "Braise Africaine",
-    "sides": "Accompagnements"
+    "all": "Tous les Poissons",
+    "fish": "Poissons Braisés",
+    "beef": "Poissons Braisés",
+    "braise": "Braise Camerounaise",
+    "sides": "Poissons Braisés"
   },
   "cart": {
     "title": "Votre Panier",
@@ -79,7 +79,7 @@
     "continueShopping": "Continuer les Achats"
   },
   "footer": {
-    "description": "Poisson grillé premium, bœuf et braise africaine livrés chauds à votre porte dans toute la Belgique.",
+    "description": "Poissons locaux du Cameroun braisés selon les traditions ancestrales, livrés frais à votre porte dans toute la Belgique après commande préalable d'une semaine.",
     "quickLinks": "Liens Rapides",
     "support": "Support",
     "contactUs": "Nous Contacter",
@@ -91,24 +91,26 @@
     "openDaily": "Ouvert Tous les Jours",
     "madeWith": "Fait avec",
     "inBelgium": "en Belgique",
-    "rights": "Tous droits réservés."
+    "rights": "Tous droits réservés.",
+    "terms": "Conditions d'Utilisation",
+    "followUs": "Suivez-nous"
   },
   "about": {
     "title": "L'Histoire Derrière",
-    "brand": "BraiseRoyale",
+    "brand": "BrazaFish carole",
     "mission": "Notre Mission",
     "values": "Nos Valeurs",
     "authenticFire": {
-      "title": "Feu Authentique",
-      "description": "Chaque plat est grillé sur du vrai charbon de bois, capturant l'essence de la cuisine africaine traditionnelle."
+      "title": "Braise Authentique",
+      "description": "Chaque poisson est braisé selon les méthodes traditionnelles camerounaises, capturant l'essence de la cuisine ancestrale."
     },
     "communityFirst": {
-      "title": "Communauté d'Abord",
-      "description": "Nous soutenons les fournisseurs locaux et rassemblons la diaspora africaine à travers la nourriture."
+      "title": "Communauté Camerounaise",
+      "description": "Nous soutenons les pêcheurs locaux et rassemblons la diaspora camerounaise à travers nos poissons braisés."
     },
     "premiumQuality": {
       "title": "Qualité Premium",
-      "description": "Seuls les meilleurs ingrédients arrivent dans votre assiette. Aucun compromis, jamais."
+      "description": "Seuls les meilleurs poissons locaux du Cameroun arrivent dans votre assiette. Aucun compromis, jamais."
     },
     "madeWithLove": {
       "title": "Fait avec Amour",
@@ -116,12 +118,22 @@
     },
     "team": "Notre Équipe",
     "founder": "Fondateur & Chef Principal",
-    "grillMaster": "Maître Grill",
+    "grillMaster": "Maître Braisier",
     "operations": "Opérations"
+  },
+  "story": {
+    "subtitle": "Né d'une passion pour les saveurs authentiques des poissons locaux du Cameroun et d'un rêve de les partager. Voici notre voyage.",
+    "title": "Des Rivières du Cameroun aux Tables du Monde",
+    "p1": "BraiseRoyale a commencé en 2019 lorsque notre fondateur, Amara Diallo, a eu la nostalgie des saveurs fumées et embrasées de la cuisine de sa grand-mère au Cameroun. Ce qui a commencé comme des braises du week-end pour les amis est rapidement devenu la braise camerounaise la plus recherchée.",
+    "p2": "Aujourd'hui, nous servons des milliers de clients, apportant le goût authentique des poissons locaux du Cameroun braisés à votre porte. Chaque poisson est sélectionné à la main, chaque braise est mijotée lentement avec amour.",
+    "p3": "Notre mission est simple : rendre la cuisine camerounaise de classe mondiale accessible à tous, livrée fraîche et savoureuse, sans compromettre la tradition ou le goût."
   },
   "menu": {
     "title": "Notre Menu",
-    "description": "Découvrez notre sélection de délices grillés au feu, élaborés avec passion et saveurs africaines authentiques"
+    "description": "Découvrez notre sélection de poissons locaux du Cameroun braisés selon les traditions ancestrales, élaborés avec passion et saveurs authentiques",
+    "filters": "Filtres",
+    "noDishes": "Aucun plat trouvé correspondant à votre recherche.",
+    "clearFilters": "Effacer les filtres"
   },
   "cart": {
     "addedToCart": "ajouté au panier",
@@ -135,21 +147,6 @@
     "total": "Total",
     "checkout": "Commander",
     "continueShopping": "Continuer les Achats"
-  },
-  "footer": {
-    "description": "Grillade Africaine Premium livrant des saveurs authentiques partout en Belgique",
-    "quickLinks": "Liens Rapides",
-    "locations": "Emplacements",
-    "catering": "Traiteur",
-    "support": "Support",
-    "contactUs": "Nous Contacter",
-    "faq": "FAQ",
-    "privacy": "Politique de Confidentialité",
-    "terms": "Conditions d'Utilisation",
-    "followUs": "Suivez-nous",
-    "madeWith": "Fait avec",
-    "inBelgium": "en Belgique",
-    "rights": "Tous droits réservés."
   },
   "auth": {
     "signIn": "Se Connecter",
@@ -168,5 +165,42 @@
     "createAccount": "Créez votre compte",
     "signingIn": "Connexion en cours...",
     "creatingAccount": "Création du compte..."
+  },
+  "favorites": {
+    "title": "Vos Plats Préférés",
+    "subtitle": "Vos plats préférés pour commander en un clic",
+    "empty": "Aucun plat préféré",
+    "emptyDescription": "Ajoutez des plats à vos favoris depuis le menu",
+    "remove": "Retirer des favoris"
+  },
+  "orders": {
+    "title": "Vos Commandes",
+    "empty": "Aucune commande",
+    "emptyDescription": "Vous n'avez pas encore passé de commande",
+    "orderNow": "Commander maintenant",
+    "orderAgain": "Commander à nouveau",
+    "status": {
+      "pending": "En attente",
+      "preparing": "En préparation",
+      "ready": "Prêt",
+      "delivered": "Livré"
+    }
+  },
+  "dashboard": {
+    "welcome": "Bienvenue",
+    "quickOrder": "Commander maintenant",
+    "favoritesTitle": "Vos Plats Préférés",
+    "favoritesSubtitle": "Vos plats préférés pour commander plus rapidement",
+    "recentOrders": "Commandes Récentes",
+    "orderAgain": "Commander à nouveau",
+    "settings": {
+      "title": "Paramètres",
+      "account": "Paramètres du Compte",
+      "notifications": "Notifications",
+      "privacy": "Confidentialité",
+      "language": "Langue et Région",
+      "security": "Sécurité",
+      "dangerZone": "Zone de Danger"
+    }
   }
 }

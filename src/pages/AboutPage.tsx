@@ -52,7 +52,7 @@ export default function AboutPage() {
               <span className="text-fire">{t('about.brand')}</span>
             </h1>
             <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
-              Born from a passion for authentic African flavors and a dream to share them with Belgium. This is our journey.
+              {t('story.subtitle')}
             </p>
           </motion.div>
         </div>
@@ -79,16 +79,16 @@ export default function AboutPage() {
               className="space-y-6"
             >
               <h2 className="font-display text-3xl md:text-4xl font-bold">
-                From Dakar Streets to Brussels Tables
+                {t('story.title')}
               </h2>
               <p className="text-muted-foreground">
-                BraiseRoyale began in 2019 when our founder, Amara Diallo, missed the smoky, fire-kissed flavors of his grandmother's cooking in Senegal. What started as weekend barbecues for friends quickly became the most sought-after African grill in Brussels.
+                {t('story.p1')}
               </p>
               <p className="text-muted-foreground">
-                Today, we serve thousands of customers across Belgium, bringing the authentic taste of West and Central African grilling to your doorstep. Every piece of fish is hand-selected, every cut of beef is premium, and every braise is slow-cooked with love.
+                {t('story.p2')}
               </p>
               <p className="text-muted-foreground">
-                Our mission is simple: to make world-class African cuisine accessible to everyone, delivered fast and fresh, without compromising on tradition or taste.
+                {t('story.p3')}
               </p>
             </motion.div>
           </div>

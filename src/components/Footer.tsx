@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Flame, Instagram, Facebook, Twitter, Phone, MessageCircle } from 'lucide-react';
+import logo from '@/assets/logo.jpg';
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -42,13 +43,28 @@ export default function Footer() {
             viewport={{ once: true }}
             className="space-y-4"
           >
-            <Link to="/home" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-fire">
-                <Flame className="w-6 h-6 text-primary-foreground" />
+            <Link to="/home" className="flex items-center gap-4 group">
+              <div className="relative">
+                <img 
+                  src={logo} 
+                  alt="BrazaFish Logo" 
+                  className="w-16 h-16 object-cover rounded-full drop-shadow-md transition-transform duration-300 group-hover:scale-105 border-2 border-white/20"
+                />
+                <div className="absolute inset-0 bg-gradient-to-br from-orange-400/10 via-red-500/5 to-yellow-400/10 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
-              <span className="font-display font-bold text-xl">
-                BRAZZA<span className="text-fire">FLAME</span>
-              </span>
+              <div className="flex flex-col">
+                <div className="flex items-baseline gap-2">
+                  <span className="font-display font-bold text-xl bg-gradient-to-r from-orange-600 via-red-600 to-yellow-600 bg-clip-text text-transparent leading-tight">
+                    BrazaFish
+                  </span>
+                  <span className="font-display font-semibold text-base text-blue-600 leading-tight">
+                    Carole
+                  </span>
+                </div>
+                <span className="text-xs text-muted-foreground font-medium">
+                  Poisson Braisé Camerounais
+                </span>
+              </div>
             </Link>
             <p className="text-muted-foreground text-sm">
               {t('footer.description')}
@@ -78,8 +94,8 @@ export default function Footer() {
               {[
                 { label: t('common.menu'), href: '/menu' },
                 { label: t('common.about'), href: '/about' },
-                { label: t('footer.locations'), href: '#' },
-                { label: t('footer.catering'), href: '#' },
+                { label: t('common.contact'), href: '/contact' },
+                { label: t('footer.catering'), href: '/contact' },
               ].map((item) => (
                 <li key={item.label}>
                   <Link to={item.href} className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">
@@ -101,9 +117,9 @@ export default function Footer() {
             <ul className="space-y-2">
               {[
                 { label: t('footer.contactUs'), href: '/contact' },
-                { label: t('footer.faq'), href: '#' },
-                { label: t('footer.trackOrder'), href: '#' },
-                { label: t('footer.privacy'), href: '#' },
+                { label: t('footer.faq'), href: '/contact' },
+                { label: t('footer.trackOrder'), href: '/orders' },
+                { label: t('footer.privacy'), href: '/contact' },
               ].map((item) => (
                 <li key={item.label}>
                   <Link to={item.href} className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">

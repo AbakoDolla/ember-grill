@@ -57,7 +57,7 @@ export default function MenuPage() {
             </div>
             <Button variant="glass" size="lg" className="gap-2">
               <SlidersHorizontal className="w-5 h-5" />
-              Filters
+              {t('menu.filters')}
             </Button>
           </motion.div>
 
@@ -99,7 +99,7 @@ export default function MenuPage() {
               animate={{ opacity: 1 }}
               className="text-center py-16"
             >
-              <p className="text-muted-foreground text-lg">No dishes found matching your search.</p>
+              <p className="text-muted-foreground text-lg">{t('menu.noDishes')}</p>
               <Button
                 variant="ghost"
                 onClick={() => {
@@ -108,7 +108,7 @@ export default function MenuPage() {
                 }}
                 className="mt-4"
               >
-                Clear filters
+                {t('menu.clearFilters')}
               </Button>
             </motion.div>
           )}

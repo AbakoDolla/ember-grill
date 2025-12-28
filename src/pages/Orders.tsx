@@ -17,6 +17,7 @@ import {
   RefreshCw
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
+import { useTranslation } from 'react-i18next'
 import supabase from '@/lib/supabase'
 
 interface Order {
@@ -38,6 +39,7 @@ interface Order {
 
 export default function OrdersPage() {
   const { user } = useAuth()
+  const { t } = useTranslation()
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('all')
@@ -174,12 +176,12 @@ export default function OrdersPage() {
                   <h3 className="text-lg font-medium mb-2">Aucune commande trouvée</h3>
                   <p className="text-muted-foreground mb-6">
                     {activeTab === 'all'
-                      ? "Vous n'avez pas encore passé de commande"
+                      ? t('orders.emptyDescription')
                       : `Aucune commande ${getStatusText(activeTab).toLowerCase()}`
                     }
                   </p>
                   <Button asChild>
-                    <a href="/menu">Commander maintenant</a>
+                    <a href="/menu">{t('orders.orderNow')}</a>
                   </Button>
                 </motion.div>
               ) : (
@@ -296,7 +298,7 @@ export default function OrdersPage() {
                               Noter la commande
                             </Button>
                             <Button variant="outline" size="sm">
-                              Commander à nouveau
+                              {t('orders.orderAgain')}
                             </Button>
                             {order.status === 'delivered' && (
                               <Button variant="outline" size="sm">

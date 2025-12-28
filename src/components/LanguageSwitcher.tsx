@@ -20,10 +20,17 @@ export default function LanguageSwitcher() {
     setIsOpen(false);
   };
 
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className="relative">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleMenu();
+        }}
         className="flex items-center gap-2 px-3 py-2 rounded-xl bg-muted/50 hover:bg-muted transition-colors text-sm font-medium"
       >
         <Globe className="w-4 h-4 text-muted-foreground" />
@@ -48,7 +55,10 @@ export default function LanguageSwitcher() {
               {languages.map((lang) => (
                 <button
                   key={lang.code}
-                  onClick={() => handleLanguageChange(lang.code)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLanguageChange(lang.code);
+                  }}
                   className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium transition-colors ${
                     i18n.language === lang.code
                       ? 'bg-primary/10 text-primary'
