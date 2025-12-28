@@ -91,7 +91,9 @@
     "openDaily": "Open Daily",
     "madeWith": "Made with",
     "inBelgium": "in Belgium",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "terms": "Terms of Service",
+    "followUs": "Follow Us"
   },
   "about": {
     "title": "The Story Behind",
@@ -145,21 +147,6 @@
     "total": "Total",
     "checkout": "Checkout",
     "continueShopping": "Continue Shopping"
-  },
-  "footer": {
-    "description": "Specialized in local Cameroonian fish braised, delivered fresh in Belgium after one week advance order",
-    "quickLinks": "Quick Links",
-    "locations": "Locations",
-    "catering": "Catering",
-    "support": "Support",
-    "contactUs": "Contact Us",
-    "faq": "FAQ",
-    "privacy": "Privacy Policy",
-    "terms": "Terms of Service",
-    "followUs": "Follow Us",
-    "madeWith": "Made with",
-    "inBelgium": "in Belgium",
-    "rights": "All rights reserved."
   },
   "auth": {
     "signIn": "Sign In",

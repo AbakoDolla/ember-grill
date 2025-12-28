@@ -91,7 +91,9 @@
     "openDaily": "Dagelijks Open",
     "madeWith": "Gemaakt met",
     "inBelgium": "in België",
-    "rights": "Alle rechten voorbehouden."
+    "rights": "Alle rechten voorbehouden.",
+    "terms": "Gebruiksvoorwaarden",
+    "followUs": "Volg Ons"
   },
   "about": {
     "title": "Het Verhaal Achter",
@@ -152,21 +154,6 @@
     "email": "E-mail",
     "message": "Bericht",
     "send": "Versturen"
-  },
-  "footer": {
-    "description": "Gespecialiseerd in lokale Kameroense vis gebraiseerd, vers bezorgd in België na bestelling een week van tevoren",
-    "quickLinks": "Snelle Links",
-    "locations": "Locaties",
-    "catering": "Catering",
-    "support": "Ondersteuning",
-    "contactUs": "Neem Contact Op",
-    "faq": "FAQ",
-    "privacy": "Privacybeleid",
-    "terms": "Gebruiksvoorwaarden",
-    "followUs": "Volg Ons",
-    "madeWith": "Gemaakt met",
-    "inBelgium": "in België",
-    "rights": "Alle rechten voorbehouden."
   },
   "auth": {
     "signIn": "Aanmelden",

@@ -91,7 +91,9 @@
     "openDaily": "Ouvert Tous les Jours",
     "madeWith": "Fait avec",
     "inBelgium": "en Belgique",
-    "rights": "Tous droits réservés."
+    "rights": "Tous droits réservés.",
+    "terms": "Conditions d'Utilisation",
+    "followUs": "Suivez-nous"
   },
   "about": {
     "title": "L'Histoire Derrière",
@@ -145,21 +147,6 @@
     "total": "Total",
     "checkout": "Commander",
     "continueShopping": "Continuer les Achats"
-  },
-  "footer": {
-    "description": "Spécialisés dans les poissons locaux du Cameroun braisés, livrés frais en Belgique après commande d'une semaine à l'avance",
-    "quickLinks": "Liens Rapides",
-    "locations": "Emplacements",
-    "catering": "Traiteur",
-    "support": "Support",
-    "contactUs": "Nous Contacter",
-    "faq": "FAQ",
-    "privacy": "Politique de Confidentialité",
-    "terms": "Conditions d'Utilisation",
-    "followUs": "Suivez-nous",
-    "madeWith": "Fait avec",
-    "inBelgium": "en Belgique",
-    "rights": "Tous droits réservés."
   },
   "auth": {
     "signIn": "Se Connecter",
