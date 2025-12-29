@@ -29,6 +29,9 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error?: string }>
   signInWithGoogle: () => Promise<{ error?: string }>
   signOut: () => Promise<void>
+  updateUserProfile: (data: any) => Promise<void>
+  updatePassword: (currentPassword: string, newPassword: string) => Promise<void>
+  deleteAccount: () => Promise<void>
 }
 
 // ------------------------
@@ -182,6 +185,101 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 
   // ------------------------
+  // Fonction de mise à jour du profil
+  // ------------------------
+  const updateUserProfile = async (data: any) => {
+    if (!user) throw new Error('User not authenticated')
+    
+    try {
+      // Update user metadata
+      const { error } = await supabase.auth.updateUser({
+        data: {
+          ...data,
+          updated_at: new Date().toISOString()
+        }
+      })
+      
+      if (error) throw error
+      
+      // Update profile in database if needed
+      if (data.phone || data.address) {
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .update({
+            phone: data.phone || null,
+            address: data.address || null,
+            updated_at: new Date().toISOString()
+          } as any)
+          .eq('id', user.id)
+        
+        if (profileError) console.error('Profile update error:', profileError)
+      }
+    } catch (error) {
+      console.error('Update profile error:', error)
+      throw error
+    }
+  }
+
+  // ------------------------
+  // Fonction de mise à jour du mot de passe
+  // ------------------------
+  const updatePassword = async (currentPassword: string, newPassword: string) => {
+    if (!user) throw new Error('User not authenticated')
+    
+    try {
+      // First verify current password
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: user.email!,
+        password: currentPassword
+      })
+      
+      if (signInError) throw new Error('Mot de passe actuel incorrect')
+      
+      // Update password
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword
+      })
+      
+      if (error) throw error
+    } catch (error) {
+      console.error('Update password error:', error)
+      throw error
+    }
+  }
+
+  // ------------------------
+  // Fonction de suppression du compte
+  // ------------------------
+  const deleteAccount = async () => {
+    if (!user) throw new Error('User not authenticated')
+    
+    try {
+      // Delete profile data
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .delete()
+        .eq('id', user.id)
+      
+      if (profileError) console.error('Profile deletion error:', profileError)
+      
+      // Delete user account
+      const { error } = await supabase.auth.admin.deleteUser(user.id)
+      
+      if (error) {
+        // Fallback to user deletion if admin deletion fails
+        const { error: userError } = await supabase.rpc('delete_user_account')
+        if (userError) throw userError
+      }
+      
+      // Sign out after deletion
+      await signOut()
+    } catch (error) {
+      console.error('Delete account error:', error)
+      throw error
+    }
+  }
+
+  // ------------------------
   // Valeurs du contexte
   // ------------------------
   const value: AuthContextType = {
@@ -193,7 +291,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     signUp,
     signIn,
     signInWithGoogle,
-    signOut
+    signOut,
+    updateUserProfile,
+    updatePassword,
+    deleteAccount
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

@@ -43,7 +43,7 @@ export default function Footer() {
             viewport={{ once: true }}
             className="space-y-4"
           >
-            <Link to="/home" className="flex items-center gap-4 group">
+            <Link to="/home" className="flex items-center gap-4 group interactive-scale">
               <div className="relative">
                 <img 
                   src={logo} 
@@ -70,15 +70,30 @@ export default function Footer() {
               {t('footer.description')}
             </p>
             <div className="flex gap-3">
-              {[Instagram, Facebook, Twitter].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                >
-                  <Icon className="w-5 h-5" />
-                </a>
-              ))}
+              <a
+                href="https://instagram.com/brazzaflame"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://facebook.com/brazzaflame"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a
+                href="https://twitter.com/brazzaflame"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+              >
+                <Twitter className="w-5 h-5" />
+              </a>
             </div>
           </motion.div>
 
@@ -95,10 +110,10 @@ export default function Footer() {
                 { label: t('common.menu'), href: '/menu' },
                 { label: t('common.about'), href: '/about' },
                 { label: t('common.contact'), href: '/contact' },
-                { label: t('footer.catering'), href: '/contact' },
+                { label: 'FAQ', href: '/faq' },
               ].map((item) => (
                 <li key={item.label}>
-                  <Link to={item.href} className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">
+                  <Link to={item.href} className="text-muted-foreground hover:text-primary transition-all duration-300 text-sm hover:translate-x-1 inline-block">
                     {item.label}
                   </Link>
                 </li>
@@ -117,12 +132,12 @@ export default function Footer() {
             <ul className="space-y-2">
               {[
                 { label: t('footer.contactUs'), href: '/contact' },
-                { label: t('footer.faq'), href: '/contact' },
+                { label: t('footer.faq'), href: '/faq' },
                 { label: t('footer.trackOrder'), href: '/orders' },
-                { label: t('footer.privacy'), href: '/contact' },
+                { label: 'Privacy Policy', href: '/privacy' },
               ].map((item) => (
                 <li key={item.label}>
-                  <Link to={item.href} className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm">
+                  <Link to={item.href} className="text-muted-foreground hover:text-primary transition-all duration-300 text-sm hover:translate-x-1 inline-block">
                     {item.label}
                   </Link>
                 </li>

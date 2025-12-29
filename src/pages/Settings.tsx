@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
@@ -9,25 +9,138 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/contexts/AuthContext';
-import { User, Bell, Shield, Palette, Globe } from 'lucide-react';
+import { toast } from 'sonner';
+import { User, Bell, Shield, Palette, Globe, Eye, EyeOff, Download, Trash2, Key, Smartphone, Mail } from 'lucide-react';
 
 export default function Settings() {
-  const { t } = useTranslation();
-  const { user } = useAuth();
-  const [notifications, setNotifications] = useState({
-    email: true,
-    push: false,
-    sms: false,
+  const { t, i18n } = useTranslation();
+  const { user, updateUserProfile, updatePassword, deleteAccount } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  
+  const [profileData, setProfileData] = useState({
+    firstName: user?.user_metadata?.name?.split(' ')[0] || '',
+    lastName: user?.user_metadata?.name?.split(' ').slice(1).join(' ') || '',
+    email: user?.email || '',
+    phone: user?.user_metadata?.phone || '',
+    address: user?.user_metadata?.address || '',
   });
+  
+  const [notifications, setNotifications] = useState({
+    email: user?.user_metadata?.notifications?.email ?? true,
+    push: user?.user_metadata?.notifications?.push ?? false,
+    sms: user?.user_metadata?.notifications?.sms ?? false,
+    orderUpdates: user?.user_metadata?.notifications?.orderUpdates ?? true,
+    promotions: user?.user_metadata?.notifications?.promotions ?? false,
+  });
+  
   const [preferences, setPreferences] = useState({
-    language: 'fr',
-    theme: 'dark',
-    currency: 'EUR',
+    language: user?.user_metadata?.language || 'fr',
+    theme: user?.user_metadata?.theme || 'dark',
+    currency: user?.user_metadata?.currency || 'EUR',
+    autoSave: user?.user_metadata?.autoSave ?? true,
+  });
+  
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
   });
 
-  const handleSave = () => {
-    // TODO: Implement save functionality
-    console.log('Settings saved');
+  const handleSave = async () => {
+    setIsLoading(true);
+    try {
+      // Update profile
+      await updateUserProfile({
+        name: `${profileData.firstName} ${profileData.lastName}`.trim(),
+        phone: profileData.phone,
+        address: profileData.address,
+        notifications,
+        preferences,
+      });
+      
+      // Update language if changed
+      if (preferences.language !== i18n.language) {
+        i18n.changeLanguage(preferences.language);
+      }
+      
+      toast.success('Paramètres enregistrés avec succès !');
+    } catch (error) {
+      toast.error('Erreur lors de l\'enregistrement des paramètres');
+      console.error('Settings save error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  const handlePasswordChange = async () => {
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      toast.error('Les mots de passe ne correspondent pas');
+      return;
+    }
+    
+    if (passwordData.newPassword.length < 6) {
+      toast.error('Le mot de passe doit contenir au moins 6 caractères');
+      return;
+    }
+    
+    setIsLoading(true);
+    try {
+      await updatePassword(passwordData.currentPassword, passwordData.newPassword);
+      toast.success('Mot de passe mis à jour avec succès !');
+      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+      setShowPasswordForm(false);
+    } catch (error) {
+      toast.error('Erreur lors de la mise à jour du mot de passe');
+      console.error('Password change error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  const handleDeleteAccount = async () => {
+    if (!showDeleteConfirm) {
+      setShowDeleteConfirm(true);
+      return;
+    }
+    
+    setIsLoading(true);
+    try {
+      await deleteAccount();
+      toast.success('Compte supprimé avec succès');
+      // Will be redirected to login page by AuthContext
+    } catch (error) {
+      toast.error('Erreur lors de la suppression du compte');
+      console.error('Delete account error:', error);
+      setShowDeleteConfirm(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  const handleDownloadData = () => {
+    const userData = {
+      profile: profileData,
+      preferences,
+      notifications,
+      createdAt: user?.created_at,
+      lastSignIn: user?.last_sign_in_at,
+    };
+    
+    const dataStr = JSON.stringify(userData, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const exportFileDefaultName = `user_data_${user?.id}_${new Date().toISOString().split('T')[0]}.json`;
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+    
+    toast.success('Données téléchargées avec succès');
   };
 
   return (
@@ -65,16 +178,20 @@ export default function Settings() {
                     <Label htmlFor="firstName">{t('settings.profile.firstName')}</Label>
                     <Input
                       id="firstName"
-                      defaultValue={user?.user_metadata?.name?.split(' ')[0] || ''}
+                      value={profileData.firstName}
+                      onChange={(e) => setProfileData({...profileData, firstName: e.target.value})}
                       placeholder={t('settings.profile.firstName')}
+                      className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="lastName">{t('settings.profile.lastName')}</Label>
                     <Input
                       id="lastName"
-                      defaultValue={user?.user_metadata?.name?.split(' ').slice(1).join(' ') || ''}
+                      value={profileData.lastName}
+                      onChange={(e) => setProfileData({...profileData, lastName: e.target.value})}
                       placeholder={t('settings.profile.lastName')}
+                      className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
                 </div>
@@ -83,8 +200,10 @@ export default function Settings() {
                   <Input
                     id="email"
                     type="email"
-                    defaultValue={user?.email || ''}
+                    value={profileData.email}
+                    onChange={(e) => setProfileData({...profileData, email: e.target.value})}
                     placeholder={t('settings.profile.email')}
+                    className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                   />
                 </div>
                 <div className="space-y-2">
@@ -92,7 +211,20 @@ export default function Settings() {
                   <Input
                     id="phone"
                     type="tel"
+                    value={profileData.phone}
+                    onChange={(e) => setProfileData({...profileData, phone: e.target.value})}
                     placeholder={t('settings.profile.phone')}
+                    className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="address">Adresse de livraison</Label>
+                  <Input
+                    id="address"
+                    value={profileData.address}
+                    onChange={(e) => setProfileData({...profileData, address: e.target.value})}
+                    placeholder="Votre adresse complète"
+                    className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                   />
                 </div>
               </CardContent>
@@ -114,7 +246,7 @@ export default function Settings() {
                   <div className="space-y-2">
                     <Label>{t('settings.preferences.language')}</Label>
                     <Select value={preferences.language} onValueChange={(value) => setPreferences({...preferences, language: value})}>
-                      <SelectTrigger>
+                      <SelectTrigger className="transition-all duration-200 focus:ring-2 focus:ring-primary/20">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -127,7 +259,7 @@ export default function Settings() {
                   <div className="space-y-2">
                     <Label>{t('settings.preferences.theme')}</Label>
                     <Select value={preferences.theme} onValueChange={(value) => setPreferences({...preferences, theme: value})}>
-                      <SelectTrigger>
+                      <SelectTrigger className="transition-all duration-200 focus:ring-2 focus:ring-primary/20">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -138,17 +270,31 @@ export default function Settings() {
                     </Select>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <Label>{t('settings.preferences.currency')}</Label>
-                  <Select value={preferences.currency} onValueChange={(value) => setPreferences({...preferences, currency: value})}>
-                    <SelectTrigger className="w-full md:w-48">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="EUR">EUR (€)</SelectItem>
-                      <SelectItem value="USD">USD ($)</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>{t('settings.preferences.currency')}</Label>
+                    <Select value={preferences.currency} onValueChange={(value) => setPreferences({...preferences, currency: value})}>
+                      <SelectTrigger className="w-full transition-all duration-200 focus:ring-2 focus:ring-primary/20">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="EUR">EUR (€)</SelectItem>
+                        <SelectItem value="USD">USD ($)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Sauvegarde automatique</Label>
+                    <Select value={preferences.autoSave ? 'enabled' : 'disabled'} onValueChange={(value) => setPreferences({...preferences, autoSave: value === 'enabled'})}>
+                      <SelectTrigger className="w-full transition-all duration-200 focus:ring-2 focus:ring-primary/20">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="enabled">Activée</SelectItem>
+                        <SelectItem value="disabled">Désactivée</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -167,7 +313,10 @@ export default function Settings() {
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label>{t('settings.notifications.email')}</Label>
+                    <div className="flex items-center gap-2">
+                      <Mail className="w-4 h-4" />
+                      <Label>{t('settings.notifications.email')}</Label>
+                    </div>
                     <p className="text-sm text-muted-foreground">
                       {t('settings.notifications.emailDescription')}
                     </p>
@@ -180,7 +329,10 @@ export default function Settings() {
                 <Separator />
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label>{t('settings.notifications.push')}</Label>
+                    <div className="flex items-center gap-2">
+                      <Smartphone className="w-4 h-4" />
+                      <Label>{t('settings.notifications.push')}</Label>
+                    </div>
                     <p className="text-sm text-muted-foreground">
                       {t('settings.notifications.pushDescription')}
                     </p>
@@ -193,14 +345,27 @@ export default function Settings() {
                 <Separator />
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label>{t('settings.notifications.sms')}</Label>
+                    <Label>Mises à jour de commande</Label>
                     <p className="text-sm text-muted-foreground">
-                      {t('settings.notifications.smsDescription')}
+                      Recevez des notifications sur le statut de vos commandes
                     </p>
                   </div>
                   <Switch
-                    checked={notifications.sms}
-                    onCheckedChange={(checked) => setNotifications({...notifications, sms: checked})}
+                    checked={notifications.orderUpdates}
+                    onCheckedChange={(checked) => setNotifications({...notifications, orderUpdates: checked})}
+                  />
+                </div>
+                <Separator />
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label>Promotions et offres</Label>
+                    <p className="text-sm text-muted-foreground">
+                      Recevez nos meilleures offres et promotions
+                    </p>
+                  </div>
+                  <Switch
+                    checked={notifications.promotions}
+                    onCheckedChange={(checked) => setNotifications({...notifications, promotions: checked})}
                   />
                 </div>
               </CardContent>
@@ -218,24 +383,156 @@ export default function Settings() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <Button variant="outline" className="w-full md:w-auto">
-                  {t('settings.privacy.changePassword')}
-                </Button>
+                {/* Password Change */}
+                <div className="space-y-4">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => setShowPasswordForm(!showPasswordForm)}
+                    className="w-full md:w-auto interactive-scale"
+                  >
+                    <Key className="w-4 h-4 mr-2" />
+                    {showPasswordForm ? 'Annuler' : t('settings.privacy.changePassword')}
+                  </Button>
+                  
+                  {showPasswordForm && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      className="space-y-4 p-4 bg-muted/50 rounded-lg"
+                    >
+                      <div className="space-y-2">
+                        <Label>Mot de passe actuel</Label>
+                        <div className="relative">
+                          <Input
+                            type={showCurrentPassword ? 'text' : 'password'}
+                            value={passwordData.currentPassword}
+                            onChange={(e) => setPasswordData({...passwordData, currentPassword: e.target.value})}
+                            placeholder="Entrez votre mot de passe actuel"
+                            className="pr-10"
+                          />
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                            onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                          >
+                            {showCurrentPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label>Nouveau mot de passe</Label>
+                        <div className="relative">
+                          <Input
+                            type={showNewPassword ? 'text' : 'password'}
+                            value={passwordData.newPassword}
+                            onChange={(e) => setPasswordData({...passwordData, newPassword: e.target.value})}
+                            placeholder="Entrez votre nouveau mot de passe"
+                            className="pr-10"
+                          />
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                            onClick={() => setShowNewPassword(!showNewPassword)}
+                          >
+                            {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label>Confirmer le mot de passe</Label>
+                        <Input
+                          type="password"
+                          value={passwordData.confirmPassword}
+                          onChange={(e) => setPasswordData({...passwordData, confirmPassword: e.target.value})}
+                          placeholder="Confirmez votre nouveau mot de passe"
+                        />
+                      </div>
+                      
+                      <Button 
+                        onClick={handlePasswordChange}
+                        disabled={isLoading}
+                        className="w-full"
+                      >
+                        {isLoading ? 'Mise à jour...' : 'Mettre à jour le mot de passe'}
+                      </Button>
+                    </motion.div>
+                  )}
+                </div>
+                
                 <Separator />
-                <Button variant="outline" className="w-full md:w-auto">
-                  {t('settings.privacy.downloadData')}
-                </Button>
+                
+                {/* Data Download */}
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <div className="flex items-center gap-2">
+                      <Download className="w-4 h-4" />
+                      <Label>{t('settings.privacy.downloadData')}</Label>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      Téléchargez toutes vos données personnelles
+                    </p>
+                  </div>
+                  <Button variant="outline" onClick={handleDownloadData} className="interactive-scale">
+                    <Download className="w-4 h-4 mr-2" />
+                    Télécharger
+                  </Button>
+                </div>
+                
                 <Separator />
-                <Button variant="destructive" className="w-full md:w-auto">
-                  {t('settings.privacy.deleteAccount')}
-                </Button>
+                
+                {/* Delete Account */}
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <div className="flex items-center gap-2">
+                      <Trash2 className="w-4 h-4 text-destructive" />
+                      <Label className="text-destructive">{t('settings.privacy.deleteAccount')}</Label>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      {showDeleteConfirm ? 'Cliquez à nouveau pour confirmer' : 'Cette action est irréversible'}
+                    </p>
+                  </div>
+                  <Button 
+                    variant={showDeleteConfirm ? 'destructive' : 'outline'} 
+                    onClick={handleDeleteAccount}
+                    disabled={isLoading}
+                    className={showDeleteConfirm ? '' : 'border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground'}
+                  >
+                    {showDeleteConfirm ? 'Confirmer la suppression' : t('settings.privacy.deleteAccount')}
+                  </Button>
+                </div>
               </CardContent>
             </Card>
 
             {/* Save Button */}
-            <div className="flex justify-end">
-              <Button onClick={handleSave} className="px-8">
-                {t('settings.save')}
+            <div className="flex justify-end gap-4">
+              <Button 
+                variant="outline" 
+                onClick={() => window.history.back()}
+                className="interactive-scale"
+              >
+                Annuler
+              </Button>
+              <Button 
+                onClick={handleSave} 
+                disabled={isLoading}
+                className="px-8 interactive-scale"
+              >
+                {isLoading ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                    Enregistrement...
+                  </>
+                ) : (
+                  <>
+                    {t('settings.save')}
+                  </>
+                )}
               </Button>
             </div>
           </div>

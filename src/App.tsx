@@ -5,7 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "@/contexts/CartContext";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { AdminProvider } from "@/contexts/AdminContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import AdminRoute from "@/components/AdminRoute";
 import WelcomeCelebration from "@/components/WelcomeCelebration";
 import { Suspense } from "react";
 
@@ -16,6 +18,10 @@ import MenuPage from "@/pages/MenuPage";
 import CartPage from "@/pages/CartPage";
 import AboutPage from "@/pages/AboutPage";
 import ContactPage from "@/pages/ContactPage";
+import FAQPage from "@/pages/FAQPage";
+import PrivacyPage from "@/pages/PrivacyPage";
+import AdminLogin from "@/pages/AdminLogin";
+import AdminDashboard from "@/pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import AuthScreen from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
@@ -58,6 +64,15 @@ const AppContent = () => {
               }}
             >
               <Routes>
+                {/* ADMIN ROUTES (NO NAVBAR) */}
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin/*" element={
+                  <AdminRoute>
+                    <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                    {/* Add more admin routes here */}
+                  </AdminRoute>
+                } />
+
                 {/* AUTH ROUTES (NO NAVBAR) */}
                 <Route path="/auth" element={<AuthScreen />} />
 
@@ -96,6 +111,8 @@ const AppContent = () => {
                   } />
                   <Route path="/about" element={<AboutPage />} />
                   <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/faq" element={<FAQPage />} />
+                  <Route path="/privacy" element={<PrivacyPage />} />
                 </Route>
 
                 <Route path="*" element={<NotFound />} />
@@ -109,11 +126,13 @@ const AppContent = () => {
 }
 
 const App = () => (
-  <AuthProvider>
-    <Suspense fallback={<div>Loading...</div>}>
-      <AppContent />
-    </Suspense>
-  </AuthProvider>
+  <AdminProvider>
+    <AuthProvider>
+      <Suspense fallback={<div>Loading...</div>}>
+        <AppContent />
+      </Suspense>
+    </AuthProvider>
+  </AdminProvider>
 );
 
 export default App;
