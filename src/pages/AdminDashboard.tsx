@@ -19,7 +19,8 @@ import {
   Plus,
   BarChart3,
   Clock,
-  AlertCircle
+  AlertCircle,
+  Shield
 } from 'lucide-react';
 import { toast } from 'sonner';
 

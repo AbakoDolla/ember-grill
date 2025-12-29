@@ -66,10 +66,9 @@ const AppContent = () => {
               <Routes>
                 {/* ADMIN ROUTES (NO NAVBAR) */}
                 <Route path="/admin/login" element={<AdminLogin />} />
-                <Route path="/admin/*" element={
+                <Route path="/admin/dashboard" element={
                   <AdminRoute>
-                    <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                    {/* Add more admin routes here */}
+                    <AdminDashboard />
                   </AdminRoute>
                 } />
 
