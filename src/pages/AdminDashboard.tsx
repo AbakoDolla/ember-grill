@@ -248,13 +248,26 @@ export default function AdminDashboard() {
                             <td className="p-4">{order.user?.user_metadata?.name || order.user?.email || 'Client anonyme'}</td>
                             <td className="p-4">€{order.total || 0}</td>
                             <td className="p-4">
-                              <span className={`px-2 py-1 text-xs rounded-full ${
+                              <span className={`px-2 py-1 text-xs rounded-full cursor-pointer hover:opacity-80 ${
                                 order.status === 'delivered' ? 'bg-green-100 text-green-800' :
                                 order.status === 'preparing' ? 'bg-blue-100 text-blue-800' :
                                 order.status === 'ready' ? 'bg-yellow-100 text-yellow-800' :
                                 order.status === 'cancelled' ? 'bg-red-100 text-red-800' :
                                 'bg-yellow-100 text-yellow-800'
-                              }`}>
+                              }`}
+                              onClick={async () => {
+                                const statusOptions = ['pending', 'preparing', 'ready', 'delivered', 'cancelled'];
+                                const currentIndex = statusOptions.indexOf(order.status);
+                                const nextStatus = statusOptions[(currentIndex + 1) % statusOptions.length];
+                                
+                                const result = await updateOrderStatus(order.id, nextStatus as any);
+                                if (result.success) {
+                                  toast.success(`Statut mis à jour: ${nextStatus}`);
+                                } else {
+                                  toast.error(result.error || 'Erreur lors de la mise à jour');
+                                }
+                              }}
+                              title="Cliquez pour changer le statut">
                                 {order.status === 'delivered' ? 'Livré' :
                                  order.status === 'preparing' ? 'Préparation' :
                                  order.status === 'ready' ? 'Prêt' :
@@ -264,13 +277,38 @@ export default function AdminDashboard() {
                             <td className="p-4">{new Date(order.created_at).toLocaleDateString('fr-FR')}</td>
                             <td className="p-4">
                               <div className="flex gap-2">
-                                <Button variant="outline" size="sm">
+                                <Button 
+                                  variant="outline" 
+                                  size="sm"
+                                  onClick={() => {
+                                    toast.info(`Détails de la commande ${order.id}`);
+                                  }}
+                                >
                                   <Eye className="w-3 h-3" />
                                 </Button>
-                                <Button variant="outline" size="sm">
+                                <Button 
+                                  variant="outline" 
+                                  size="sm"
+                                  onClick={() => {
+                                    toast.info(`Modification de la commande ${order.id}`);
+                                  }}
+                                >
                                   <Edit className="w-3 h-3" />
                                 </Button>
-                                <Button variant="destructive" size="sm">
+                                <Button 
+                                  variant="destructive" 
+                                  size="sm"
+                                  onClick={async () => {
+                                    if (window.confirm(`Supprimer la commande ${order.id} ?`)) {
+                                      const result = await deleteOrder(order.id);
+                                      if (result.success) {
+                                        toast.success('Commande supprimée avec succès');
+                                      } else {
+                                        toast.error(result.error || 'Erreur lors de la suppression');
+                                      }
+                                    }
+                                  }}
+                                >
                                   <Trash2 className="w-3 h-3" />
                                 </Button>
                               </div>
@@ -319,7 +357,14 @@ export default function AdminDashboard() {
                         Inscrit le {new Date(user.created_at).toLocaleDateString('fr-FR')}
                       </p>
                       <div className="flex gap-2 mt-4">
-                        <Button variant="outline" size="sm" className="flex-1">
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="flex-1"
+                          onClick={() => {
+                            toast.info(`Détails de l'utilisateur ${user.email}`);
+                          }}
+                        >
                           <Eye className="w-3 h-3 mr-1" />
                           Voir
                         </Button>
@@ -327,7 +372,16 @@ export default function AdminDashboard() {
                           variant="destructive" 
                           size="sm" 
                           className="flex-1"
-                          onClick={() => deleteUser(user.id)}
+                          onClick={async () => {
+                            if (window.confirm(`Supprimer l'utilisateur ${user.email} ?`)) {
+                              const result = await deleteUser(user.id);
+                              if (result.success) {
+                                toast.success('Utilisateur supprimé avec succès');
+                              } else {
+                                toast.error(result.error || 'Erreur lors de la suppression');
+                              }
+                            }
+                          }}
                         >
                           <Trash2 className="w-3 h-3 mr-1" />
                           Supprimer
@@ -344,12 +398,22 @@ export default function AdminDashboard() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold">Gestion des produits</h2>
-                <Button className="interactive-scale">
+                <Button 
+                  className="interactive-scale"
+                  onClick={() => {
+                    toast.info('Ajouter un nouveau produit');
+                  }}
+                >
                   <Plus className="w-4 h-4 mr-2" />
                   Ajouter un produit
                 </Button>
               </div>
-              <ProductManagement />
+              <ProductManagement 
+                products={products}
+                onCreateProduct={createProduct}
+                onUpdateProduct={updateProduct}
+                onDeleteProduct={deleteProduct}
+              />
             </div>
           )}
 

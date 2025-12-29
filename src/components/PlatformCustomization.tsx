@@ -8,6 +8,7 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
+import { usePlatformSettings } from '@/hooks/usePlatformSettings';
 import { 
   Palette, 
   Globe, 
@@ -99,38 +100,63 @@ const defaultSettings: PlatformSettings = {
 };
 
 export default function PlatformCustomization() {
-  const [settings, setSettings] = useState<PlatformSettings>(defaultSettings);
+  const { settings, loading, updateSetting, getSetting, getSettingsObject } = usePlatformSettings();
   const [isLoading, setIsLoading] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
 
-  useEffect(() => {
-    // Load settings from localStorage or API
-    const savedSettings = localStorage.getItem('platform_settings');
-    if (savedSettings) {
-      try {
-        setSettings(JSON.parse(savedSettings));
-      } catch (error) {
-        console.error('Error loading settings:', error);
-      }
-    }
-  }, []);
+  // Get settings from Supabase or use defaults
+  const settingsObject = getSettingsObject();
+  
+  const [localSettings, setLocalSettings] = useState({
+    siteName: getSetting('site_name', 'Ember Grill'),
+    siteDescription: getSetting('site_description', 'Restaurant camerounais moderne avec grillades authentiques'),
+    logo: getSetting('logo', '/logo.png'),
+    favicon: getSetting('favicon', '/favicon.ico'),
+    primaryColor: getSetting('primary_color', '#000000'),
+    secondaryColor: getSetting('secondary_color', '#ffffff'),
+    accentColor: getSetting('accent_color', '#ff6b35'),
+    darkMode: getSetting('dark_mode', true),
+    defaultLanguage: getSetting('default_language', 'fr'),
+    defaultCurrency: getSetting('default_currency', 'EUR'),
+    timezone: getSetting('timezone', 'Europe/Brussels'),
+    contactEmail: getSetting('contact_email', 'contact@ember-grill.be'),
+    contactPhone: getSetting('contact_phone', '+32 2 123 45 67'),
+    contactAddress: getSetting('contact_address', 'Rue des Grillades 123, 1000 Bruxelles'),
+    emailNotifications: getSetting('email_notifications', true),
+    smsNotifications: getSetting('sms_notifications', false),
+    pushNotifications: getSetting('push_notifications', true),
+    paypalEnabled: getSetting('paypal_enabled', true),
+    stripeEnabled: getSetting('stripe_enabled', false),
+    cashOnDelivery: getSetting('cash_on_delivery', true),
+    twoFactorAuth: getSetting('two_factor_auth', false),
+    sessionTimeout: getSetting('session_timeout', 24),
+    passwordMinLength: getSetting('password_min_length', 8),
+    registrationEnabled: getSetting('registration_enabled', true),
+    guestCheckout: getSetting('guest_checkout', true),
+    reviewsEnabled: getSetting('reviews_enabled', true),
+    wishlistEnabled: getSetting('wishlist_enabled', true)
+  });
 
-  useEffect(() => {
-    // Check if settings have changed
-    const hasChanges = JSON.stringify(settings) !== JSON.stringify(defaultSettings);
-    setHasChanges(hasChanges);
-  }, [settings]);
+  const updateLocalSetting = (key: string, value: any) => {
+    setLocalSettings(prev => ({ ...prev, [key]: value }));
+    setHasChanges(true);
+  };
 
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      // Save to localStorage (in production, save to API/database)
-      localStorage.setItem('platform_settings', JSON.stringify(settings));
+      // Save all settings to Supabase
+      const updates = Object.entries(localSettings).map(([key, value]) => 
+        updateSetting(key.replace(/([A-Z])/g, '_$1').toLowerCase(), value)
+      );
+      
+      await Promise.all(updates);
       
       // Apply theme changes immediately
-      document.documentElement.style.setProperty('--primary', settings.primaryColor);
-      document.documentElement.style.setProperty('--accent', settings.accentColor);
+      document.documentElement.style.setProperty('--primary', localSettings.primaryColor);
+      document.documentElement.style.setProperty('--accent', localSettings.accentColor);
       
+      setHasChanges(false);
       toast.success('Paramètres de la plateforme enregistrés avec succès');
     } catch (error) {
       toast.error('Erreur lors de l\'enregistrement des paramètres');
@@ -140,12 +166,43 @@ export default function PlatformCustomization() {
   };
 
   const handleReset = () => {
-    setSettings(defaultSettings);
+    const defaultSettings = {
+      siteName: 'Ember Grill',
+      siteDescription: 'Restaurant camerounais moderne avec grillades authentiques',
+      logo: '/logo.png',
+      favicon: '/favicon.ico',
+      primaryColor: '#000000',
+      secondaryColor: '#ffffff',
+      accentColor: '#ff6b35',
+      darkMode: true,
+      defaultLanguage: 'fr',
+      defaultCurrency: 'EUR',
+      timezone: 'Europe/Brussels',
+      contactEmail: 'contact@ember-grill.be',
+      contactPhone: '+32 2 123 45 67',
+      contactAddress: 'Rue des Grillades 123, 1000 Bruxelles',
+      emailNotifications: true,
+      smsNotifications: false,
+      pushNotifications: true,
+      paypalEnabled: true,
+      stripeEnabled: false,
+      cashOnDelivery: true,
+      twoFactorAuth: false,
+      sessionTimeout: 24,
+      passwordMinLength: 8,
+      registrationEnabled: true,
+      guestCheckout: true,
+      reviewsEnabled: true,
+      wishlistEnabled: true
+    };
+    
+    setLocalSettings(defaultSettings);
+    setHasChanges(true);
     toast.info('Paramètres réinitialisés aux valeurs par défaut');
   };
 
   const handleExport = () => {
-    const dataStr = JSON.stringify(settings, null, 2);
+    const dataStr = JSON.stringify(localSettings, null, 2);
     const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
     
     const exportFileDefaultName = `platform_settings_${new Date().toISOString().split('T')[0]}.json`;
@@ -166,17 +223,14 @@ export default function PlatformCustomization() {
     reader.onload = (e) => {
       try {
         const importedSettings = JSON.parse(e.target?.result as string);
-        setSettings({ ...defaultSettings, ...importedSettings });
+        setLocalSettings({ ...localSettings, ...importedSettings });
+        setHasChanges(true);
         toast.success('Paramètres importés avec succès');
       } catch (error) {
         toast.error('Erreur lors de l\'importation des paramètres');
       }
     };
     reader.readAsText(file);
-  };
-
-  const updateSetting = (key: keyof PlatformSettings, value: any) => {
-    setSettings(prev => ({ ...prev, [key]: value }));
   };
 
   return (
@@ -219,7 +273,7 @@ export default function PlatformCustomization() {
               <Input
                 id="siteName"
                 value={settings.siteName}
-                onChange={(e) => updateSetting('siteName', e.target.value)}
+                onChange={(e) => updateLocalSetting('siteName', e.target.value)}
                 placeholder="Nom de votre site"
               />
             </div>
