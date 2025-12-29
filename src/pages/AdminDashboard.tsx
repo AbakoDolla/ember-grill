@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAdmin } from '@/contexts/AdminContext';
+import { useAdminData } from '@/hooks/useAdminData';
 import ProductManagement from '@/components/ProductManagement';
+import AdminCharts from '@/components/AdminCharts';
+import PlatformCustomization from '@/components/PlatformCustomization';
 import { 
   Users, 
   ShoppingCart, 
@@ -20,7 +23,8 @@ import {
   BarChart3,
   Clock,
   AlertCircle,
-  Shield
+  Shield,
+  RefreshCw
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -51,9 +55,23 @@ export default function AdminDashboard() {
   const { logoutAdmin } = useAdmin();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
-  const [stats, setStats] = useState(mockStats);
-  const [recentOrders, setRecentOrders] = useState(mockRecentOrders);
-  const [users, setUsers] = useState(mockUsers);
+  
+  // Use real admin data
+  const {
+    stats,
+    orders,
+    users,
+    products,
+    loading,
+    error,
+    updateOrderStatus,
+    deleteOrder,
+    deleteUser,
+    createProduct,
+    updateProduct,
+    deleteProduct,
+    refreshData
+  } = useAdminData();
 
   const handleLogout = () => {
     logoutAdmin();
@@ -108,6 +126,7 @@ export default function AdminDashboard() {
             { id: 'orders', label: 'Commandes', icon: ShoppingCart },
             { id: 'users', label: 'Utilisateurs', icon: Users },
             { id: 'products', label: 'Produits', icon: Package },
+            { id: 'customization', label: 'Personnalisation', icon: Settings },
             { id: 'settings', label: 'Paramètres', icon: Settings }
           ].map((tab) => (
             <Button
@@ -131,73 +150,71 @@ export default function AdminDashboard() {
         >
           {activeTab === 'overview' && (
             <div className="space-y-8">
-              {/* Stats Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <StatCard
-                  title="Utilisateurs totaux"
-                  value={stats.totalUsers.toLocaleString()}
-                  icon={Users}
-                  change={12.5}
-                  color="blue"
-                />
-                <StatCard
-                  title="Commandes totales"
-                  value={stats.totalOrders.toLocaleString()}
-                  icon={ShoppingCart}
-                  change={8.2}
-                  color="green"
-                />
-                <StatCard
-                  title="Revenu total"
-                  value={`€${stats.totalRevenue.toLocaleString()}`}
-                  icon={DollarSign}
-                  change={15.3}
-                  color="amber"
-                />
-                <StatCard
-                  title="Produits"
-                  value={stats.totalProducts}
-                  icon={Package}
-                  color="purple"
-                />
-              </div>
-
-              {/* Recent Orders */}
-              <Card variant="glass">
-                <CardHeader>
-                  <CardTitle>Commandes récentes</CardTitle>
-                  <CardDescription>Dernières commandes passées</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {recentOrders.map((order) => (
-                      <div key={order.id} className="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                            <ShoppingCart className="w-5 h-5 text-primary" />
+              {loading ? (
+                <div className="flex items-center justify-center py-12">
+                  <RefreshCw className="w-8 h-8 animate-spin text-primary" />
+                  <span className="ml-2">Chargement des données...</span>
+                </div>
+              ) : error ? (
+                <Card variant="glass">
+                  <CardContent className="text-center py-12">
+                    <AlertCircle className="w-16 h-16 mx-auto mb-4 text-destructive" />
+                    <p className="text-destructive mb-4">Erreur lors du chargement des données</p>
+                    <Button onClick={refreshData} variant="outline">
+                      <RefreshCw className="w-4 h-4 mr-2" />
+                      Réessayer
+                    </Button>
+                  </CardContent>
+                </Card>
+              ) : (
+                <>
+                  <AdminCharts data={{ orders, users, products, stats }} />
+                  
+                  {/* Recent Orders */}
+                  <Card variant="glass">
+                    <CardHeader>
+                      <CardTitle>Commandes récentes</CardTitle>
+                      <CardDescription>Dernières commandes passées</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        {orders.slice(0, 5).map((order) => (
+                          <div key={order.id} className="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
+                            <div className="flex items-center gap-4">
+                              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                                <ShoppingCart className="w-5 h-5 text-primary" />
+                              </div>
+                              <div>
+                                <p className="font-medium">
+                                  {order.user?.user_metadata?.name || order.user?.email || 'Client anonyme'}
+                                </p>
+                                <p className="text-sm text-muted-foreground">{order.id}</p>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <p className="font-medium">€{order.total || 0}</p>
+                              <p className="text-sm text-muted-foreground">
+                                {new Date(order.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                              </p>
+                              <span className={`inline-block px-2 py-1 text-xs rounded-full ${
+                                order.status === 'delivered' ? 'bg-green-100 text-green-800' :
+                                order.status === 'preparing' ? 'bg-blue-100 text-blue-800' :
+                                order.status === 'ready' ? 'bg-yellow-100 text-yellow-800' :
+                                'bg-red-100 text-red-800'
+                              }`}>
+                                {order.status === 'delivered' ? 'Livré' :
+                                 order.status === 'preparing' ? 'Préparation' :
+                                 order.status === 'ready' ? 'Prêt' :
+                                 order.status === 'cancelled' ? 'Annulé' : 'En attente'}
+                              </span>
+                            </div>
                           </div>
-                          <div>
-                            <p className="font-medium">{order.customer}</p>
-                            <p className="text-sm text-muted-foreground">{order.id}</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium">€{order.amount}</p>
-                          <p className="text-sm text-muted-foreground">{order.time}</p>
-                          <span className={`inline-block px-2 py-1 text-xs rounded-full ${
-                            order.status === 'delivered' ? 'bg-green-100 text-green-800' :
-                            order.status === 'preparing' ? 'bg-blue-100 text-blue-800' :
-                            'bg-yellow-100 text-yellow-800'
-                          }`}>
-                            {order.status === 'delivered' ? 'Livré' :
-                             order.status === 'preparing' ? 'Préparation' : 'En attente'}
-                          </span>
-                        </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+                    </CardContent>
+                  </Card>
+                </>
+              )}
             </div>
           )}
 
@@ -225,22 +242,26 @@ export default function AdminDashboard() {
                         </tr>
                       </thead>
                       <tbody>
-                        {recentOrders.map((order) => (
+                        {orders.slice(0, 10).map((order) => (
                           <tr key={order.id} className="border-b border-border hover:bg-muted/50">
                             <td className="p-4">{order.id}</td>
-                            <td className="p-4">{order.customer}</td>
-                            <td className="p-4">€{order.amount}</td>
+                            <td className="p-4">{order.user?.user_metadata?.name || order.user?.email || 'Client anonyme'}</td>
+                            <td className="p-4">€{order.total || 0}</td>
                             <td className="p-4">
                               <span className={`px-2 py-1 text-xs rounded-full ${
                                 order.status === 'delivered' ? 'bg-green-100 text-green-800' :
                                 order.status === 'preparing' ? 'bg-blue-100 text-blue-800' :
+                                order.status === 'ready' ? 'bg-yellow-100 text-yellow-800' :
+                                order.status === 'cancelled' ? 'bg-red-100 text-red-800' :
                                 'bg-yellow-100 text-yellow-800'
                               }`}>
                                 {order.status === 'delivered' ? 'Livré' :
-                                 order.status === 'preparing' ? 'Préparation' : 'En attente'}
+                                 order.status === 'preparing' ? 'Préparation' :
+                                 order.status === 'ready' ? 'Prêt' :
+                                 order.status === 'cancelled' ? 'Annulé' : 'En attente'}
                               </span>
                             </td>
-                            <td className="p-4">{order.time}</td>
+                            <td className="p-4">{new Date(order.created_at).toLocaleDateString('fr-FR')}</td>
                             <td className="p-4">
                               <div className="flex gap-2">
                                 <Button variant="outline" size="sm">
@@ -274,7 +295,7 @@ export default function AdminDashboard() {
                 </Button>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {users.map((user) => (
+                {users.slice(0, 9).map((user) => (
                   <Card variant="glass" key={user.id} className="hover:scale-105 transition-all duration-300">
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between mb-4">
@@ -282,19 +303,32 @@ export default function AdminDashboard() {
                           <Users className="w-6 h-6 text-primary" />
                         </div>
                         <div className="text-right">
-                          <p className="text-sm text-muted-foreground">{user.orders} commandes</p>
-                          <p className="font-bold">€{user.spent}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {orders.filter(o => o.user_id === user.id).length} commandes
+                          </p>
+                          <p className="font-bold">
+                            €{orders.filter(o => o.user_id === user.id).reduce((sum, o) => sum + (o.total || 0), 0).toFixed(2)}
+                          </p>
                         </div>
                       </div>
-                      <h3 className="font-semibold">{user.name}</h3>
+                      <h3 className="font-semibold">
+                        {user.user_metadata?.name || user.email}
+                      </h3>
                       <p className="text-sm text-muted-foreground">{user.email}</p>
-                      <p className="text-xs text-muted-foreground mt-2">Inscrit le {user.joined}</p>
+                      <p className="text-xs text-muted-foreground mt-2">
+                        Inscrit le {new Date(user.created_at).toLocaleDateString('fr-FR')}
+                      </p>
                       <div className="flex gap-2 mt-4">
                         <Button variant="outline" size="sm" className="flex-1">
                           <Eye className="w-3 h-3 mr-1" />
                           Voir
                         </Button>
-                        <Button variant="destructive" size="sm" className="flex-1">
+                        <Button 
+                          variant="destructive" 
+                          size="sm" 
+                          className="flex-1"
+                          onClick={() => deleteUser(user.id)}
+                        >
                           <Trash2 className="w-3 h-3 mr-1" />
                           Supprimer
                         </Button>
@@ -316,6 +350,12 @@ export default function AdminDashboard() {
                 </Button>
               </div>
               <ProductManagement />
+            </div>
+          )}
+
+          {activeTab === 'customization' && (
+            <div className="space-y-6">
+              <PlatformCustomization />
             </div>
           )}
 
