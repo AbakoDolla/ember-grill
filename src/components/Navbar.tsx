@@ -43,10 +43,10 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:px-8"
+      className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 md:px-8 py-2"
     >
       <div className="max-w-7xl mx-auto">
-      <div className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl px-3 md:px-4 py-2 flex items-center justify-between">
+      <div className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl px-2 sm:px-3 md:px-4 py-1 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-6 group relative">
             {/* Logo avec effets visuels */}
@@ -54,7 +54,7 @@ export default function Navbar() {
               <img 
                 src={logo} 
                 alt="BrazaFish Logo" 
-                className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-full drop-shadow-lg transition-transform duration-300 group-hover:scale-105 border-2 border-white/20"
+                className="w-12 h-12 md:w-14 md:h-14 object-cover rounded-full drop-shadow-lg transition-transform duration-300 group-hover:scale-105 border-2 border-white/20"
               />
               {/* Effet de brillance */}
               <div className="absolute inset-0 bg-gradient-to-br from-orange-400/20 via-red-500/10 to-yellow-400/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -63,11 +63,11 @@ export default function Navbar() {
             {/* Nom de la marque */}
             <div className="flex flex-col">
               <div className="flex items-baseline gap-2">
-                <span className="font-display font-black text-xl md:text-2xl bg-gradient-to-r from-orange-600 via-red-600 to-yellow-600 bg-clip-text text-transparent leading-none">
+                <span className="font-display font-black text-lg md:text-xl bg-gradient-to-r from-orange-600 via-red-600 to-yellow-600 bg-clip-text text-transparent leading-none">
                   BrazaFish
                 </span>
-                <span className="font-display font-bold text-base md:text-lg text-blue-600 leading-none">
-                  Carole
+                <span className="font-display font-bold text-sm md:text-base text-blue-600 leading-none">
+                  elora
                 </span>
               </div>
               <span className="text-xs text-muted-foreground font-medium tracking-wide uppercase">

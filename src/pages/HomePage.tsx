@@ -39,7 +39,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 md:px-8 pt-24 pb-12">
+      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 pt-20 sm:pt-24 pb-8 sm:pb-12">
         {/* Background effects */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-card" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(18_100%_60%/0.1),transparent_70%)]" />
@@ -157,7 +157,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 md:py-24 px-4 md:px-8 bg-card">
+      <section className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-8 bg-card">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -195,7 +195,7 @@ export default function HomePage() {
       </section>
 
       {/* Popular Items Section */}
-      <section className="py-16 md:py-24 px-4 md:px-8">
+      <section className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

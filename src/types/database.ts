@@ -147,36 +147,54 @@ export interface Database {
         Row: {
           id: string
           customer_id: string | null
+          user_id: string | null
           status: 'pending' | 'confirmed' | 'preparing' | 'ready' | 'delivered' | 'cancelled'
+          payment_status: 'pending' | 'paid' | 'failed' | 'refunded'
           total_amount: number
           delivery_address: string | null
           delivery_fee: number
           special_instructions: string | null
+          requested_delivery_date: string
           estimated_delivery_time: string | null
+          actual_delivery_time: string | null
+          payment_method: string | null
+          payment_intent_id: string | null
           created_at: string
           updated_at: string
         }
         Insert: {
           id?: string
           customer_id?: string | null
+          user_id?: string | null
           status?: 'pending' | 'confirmed' | 'preparing' | 'ready' | 'delivered' | 'cancelled'
+          payment_status?: 'pending' | 'paid' | 'failed' | 'refunded'
           total_amount: number
           delivery_address?: string | null
           delivery_fee?: number
           special_instructions?: string | null
+          requested_delivery_date: string
           estimated_delivery_time?: string | null
+          actual_delivery_time?: string | null
+          payment_method?: string | null
+          payment_intent_id?: string | null
           created_at?: string
           updated_at?: string
         }
         Update: {
           id?: string
           customer_id?: string | null
+          user_id?: string | null
           status?: 'pending' | 'confirmed' | 'preparing' | 'ready' | 'delivered' | 'cancelled'
+          payment_status?: 'pending' | 'paid' | 'failed' | 'refunded'
           total_amount?: number
           delivery_address?: string | null
           delivery_fee?: number
           special_instructions?: string | null
+          requested_delivery_date?: string
           estimated_delivery_time?: string | null
+          actual_delivery_time?: string | null
+          payment_method?: string | null
+          payment_intent_id?: string | null
           created_at?: string
           updated_at?: string
         }

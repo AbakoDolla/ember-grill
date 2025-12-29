@@ -86,11 +86,25 @@ function EmberGlow() {
 }
 
 export default function Food3D() {
+  const handleContextLoss = (gl: THREE.WebGLRenderer) => {
+    console.warn('WebGL context lost in Food3D component');
+    // Optionally handle context restoration
+    gl.domElement.addEventListener('webglcontextrestored', () => {
+      console.log('WebGL context restored in Food3D component');
+    }, { once: true });
+  };
+
   return (
     <div className="w-full h-full">
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50 }}
         style={{ background: 'transparent' }}
+        onCreated={({ gl }) => {
+          gl.domElement.addEventListener('webglcontextlost', (event) => {
+            event.preventDefault();
+            handleContextLoss(gl);
+          });
+        }}
       >
         <ambientLight intensity={0.3} />
         <directionalLight position={[5, 5, 5]} intensity={0.8} />

@@ -20,6 +20,7 @@ import NotFound from "./pages/NotFound";
 import AuthScreen from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Orders from "./pages/Orders";
+import Settings from "./pages/Settings";
 import Favorites from "./pages/Favorites";
 
 const queryClient = new QueryClient();
@@ -50,14 +51,19 @@ const AppContent = () => {
               }}
             />
 
-            <BrowserRouter>
+            <BrowserRouter
+              future={{
+                v7_startTransition: true,
+                v7_relativeSplatPath: true,
+              }}
+            >
               <Routes>
                 {/* AUTH ROUTES (NO NAVBAR) */}
-                <Route path="/" element={<HomePage />} />
                 <Route path="/auth" element={<AuthScreen />} />
 
                 {/* APP ROUTES (WITH NAVBAR) */}
                 <Route element={<MainLayout />}>
+                  <Route path="/" element={<HomePage />} />
                   <Route path="/menu" element={
                     <ProtectedRoute>
                       <MenuPage />
@@ -81,6 +87,11 @@ const AppContent = () => {
                   <Route path="/favorites" element={
                     <ProtectedRoute>
                       <Favorites />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/settings" element={
+                    <ProtectedRoute>
+                      <Settings />
                     </ProtectedRoute>
                   } />
                   <Route path="/about" element={<AboutPage />} />

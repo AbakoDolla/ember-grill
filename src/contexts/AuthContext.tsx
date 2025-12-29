@@ -25,8 +25,9 @@ interface AuthContextType {
   loading: boolean
   showWelcome: boolean
   setShowWelcome: (show: boolean) => void
-  signUp: (email: string, password: string, name: string) => Promise<{ error?: string }>
+  signUp: (email: string, password: string, name: string, captchaToken?: string) => Promise<{ error?: string }>
   signIn: (email: string, password: string) => Promise<{ error?: string }>
+  signInWithGoogle: () => Promise<{ error?: string }>
   signOut: () => Promise<void>
 }
 
@@ -124,12 +125,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // ------------------------
   // Fonction d'inscription
   // ------------------------
-  const signUp = async (email: string, password: string, name: string) => {
+  const signUp = async (email: string, password: string, name: string, captchaToken?: string) => {
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: { data: { name } }
+        options: { 
+          data: { name },
+          captchaToken: captchaToken
+        }
       })
       if (error) return { error: error.message }
       return {}
@@ -144,6 +148,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const signIn = async (email: string, password: string) => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+      if (error) return { error: error.message }
+      return {}
+    } catch {
+      return { error: 'Une erreur inattendue s\'est produite' }
+    }
+  }
+
+  // ------------------------
+  // Fonction de connexion Google OAuth
+  // ------------------------
+  const signInWithGoogle = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/`
+        }
+      })
       if (error) return { error: error.message }
       return {}
     } catch {
@@ -170,6 +192,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setShowWelcome,
     signUp,
     signIn,
+    signInWithGoogle,
     signOut
   }
 

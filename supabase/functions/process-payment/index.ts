@@ -44,7 +44,8 @@ serve(async (req) => {
     const { error: updateError } = await supabaseClient
       .from('orders')
       .update({
-        status: paymentSuccess ? 'paid' : 'payment_failed',
+        status: paymentSuccess ? 'confirmed' : 'cancelled',
+        payment_status: paymentSuccess ? 'paid' : 'failed',
         payment_method: paymentMethod,
         payment_transaction_id: transactionId,
         paid_at: paymentSuccess ? new Date().toISOString() : null

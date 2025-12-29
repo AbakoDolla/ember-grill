@@ -47,48 +47,50 @@
     }
   },
   "favorites": {
-    "title": "Klanten",
-    "titleHighlight": "Favorieten",
+    "title": "Favorieten van",
+    "titleHighlight": "Klanten",
     "subtitle": "De gerechten die onze klanten blijven bestellen",
     "viewAll": "Bekijk Volledig Menu"
   },
   "cta": {
-    "title": "Klaar om het",
-    "titleHighlight": "Vuur",
-    "description": "Bestel nu en ervaar de meest authentieke lokale Kameroense vis gebraiseerd. Vooraf bestellen van een week vereist voor optimale versheid."
+    "title": "Klaar om de",
+    "titleHighlight": "Braise te Proeven",
+    "description": "Bestel nu en ontdek de meest authentieke lokale Kameroense vis gebraiseerd. Vooraf bestellen een week vereist voor optimale versheid."
   },
   "categories": {
     "all": "Alle Vis",
     "fish": "Gebraiseerde Vis",
-    "beef": "Gebraiseerde Vis",
+    "beef": "Vlees",
     "braise": "Kameroense Braise",
-    "sides": "Gebraiseerde Vis"
+    "sides": "Bijgerechten"
   },
   "cart": {
     "title": "Uw Winkelwagen",
     "empty": "Uw winkelwagen is leeg",
-    "emptyDescription": "Voeg heerlijke items van ons menu toe om te beginnen",
-    "browseMenu": "Bekijk Menu",
-    "orderSummary": "Bestellingsoverzicht",
+    "emptyDescription": "Voeg heerlijke gerechten van ons menu toe om te beginnen",
+    "browseMenu": "Blader door Menu",
+    "orderSummary": "Besteloverzicht",
     "subtotal": "Subtotaal",
     "deliveryFee": "Bezorgkosten",
     "freeDelivery": "Gratis",
-    "addForFreeDelivery": "Voeg €{{amount}} meer toe voor gratis bezorging",
+    "addForFreeDelivery": "Voeg €{{amount}} toe voor gratis bezorging",
     "total": "Totaal",
     "checkout": "Afrekenen",
-    "continueShopping": "Verder Winkelen"
+    "continueShopping": "Verder Winkelen",
+    "addedToCart": "toegevoegd aan winkelwagen",
+    "readyWhenYouAre": "Klaar wanneer u dat bent!"
   },
   "footer": {
     "description": "Lokale Kameroense vis gebraiseerd volgens voorouderlijke tradities, vers bezorgd aan uw deur in heel België na bestelling een week van tevoren.",
     "quickLinks": "Snelle Links",
     "support": "Ondersteuning",
-    "contactUs": "Contact",
+    "contactUs": "Neem Contact Op",
     "faq": "FAQ",
-    "trackOrder": "Bestelling Volgen",
+    "trackOrder": "Volg Bestelling",
     "privacy": "Privacybeleid",
     "locations": "Locaties",
     "catering": "Catering",
-    "openDaily": "Dagelijks Open",
+    "openDaily": "Dagelijks Geopend",
     "madeWith": "Gemaakt met",
     "inBelgium": "in België",
     "rights": "Alle rechten voorbehouden.",
@@ -97,7 +99,7 @@
   },
   "about": {
     "title": "Het Verhaal Achter",
-    "brand": "BrazaFish carole",
+    "brand": "BrazaFish elora",
     "mission": "Onze Missie",
     "values": "Onze Waarden",
     "authenticFire": {
@@ -135,19 +137,6 @@
     "noDishes": "Geen gerechten gevonden die overeenkomen met uw zoekopdracht.",
     "clearFilters": "Filters wissen"
   },
-  "cart": {
-    "addedToCart": "toegevoegd aan winkelwagen",
-    "readyWhenYouAre": "Klaar wanneer u dat bent!",
-    "empty": "Uw winkelwagen is leeg",
-    "emptyDescription": "Voeg enkele heerlijke gerechten van ons menu toe om te beginnen",
-    "browseMenu": "Menu Bekijken",
-    "subtotal": "Subtotaal",
-    "delivery": "Bezorging",
-    "free": "Gratis",
-    "total": "Totaal",
-    "checkout": "Afrekenen",
-    "continueShopping": "Verder Winkelen"
-  },
   "contact": {
     "title": "Neem Contact Op",
     "name": "Naam",
@@ -173,13 +162,6 @@
     "signingIn": "Aanmelden...",
     "creatingAccount": "Account aanmaken..."
   },
-  "favorites": {
-    "title": "Uw Favoriete Gerechten",
-    "subtitle": "Uw favoriete gerechten om met één klik te bestellen",
-    "empty": "Geen favoriete gerechten",
-    "emptyDescription": "Voeg gerechten toe aan uw favorieten vanuit het menu",
-    "remove": "Verwijderen uit favorieten"
-  },
   "orders": {
     "title": "Uw Bestellingen",
     "empty": "Geen bestellingen",
@@ -199,15 +181,46 @@
     "favoritesTitle": "Uw Favoriete Gerechten",
     "favoritesSubtitle": "Uw favoriete gerechten om sneller te bestellen",
     "recentOrders": "Recente Bestellingen",
-    "orderAgain": "Opnieuw bestellen",
-    "settings": {
-      "title": "Instellingen",
-      "account": "Account Instellingen",
-      "notifications": "Meldingen",
-      "privacy": "Privacy",
-      "language": "Taal & Regio",
-      "security": "Beveiliging",
-      "dangerZone": "Gevarenzone"
-    }
+    "orderAgain": "Opnieuw bestellen"
+  },
+  "settings": {
+    "title": "Instellingen",
+    "subtitle": "Beheer uw accountinstellingen en voorkeuren",
+    "profile": {
+      "title": "Profiel",
+      "description": "Werk uw persoonlijke informatie bij",
+      "firstName": "Voornaam",
+      "lastName": "Achternaam",
+      "email": "E-mailadres",
+      "phone": "Telefoonnummer"
+    },
+    "preferences": {
+      "title": "Voorkeuren",
+      "description": "Pas uw ervaring aan",
+      "language": "Taal",
+      "theme": "Thema",
+      "currency": "Valuta",
+      "light": "Licht",
+      "dark": "Donker",
+      "system": "Systeem"
+    },
+    "notifications": {
+      "title": "Meldingen",
+      "description": "Kies hoe u wilt worden geïnformeerd",
+      "email": "E-mailmeldingen",
+      "emailDescription": "Ontvang orderupdates via e-mail",
+      "push": "Pushmeldingen",
+      "pushDescription": "Ontvang pushmeldingen in uw browser",
+      "sms": "SMS-meldingen",
+      "smsDescription": "Ontvang belangrijke updates via SMS"
+    },
+    "privacy": {
+      "title": "Privacy en Beveiliging",
+      "description": "Beheer uw privacy en beveiliging",
+      "changePassword": "Wachtwoord wijzigen",
+      "downloadData": "Mijn gegevens downloaden",
+      "deleteAccount": "Account verwijderen"
+    },
+    "save": "Wijzigingen opslaan"
   }
 }

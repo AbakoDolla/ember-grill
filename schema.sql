@@ -63,12 +63,21 @@ CREATE TABLE IF NOT EXISTS orders (
   delivery_address TEXT,
   delivery_fee DECIMAL(10,2) DEFAULT 0,
   special_instructions TEXT,
-  estimated_delivery_time TIMESTAMP WITH TIME ZONE,
+  requested_delivery_date DATE NOT NULL, -- Date de livraison souhaitée (vendredi, samedi ou dimanche)
+  estimated_delivery_time TIME, -- Heure de livraison estimée
   actual_delivery_time TIMESTAMP WITH TIME ZONE,
   payment_method TEXT,
   payment_intent_id TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  -- Contrainte : livraison seulement vendredi, samedi, dimanche
+  CONSTRAINT valid_delivery_day CHECK (
+    EXTRACT(DOW FROM requested_delivery_date) IN (5, 6, 0) -- 5=Friday, 6=Saturday, 0=Sunday
+  ),
+  -- Contrainte : commande doit être faite au moins 7 jours à l'avance
+  CONSTRAINT minimum_advance_booking CHECK (
+    requested_delivery_date >= (CURRENT_DATE + INTERVAL '7 days')
+  )
 );
 
 -- Create order_items table
@@ -362,11 +371,11 @@ $$ LANGUAGE plpgsql;
 
 -- Function to create notification
 CREATE OR REPLACE FUNCTION create_notification(
-  p_user_id UUID DEFAULT NULL,
-  p_customer_id UUID DEFAULT NULL,
   p_type TEXT,
   p_title TEXT,
   p_message TEXT,
+  p_user_id UUID DEFAULT NULL,
+  p_customer_id UUID DEFAULT NULL,
   p_data JSONB DEFAULT NULL
 )
 RETURNS UUID AS $$
@@ -458,8 +467,8 @@ INSERT INTO menu_items (name, description, price, image_url, category, spice_lev
 ('Poulet Braisé', 'Tender chicken braised in rich tomato sauce with African spices.', 21.99, '/assets/food/poulet-braise.jpg', 'braise', 2, true, 30, ARRAY['chicken']),
 ('Porc Braisé', 'Slow-braised pork in spicy palm oil sauce with vegetables.', 25.99, '/assets/food/porc-braise.jpg', 'braise', 3, false, 35, ARRAY['pork']),
 ('Plantain Fries', 'Crispy fried plantains served with spicy dipping sauce.', 8.99, '/assets/food/plantain-fries.jpg', 'sides', 2, false, 10, ARRAY['soy']),
-('Attiéké', 'Steamed fermented cassava couscous, traditional West African side.', 7.99, '/assets/food/attieke.jpg', 'sides', 1, false, 8, ARRAY[]),
-('Jollof Rice', 'Fragrant rice cooked in rich tomato sauce with peppers and spices.', 9.99, '/assets/food/jollof-rice.jpg', 'sides', 2, true, 15, ARRAY[]),
+('Attiéké', 'Steamed fermented cassava couscous, traditional West African side.', 7.99, '/assets/food/attieke.jpg', 'sides', 1, false, 8, ARRAY[]::TEXT[]),
+('Jollof Rice', 'Fragrant rice cooked in rich tomato sauce with peppers and spices.', 9.99, '/assets/food/jollof-rice.jpg', 'sides', 2, true, 15, ARRAY[]::TEXT[]),
 ('Grilled Corn', 'Sweet corn grilled over open flames with herb butter.', 6.99, '/assets/food/grilled-corn.jpg', 'sides', 1, false, 12, ARRAY['dairy']);
 
 -- Insert sample promotions

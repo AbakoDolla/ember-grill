@@ -32,7 +32,7 @@ Vous avez deux options :
 npx supabase login
 
 # Lier le projet (remplacez VOTRE_PROJECT_ID par l'ID de votre projet)
-npx supabase link --project-ref VOTRE_PROJECT_ID
+npx supabase link --project-ref hhwmzjxqphdshyietbbi
 
 # Appliquer les migrations
 npx supabase db push

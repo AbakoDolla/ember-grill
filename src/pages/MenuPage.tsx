@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { menuItems, categories, MenuItem } from '@/data/menu';
 import MenuCard from '@/components/MenuCard';
 import Footer from '@/components/Footer';
-import { Search, SlidersHorizontal } from 'lucide-react';
+import { AlertTriangle, Search, SlidersHorizontal } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
 export default function MenuPage() {
@@ -23,7 +23,7 @@ export default function MenuPage() {
   return (
     <div className="min-h-screen bg-background pt-24 pb-12">
       {/* Hero */}
-      <section className="px-4 md:px-8 mb-12">
+      <section className="px-4 sm:px-6 md:px-8 mb-8 sm:mb-12">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -36,6 +36,31 @@ export default function MenuPage() {
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               {t('menu.description')}
             </p>
+          </motion.div>
+
+          {/* Delivery Notice */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="max-w-4xl mx-auto mb-8"
+          >
+            <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg p-6">
+              <div className="flex items-start gap-4">
+                <AlertTriangle className="w-6 h-6 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+                <div className="space-y-2">
+                  <h3 className="font-semibold text-amber-800 dark:text-amber-200">
+                    📅 Système de Commande à l'Avance
+                  </h3>
+                  <div className="text-amber-700 dark:text-amber-300 space-y-1">
+                    <p>• <strong>Commande 7 jours minimum à l'avance</strong> pour garantir la fraîcheur</p>
+                    <p>• <strong>Livraison uniquement le vendredi, samedi et dimanche</strong></p>
+                    <p>• <strong>Paiement immédiat</strong> après validation de la commande</p>
+                    <p>• Sélectionnez votre date et heure de livraison lors du checkout</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </motion.div>
 
           {/* Search & Filter */}
@@ -85,7 +110,7 @@ export default function MenuPage() {
       </section>
 
       {/* Menu Grid */}
-      <section className="px-4 md:px-8 mb-16">
+      <section className="px-4 sm:px-6 md:px-8 mb-12 sm:mb-16">
         <div className="max-w-7xl mx-auto">
           {filteredItems.length > 0 ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

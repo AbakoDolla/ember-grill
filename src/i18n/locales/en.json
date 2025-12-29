@@ -49,20 +49,20 @@
   "favorites": {
     "title": "Customer",
     "titleHighlight": "Favorites",
-    "subtitle": "The dishes our customers can't stop ordering",
+    "subtitle": "The dishes our customers keep ordering",
     "viewAll": "View Full Menu"
   },
   "cta": {
     "title": "Ready to Taste the",
     "titleHighlight": "Braise",
-    "description": "Order now and experience the most authentic local Cameroonian fish braised. Advance order of one week required for optimal freshness."
+    "description": "Order now and discover the most authentic local Cameroonian fish braised. One week advance order required for optimal freshness."
   },
   "categories": {
     "all": "All Fish",
     "fish": "Braised Fish",
-    "beef": "Braised Fish",
+    "beef": "Meat",
     "braise": "Cameroonian Braise",
-    "sides": "Braised Fish"
+    "sides": "Sides"
   },
   "cart": {
     "title": "Your Cart",
@@ -73,10 +73,12 @@
     "subtotal": "Subtotal",
     "deliveryFee": "Delivery Fee",
     "freeDelivery": "Free",
-    "addForFreeDelivery": "Add €{{amount}} more for free delivery",
+    "addForFreeDelivery": "Add ${{amount}} more for free delivery",
     "total": "Total",
-    "checkout": "Proceed to Checkout",
-    "continueShopping": "Continue Shopping"
+    "checkout": "Checkout",
+    "continueShopping": "Continue Shopping",
+    "addedToCart": "added to cart",
+    "readyWhenYouAre": "Ready when you are!"
   },
   "footer": {
     "description": "Local Cameroonian fish braised according to ancestral traditions, delivered fresh to your door across Belgium after one week advance order.",
@@ -97,24 +99,24 @@
   },
   "about": {
     "title": "The Story Behind",
-    "brand": "BrazaFish carole",
+    "brand": "BrazaFish elora",
     "mission": "Our Mission",
     "values": "Our Values",
     "authenticFire": {
       "title": "Authentic Braise",
-      "description": "Every fish is braised according to traditional Cameroonian methods, capturing the essence of ancestral cuisine."
+      "description": "Each fish is braised according to traditional Cameroonian methods, capturing the essence of ancestral cuisine."
     },
     "communityFirst": {
       "title": "Cameroonian Community",
-      "description": "We support local fishermen and bring the Cameroonian diaspora together through our braised fish."
+      "description": "We support local fishermen and bring together the Cameroonian diaspora through our braised fish."
     },
     "premiumQuality": {
       "title": "Premium Quality",
-      "description": "Only the finest local fish from Cameroon make it to your plate. No compromises, ever."
+      "description": "Only the best local fish from Cameroon makes it to your plate. No compromises, ever."
     },
     "madeWithLove": {
       "title": "Made with Love",
-      "description": "Each recipe has been passed down through generations and prepared with care."
+      "description": "Each recipe has been passed down from generation to generation and prepared with care."
     },
     "team": "Our Team",
     "founder": "Founder & Head Chef",
@@ -122,31 +124,25 @@
     "operations": "Operations"
   },
   "story": {
-    "subtitle": "Born from a passion for authentic local Cameroonian fish flavors and a dream to share them. This is our journey.",
-    "title": "From Cameroon Rivers to World Tables",
-    "p1": "BraiseRoyale began in 2019 when our founder, Amara Diallo, missed the smoky, fire-kissed flavors of his grandmother's cooking in Cameroon. What started as weekend braises for friends quickly became the most sought-after Cameroonian braise.",
-    "p2": "Today, we serve thousands of customers, bringing the authentic taste of local Cameroonian fish braised to your doorstep. Every fish is hand-selected, every braise is slow-cooked with love.",
-    "p3": "Our mission is simple: to make world-class Cameroonian cuisine accessible to everyone, delivered fresh and delicious, without compromising on tradition or taste."
+    "subtitle": "Born from a passion for authentic tastes of local Cameroonian fish and a dream to share them. This is our journey.",
+    "title": "From Cameroonian Rivers to World Tables",
+    "p1": "BraiseRoyale started in 2019 when our founder, Amara Diallo, missed the smoky, fire-kissed flavors of his grandmother's cooking in Cameroon. What started as weekend braises for friends quickly became the most sought-after Cameroonian braise.",
+    "p2": "Today, we serve thousands of customers, bringing the authentic taste of local Cameroonian fish braised to your door. Each fish is hand-selected, each braise is slowly cooked with love.",
+    "p3": "Our mission is simple: make world-class Cameroonian cuisine accessible to everyone, delivered fresh and delicious, without compromising on tradition or taste."
   },
   "menu": {
     "title": "Our Menu",
-    "description": "Explore our selection of local Cameroonian fish braised according to ancestral traditions, crafted with passion and authentic flavors",
+    "description": "Discover our selection of local Cameroonian fish braised according to ancestral traditions, made with passion and authentic flavors",
     "filters": "Filters",
     "noDishes": "No dishes found matching your search.",
     "clearFilters": "Clear filters"
   },
-  "cart": {
-    "addedToCart": "added to cart",
-    "readyWhenYouAre": "Ready when you are!",
-    "empty": "Your cart is empty",
-    "emptyDescription": "Add some delicious items from our menu to get started",
-    "browseMenu": "Browse Menu",
-    "subtotal": "Subtotal",
-    "delivery": "Delivery",
-    "free": "Free",
-    "total": "Total",
-    "checkout": "Checkout",
-    "continueShopping": "Continue Shopping"
+  "contact": {
+    "title": "Contact Us",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send"
   },
   "auth": {
     "signIn": "Sign In",
@@ -165,13 +161,6 @@
     "createAccount": "Create your account",
     "signingIn": "Signing in...",
     "creatingAccount": "Creating account..."
-  },
-  "favorites": {
-    "title": "Your Favorite Dishes",
-    "subtitle": "Your favorite dishes to order with one click",
-    "empty": "No favorite dishes",
-    "emptyDescription": "Add dishes to your favorites from the menu",
-    "remove": "Remove from favorites"
   },
   "orders": {
     "title": "Your Orders",
@@ -192,15 +181,46 @@
     "favoritesTitle": "Your Favorite Dishes",
     "favoritesSubtitle": "Your favorite dishes to order faster",
     "recentOrders": "Recent Orders",
-    "orderAgain": "Order again",
-    "settings": {
-      "title": "Settings",
-      "account": "Account Settings",
-      "notifications": "Notifications",
-      "privacy": "Privacy",
-      "language": "Language & Region",
-      "security": "Security",
-      "dangerZone": "Danger Zone"
-    }
+    "orderAgain": "Order again"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your account settings and preferences",
+    "profile": {
+      "title": "Profile",
+      "description": "Update your personal information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email Address",
+      "phone": "Phone Number"
+    },
+    "preferences": {
+      "title": "Preferences",
+      "description": "Customize your experience",
+      "language": "Language",
+      "theme": "Theme",
+      "currency": "Currency",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Choose how you want to be notified",
+      "email": "Email Notifications",
+      "emailDescription": "Receive order updates via email",
+      "push": "Push Notifications",
+      "pushDescription": "Receive push notifications in your browser",
+      "sms": "SMS Notifications",
+      "smsDescription": "Receive important updates via SMS"
+    },
+    "privacy": {
+      "title": "Privacy & Security",
+      "description": "Manage your privacy and security",
+      "changePassword": "Change Password",
+      "downloadData": "Download My Data",
+      "deleteAccount": "Delete Account"
+    },
+    "save": "Save Changes"
   }
 }

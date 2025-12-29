@@ -18,7 +18,7 @@
     "title1": "Poissons",
     "title2": "Locaux",
     "title3": "Braisés à la Perfection",
-    "description": "Découvrez le goût authentique des poissons locaux du Cameroun braisés selon les traditions ancestrales. Livré partout en Belgique après commande préalable d'une semaine.",
+    "description": "Découvrez le goût authentique des poissons locaux du Cameroun braisés selon les traditions ancestrales. Livraison uniquement le vendredi, samedi et dimanche après commande préalable d'une semaine.",
     "howItWorks": "Comment Commander",
     "stats": {
       "customers": "Clients Satisfaits",
@@ -34,12 +34,12 @@
       "description": "Cuisson lente et savoureuse selon les méthodes ancestrales camerounaises"
     },
     "delivery": {
-      "title": "Commande à l'Avance",
-      "description": "Réservez votre poisson braisé une semaine à l'avance pour une fraîcheur garantie"
+      "title": "Livraison Week-End",
+      "description": "Livraison uniquement le vendredi, samedi et dimanche après paiement immédiat de la commande"
     },
     "belgium": {
       "title": "Livraison en Belgique",
-      "description": "Service de livraison partout en Belgique pour vos poissons braisés du Cameroun"
+      "description": "Service de livraison partout en Belgique pour vos poissons braisés du Cameroun le week-end"
     },
     "quality": {
       "title": "Poissons du Cameroun",
@@ -55,14 +55,14 @@
   "cta": {
     "title": "Prêt à Goûter la",
     "titleHighlight": "Braise",
-    "description": "Commandez maintenant et découvrez les poissons locaux du Cameroun braisés les plus authentiques. Commande préalable d'une semaine requise pour une fraîcheur optimale."
+    "description": "Commandez maintenant et découvrez les poissons locaux du Cameroun braisés les plus authentiques. Livraison uniquement le vendredi, samedi et dimanche après paiement immédiat."
   },
   "categories": {
     "all": "Tous les Poissons",
     "fish": "Poissons Braisés",
-    "beef": "Poissons Braisés",
+    "beef": "Viandes",
     "braise": "Braise Camerounaise",
-    "sides": "Poissons Braisés"
+    "sides": "Accompagnements"
   },
   "cart": {
     "title": "Votre Panier",
@@ -76,10 +76,12 @@
     "addForFreeDelivery": "Ajoutez €{{amount}} de plus pour la livraison gratuite",
     "total": "Total",
     "checkout": "Passer à la Caisse",
-    "continueShopping": "Continuer les Achats"
+    "continueShopping": "Continuer les Achats",
+    "addedToCart": "ajouté au panier",
+    "readyWhenYouAre": "Prêt quand vous l'êtes !"
   },
   "footer": {
-    "description": "Poissons locaux du Cameroun braisés selon les traditions ancestrales, livrés frais à votre porte dans toute la Belgique après commande préalable d'une semaine.",
+    "description": "Poissons locaux du Cameroun braisés selon les traditions ancestrales, livrés frais à votre porte dans toute la Belgique uniquement le vendredi, samedi et dimanche après paiement immédiat.",
     "quickLinks": "Liens Rapides",
     "support": "Support",
     "contactUs": "Nous Contacter",
@@ -97,7 +99,7 @@
   },
   "about": {
     "title": "L'Histoire Derrière",
-    "brand": "BrazaFish carole",
+    "brand": "BrazaFish elora",
     "mission": "Notre Mission",
     "values": "Nos Valeurs",
     "authenticFire": {
@@ -135,19 +137,6 @@
     "noDishes": "Aucun plat trouvé correspondant à votre recherche.",
     "clearFilters": "Effacer les filtres"
   },
-  "cart": {
-    "addedToCart": "ajouté au panier",
-    "readyWhenYouAre": "Prêt quand vous l'êtes !",
-    "empty": "Votre panier est vide",
-    "emptyDescription": "Ajoutez quelques délicieux plats de notre menu pour commencer",
-    "browseMenu": "Parcourir le Menu",
-    "subtotal": "Sous-total",
-    "delivery": "Livraison",
-    "free": "Gratuit",
-    "total": "Total",
-    "checkout": "Commander",
-    "continueShopping": "Continuer les Achats"
-  },
   "auth": {
     "signIn": "Se Connecter",
     "signUp": "S'Inscrire",
@@ -165,13 +154,6 @@
     "createAccount": "Créez votre compte",
     "signingIn": "Connexion en cours...",
     "creatingAccount": "Création du compte..."
-  },
-  "favorites": {
-    "title": "Vos Plats Préférés",
-    "subtitle": "Vos plats préférés pour commander en un clic",
-    "empty": "Aucun plat préféré",
-    "emptyDescription": "Ajoutez des plats à vos favoris depuis le menu",
-    "remove": "Retirer des favoris"
   },
   "orders": {
     "title": "Vos Commandes",
@@ -192,15 +174,46 @@
     "favoritesTitle": "Vos Plats Préférés",
     "favoritesSubtitle": "Vos plats préférés pour commander plus rapidement",
     "recentOrders": "Commandes Récentes",
-    "orderAgain": "Commander à nouveau",
-    "settings": {
-      "title": "Paramètres",
-      "account": "Paramètres du Compte",
-      "notifications": "Notifications",
-      "privacy": "Confidentialité",
-      "language": "Langue et Région",
-      "security": "Sécurité",
-      "dangerZone": "Zone de Danger"
-    }
+    "orderAgain": "Commander à nouveau"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "subtitle": "Gérez vos paramètres de compte et vos préférences",
+    "profile": {
+      "title": "Profil",
+      "description": "Mettez à jour vos informations personnelles",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Adresse e-mail",
+      "phone": "Numéro de téléphone"
+    },
+    "preferences": {
+      "title": "Préférences",
+      "description": "Personnalisez votre expérience",
+      "language": "Langue",
+      "theme": "Thème",
+      "currency": "Devise",
+      "light": "Clair",
+      "dark": "Sombre",
+      "system": "Système"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Choisissez comment vous souhaitez être notifié",
+      "email": "Notifications par e-mail",
+      "emailDescription": "Recevez des mises à jour sur vos commandes par e-mail",
+      "push": "Notifications push",
+      "pushDescription": "Recevez des notifications push dans votre navigateur",
+      "sms": "Notifications SMS",
+      "smsDescription": "Recevez des mises à jour importantes par SMS"
+    },
+    "privacy": {
+      "title": "Confidentialité et Sécurité",
+      "description": "Gérez votre confidentialité et votre sécurité",
+      "changePassword": "Changer le mot de passe",
+      "downloadData": "Télécharger mes données",
+      "deleteAccount": "Supprimer le compte"
+    },
+    "save": "Enregistrer les modifications"
   }
 }

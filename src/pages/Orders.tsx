@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -18,65 +18,15 @@ import {
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useTranslation } from 'react-i18next'
-import supabase from '@/lib/supabase'
+import { useOrders } from '@/hooks/useOrders'
 
-interface Order {
-  id: string
-  status: string
-  total_amount: number
-  created_at: string
-  delivery_address?: string
-  estimated_delivery_time?: string
-  order_items: Array<{
-    quantity: number
-    unit_price: number
-    menu_item: {
-      name: string
-      image_url?: string
-    }
-  }>
-}
+import { OrderData } from '@/hooks/useOrders'
 
 export default function OrdersPage() {
   const { user } = useAuth()
   const { t } = useTranslation()
-  const [orders, setOrders] = useState<Order[]>([])
-  const [loading, setLoading] = useState(true)
+  const { orders, loading, error } = useOrders(user?.id)
   const [activeTab, setActiveTab] = useState('all')
-
-  const fetchOrders = useCallback(async () => {
-    try {
-      setLoading(true)
-      const { data, error } = await supabase
-        .from('orders')
-        .select(`
-          *,
-          order_items (
-            quantity,
-            unit_price,
-            menu_item:menu_items (
-              name,
-              image_url
-            )
-          )
-        `)
-        .eq('user_id', user?.id)
-        .order('created_at', { ascending: false })
-
-      if (error) throw error
-      setOrders(data || [])
-    } catch (error) {
-      console.error('Error fetching orders:', error)
-    } finally {
-      setLoading(false)
-    }
-  }, [user?.id])
-
-  useEffect(() => {
-    if (user) {
-      fetchOrders()
-    }
-  }, [user, fetchOrders])
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -235,7 +185,7 @@ export default function OrdersPage() {
                                     <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-xs font-medium">
                                       {item.quantity}
                                     </div>
-                                    <span className="flex-1">{item.menu_item?.name}</span>
+                                    <span className="flex-1">{item.menu_items?.name}</span>
                                     <span className="font-medium">{(item.unit_price * item.quantity).toFixed(2)}€</span>
                                   </div>
                                 ))}
@@ -274,17 +224,20 @@ export default function OrdersPage() {
                                 </div>
                               )}
 
-                              {order.estimated_delivery_time && (
+                              {order.requested_delivery_date && (
                                 <div>
                                   <h4 className="font-medium mb-2 flex items-center gap-2">
                                     <Clock className="h-4 w-4" />
-                                    Livraison estimée
+                                    Livraison demandée
                                   </h4>
                                   <p className="text-sm text-muted-foreground">
-                                    {new Date(order.estimated_delivery_time).toLocaleTimeString('fr-FR', {
-                                      hour: '2-digit',
-                                      minute: '2-digit'
+                                    {new Date(order.requested_delivery_date).toLocaleDateString('fr-FR', {
+                                      weekday: 'long',
+                                      year: 'numeric',
+                                      month: 'long',
+                                      day: 'numeric'
                                     })}
+                                    {order.estimated_delivery_time && ` à ${order.estimated_delivery_time}`}
                                   </p>
                                 </div>
                               )}

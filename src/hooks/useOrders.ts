@@ -16,15 +16,18 @@ export interface OrderData {
   id: string
   total_amount: number
   status: string
+  payment_status: string
   delivery_address: string
   delivery_fee: number
   special_instructions?: string
-  estimated_delivery_time: string
+  requested_delivery_date: string // Date de livraison souhaitée
+  estimated_delivery_time?: string // Heure de livraison estimée
+  actual_delivery_time?: string
+  payment_method?: string
+  payment_transaction_id?: string
   created_at: string
   customer_id: string
   paid_at?: string
-  payment_method?: string
-  payment_transaction_id?: string
   order_items: Array<{
     id: string
     quantity: number
@@ -82,7 +85,9 @@ export function useOrders(customerId?: string) {
     cartItems: CartItem[],
     deliveryAddress: string,
     specialInstructions?: string,
-    promotionCode?: string
+    promotionCode?: string,
+    requestedDeliveryDate?: string,
+    estimatedDeliveryTime?: string
   ) => {
     try {
       setLoading(true)
@@ -94,7 +99,9 @@ export function useOrders(customerId?: string) {
           cartItems,
           deliveryAddress,
           specialInstructions,
-          promotionCode
+          promotionCode,
+          requestedDeliveryDate,
+          estimatedDeliveryTime
         }
       })
 

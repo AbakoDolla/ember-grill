@@ -1,23 +1,106 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useTranslation } from 'react-i18next';
 import { useCart } from '@/contexts/CartContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { useOrders } from '@/hooks/useOrders';
 import Footer from '@/components/Footer';
-import { Minus, Plus, Trash2, ArrowRight, ShoppingBag } from 'lucide-react';
+import DeliveryDatePicker from '@/components/DeliveryDatePicker';
+import PayPalPayment from '@/components/PayPalPaymentSimple';
+import { Minus, Plus, Trash2, ArrowRight, ShoppingBag, CreditCard, User, Phone, MapPin } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function CartPage() {
   const { t } = useTranslation();
-  const { items, updateQuantity, removeItem, total } = useCart();
+  const { items, updateQuantity, removeItem, total, clearCart } = useCart();
+  const { user } = useAuth();
+  const { createOrder, processPayment } = useOrders();
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string>('');
+  const [customerInfo, setCustomerInfo] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: ''
+  });
+  const [specialInstructions, setSpecialInstructions] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'paypal'>('card');
 
   const deliveryFee = total > 50 ? 0 : 4.99;
   const grandTotal = total + deliveryFee;
 
+  const handleCheckout = async (paymentData?: any) => {
+    if (!selectedDate || !selectedTime) {
+      toast.error('Veuillez sélectionner une date et une heure de livraison');
+      return;
+    }
+
+    // Validation des informations selon que l'utilisateur est connecté ou non
+    if (!user) {
+      if (!customerInfo.email || !customerInfo.firstName || !customerInfo.lastName || !customerInfo.phone || !customerInfo.address) {
+        toast.error('Veuillez remplir toutes les informations de livraison');
+        return;
+      }
+    }
+
+    setIsProcessing(true);
+    try {
+      // Utiliser les infos de l'utilisateur connecté ou les infos du formulaire
+      const orderCustomer = user ? {
+        email: user.email || '',
+        firstName: user.firstName || customerInfo.firstName,
+        lastName: user.lastName || customerInfo.lastName,
+        phone: user.phone || customerInfo.phone
+      } : {
+        email: customerInfo.email,
+        firstName: customerInfo.firstName,
+        lastName: customerInfo.lastName,
+        phone: customerInfo.phone
+      };
+
+      // Créer la commande
+      const orderData = await createOrder(
+        orderCustomer,
+        items,
+        user?.address || customerInfo.address,
+        specialInstructions,
+        undefined, // promotionCode
+        selectedDate.toISOString().split('T')[0], // requestedDeliveryDate
+        selectedTime // estimatedDeliveryTime
+      );
+
+      toast.success('Commande créée avec succès !');
+
+      // Traiter le paiement
+      const paymentType = paymentMethod === 'paypal' ? 'paypal' : 'card';
+      await processPayment(orderData.id, paymentType, paymentData || {});
+
+      toast.success('Paiement traité avec succès ! Votre commande est confirmée.');
+
+      // Vider le panier
+      clearCart();
+
+      // Rediriger vers la page des commandes
+      window.location.href = '/orders';
+
+    } catch (error) {
+      toast.error('Erreur lors du traitement de la commande : ' + error.message);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   if (items.length === 0) {
     return (
       <div className="min-h-screen bg-background pt-24 pb-12">
-        <div className="max-w-2xl mx-auto px-4 md:px-8 text-center">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 md:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -44,7 +127,7 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-12">
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -66,9 +149,9 @@ export default function CartPage() {
                 <Card variant="glass" className="p-4 md:p-6">
                   <div className="flex gap-4">
                     {/* Image */}
-                    <img 
-                      src={item.image} 
-                      alt={item.name} 
+                    <img
+                      src={item.image}
+                      alt={item.name}
                       className="w-20 h-20 md:w-24 md:h-24 rounded-xl object-cover shrink-0"
                     />
 
@@ -116,6 +199,14 @@ export default function CartPage() {
                 </Card>
               </motion.div>
             ))}
+
+            {/* Delivery Date Picker */}
+            <DeliveryDatePicker
+              selectedDate={selectedDate}
+              selectedTime={selectedTime}
+              onDateSelect={setSelectedDate}
+              onTimeSelect={setSelectedTime}
+            />
           </div>
 
           {/* Order Summary */}
@@ -149,13 +240,135 @@ export default function CartPage() {
                 </div>
               </div>
 
-              <Button variant="hero" className="w-full" size="lg">
-                {t('cart.checkout')}
-                <ArrowRight className="w-5 h-5" />
-              </Button>
+              {/* Informations client */}
+              {!user && (
+                <div className="space-y-4 mb-6">
+                  <h3 className="font-medium flex items-center gap-2">
+                    <User className="w-4 h-4" />
+                    Informations de livraison
+                  </h3>
+                  
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <Label htmlFor="firstName">Prénom</Label>
+                      <Input
+                        id="firstName"
+                        value={customerInfo.firstName}
+                        onChange={(e) => setCustomerInfo(prev => ({ ...prev, firstName: e.target.value }))}
+                        placeholder="Votre prénom"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="lastName">Nom</Label>
+                      <Input
+                        id="lastName"
+                        value={customerInfo.lastName}
+                        onChange={(e) => setCustomerInfo(prev => ({ ...prev, lastName: e.target.value }))}
+                        placeholder="Votre nom"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={customerInfo.email}
+                      onChange={(e) => setCustomerInfo(prev => ({ ...prev, email: e.target.value }))}
+                      placeholder="votre@email.com"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="phone">Téléphone</Label>
+                    <Input
+                      id="phone"
+                      value={customerInfo.phone}
+                      onChange={(e) => setCustomerInfo(prev => ({ ...prev, phone: e.target.value }))}
+                      placeholder="+33 6 XX XX XX XX"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="address">Adresse de livraison</Label>
+                    <Input
+                      id="address"
+                      value={customerInfo.address}
+                      onChange={(e) => setCustomerInfo(prev => ({ ...prev, address: e.target.value }))}
+                      placeholder="Votre adresse complète"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="instructions">Instructions spéciales (optionnel)</Label>
+                    <Input
+                      id="instructions"
+                      value={specialInstructions}
+                      onChange={(e) => setSpecialInstructions(e.target.value)}
+                      placeholder="Sonnette cassée, etc."
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Méthode de paiement */}
+              <div className="space-y-4 mb-6">
+                <h3 className="font-medium flex items-center gap-2">
+                  <CreditCard className="w-4 h-4" />
+                  Méthode de paiement
+                </h3>
+                
+                <div className="grid grid-cols-2 gap-3">
+                  <Button
+                    variant={paymentMethod === 'card' ? 'default' : 'outline'}
+                    onClick={() => setPaymentMethod('card')}
+                    className="h-12"
+                  >
+                    <CreditCard className="w-4 h-4 mr-2" />
+                    Carte bancaire
+                  </Button>
+                  <Button
+                    variant={paymentMethod === 'paypal' ? 'default' : 'outline'}
+                    onClick={() => setPaymentMethod('paypal')}
+                    className="h-12"
+                  >
+                    <div className="w-4 h-4 mr-2 bg-blue-600 rounded" />
+                    PayPal
+                  </Button>
+                </div>
+              </div>
+
+              {/* PayPal Payment Component */}
+              {paymentMethod === 'paypal' && (
+                <div className="mb-6">
+                  <PayPalPayment
+                    amount={grandTotal}
+                    onSuccess={(data) => handleCheckout(data)}
+                    onError={(error) => console.error('PayPal error:', error)}
+                    onCancel={() => toast.info('Paiement PayPal annulé')}
+                    disabled={!selectedDate || !selectedTime || (!user && (!customerInfo.email || !customerInfo.firstName || !customerInfo.lastName || !customerInfo.phone || !customerInfo.address))}
+                  />
+                </div>
+              )}
+
+              {/* Cart Payment Button */}
+              {paymentMethod === 'card' && (
+                <Button
+                  variant="hero"
+                  className="w-full"
+                  size="lg"
+                  disabled={!selectedDate || !selectedTime || isProcessing}
+                  onClick={() => handleCheckout()}
+                >
+                  <CreditCard className="w-5 h-5 mr-2" />
+                  {isProcessing ? 'Traitement...' : 'Confirmer la commande et payer'}
+                  <ArrowRight className="w-5 h-5" />
+                </Button>
+              )}
 
               <p className="text-muted-foreground text-sm text-center mt-4">
-                Secure checkout powered by Stripe
+                {paymentMethod === 'paypal' ? 'Paiement sécurisé via PayPal' : 'Paiement sécurisé •'} Livraison {selectedDate ? selectedDate.toLocaleDateString('fr-FR', { weekday: 'long' }) : 'le week-end'}
               </p>
             </Card>
           </motion.div>

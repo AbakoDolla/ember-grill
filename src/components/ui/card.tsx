@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'glass' | 'fire';
+  variant?: 'default' | 'glass' | 'fire' | 'magnetic' | 'neon' | 'premium';
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
@@ -11,10 +11,13 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     <div
       ref={ref}
       className={cn(
-        "rounded-2xl text-card-foreground transition-all duration-300",
-        variant === 'default' && "bg-card border border-border shadow-glass",
-        variant === 'glass' && "bg-card/50 backdrop-blur-xl border border-border/50",
-        variant === 'fire' && "bg-card/50 backdrop-blur-xl border border-border/50 hover:border-primary/30 hover:shadow-fire",
+        "rounded-2xl text-card-foreground transition-all duration-300 transform-gpu backface-hidden",
+        variant === 'default' && "bg-card border border-border shadow-glass hover:shadow-lg hover:scale-105",
+        variant === 'glass' && "glass-card hover:scale-105",
+        variant === 'fire' && "glass-card hover:border-primary/50 hover:shadow-fire hover:scale-105",
+        variant === 'magnetic' && "magnetic-border hover:scale-105",
+        variant === 'neon' && "glass-card border border-primary/30 neon-text hover:border-primary hover:shadow-fire hover:scale-105",
+        variant === 'premium' && "glass-card border border-accent/30 hover:border-accent hover:shadow-gold hover:scale-105",
         className
       )}
       {...props}

@@ -13,14 +13,14 @@ export default function Footer() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
       
       {/* Floating WhatsApp & Call Buttons */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+      <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 flex flex-col gap-3">
         <motion.a
           href="tel:+32212345678"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          className="w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-lg fire-glow"
+          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary flex items-center justify-center shadow-lg fire-glow"
         >
-          <Phone className="w-6 h-6 text-primary-foreground" />
+          <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
         </motion.a>
         <motion.a
           href="https://wa.me/32212345678"
@@ -28,13 +28,13 @@ export default function Footer() {
           rel="noopener noreferrer"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          className="w-14 h-14 rounded-full bg-fresh flex items-center justify-center shadow-lg"
+          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-fresh flex items-center justify-center shadow-lg"
         >
-          <MessageCircle className="w-6 h-6 text-fresh-foreground" />
+          <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-fresh-foreground" />
         </motion.a>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {/* Brand */}
           <motion.div
@@ -58,7 +58,7 @@ export default function Footer() {
                     BrazaFish
                   </span>
                   <span className="font-display font-semibold text-base text-blue-600 leading-tight">
-                    Carole
+                    elora
                   </span>
                 </div>
                 <span className="text-xs text-muted-foreground font-medium">

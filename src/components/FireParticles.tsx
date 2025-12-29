@@ -84,11 +84,25 @@ function Particles({ count = 100 }: { count?: number }) {
 }
 
 export default function FireParticles() {
+  const handleContextLoss = (gl: THREE.WebGLRenderer) => {
+    console.warn('WebGL context lost in FireParticles component');
+    // Optionally handle context restoration
+    gl.domElement.addEventListener('webglcontextrestored', () => {
+      console.log('WebGL context restored in FireParticles component');
+    }, { once: true });
+  };
+
   return (
     <div className="absolute inset-0 pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 10], fov: 60 }}
         style={{ background: 'transparent' }}
+        onCreated={({ gl }) => {
+          gl.domElement.addEventListener('webglcontextlost', (event) => {
+            event.preventDefault();
+            handleContextLoss(gl);
+          });
+        }}
       >
         <Particles count={80} />
       </Canvas>

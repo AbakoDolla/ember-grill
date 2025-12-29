@@ -1,15 +1,21 @@
 -- Create tables for Ember Grill restaurant application
 
--- Enable UUID extension
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
 -- Enable pg_cron for scheduled tasks (optional)
 -- CREATE EXTENSION IF NOT EXISTS "pg_cron";
 
 -- Create custom types
-CREATE TYPE order_status AS ENUM ('pending', 'confirmed', 'preparing', 'ready', 'delivered', 'cancelled');
-CREATE TYPE payment_status AS ENUM ('pending', 'paid', 'failed', 'refunded');
-CREATE TYPE user_role AS ENUM ('customer', 'admin', 'staff');
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'order_status') THEN
+        CREATE TYPE order_status AS ENUM ('pending', 'confirmed', 'preparing', 'ready', 'delivered', 'cancelled');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'payment_status') THEN
+        CREATE TYPE payment_status AS ENUM ('pending', 'paid', 'failed', 'refunded');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'user_role') THEN
+        CREATE TYPE user_role AS ENUM ('customer', 'admin', 'staff');
+    END IF;
+END$$;
 
 -- Create profiles table (extends auth.users)
 CREATE TABLE IF NOT EXISTS profiles (
@@ -26,7 +32,7 @@ CREATE TABLE IF NOT EXISTS profiles (
 
 -- Create menu_items table
 CREATE TABLE IF NOT EXISTS menu_items (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   description TEXT,
   price DECIMAL(10,2) NOT NULL,
@@ -43,7 +49,7 @@ CREATE TABLE IF NOT EXISTS menu_items (
 
 -- Create customers table (for guest orders)
 CREATE TABLE IF NOT EXISTS customers (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
   first_name TEXT,
   last_name TEXT,
@@ -54,7 +60,7 @@ CREATE TABLE IF NOT EXISTS customers (
 
 -- Create orders table
 CREATE TABLE IF NOT EXISTS orders (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   customer_id UUID REFERENCES customers(id),
   user_id UUID REFERENCES auth.users(id),
   status order_status DEFAULT 'pending',
@@ -73,7 +79,7 @@ CREATE TABLE IF NOT EXISTS orders (
 
 -- Create order_items table
 CREATE TABLE IF NOT EXISTS order_items (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   order_id UUID REFERENCES orders(id) ON DELETE CASCADE,
   menu_item_id UUID REFERENCES menu_items(id),
   quantity INTEGER NOT NULL CHECK (quantity > 0),
@@ -84,7 +90,7 @@ CREATE TABLE IF NOT EXISTS order_items (
 
 -- Create reviews table
 CREATE TABLE IF NOT EXISTS reviews (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   order_id UUID REFERENCES orders(id),
   user_id UUID REFERENCES auth.users(id),
   customer_id UUID REFERENCES customers(id),
@@ -97,7 +103,7 @@ CREATE TABLE IF NOT EXISTS reviews (
 
 -- Create promotions table
 CREATE TABLE IF NOT EXISTS promotions (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   code TEXT UNIQUE NOT NULL,
   description TEXT,
   discount_type TEXT NOT NULL CHECK (discount_type IN ('percentage', 'fixed')),
@@ -113,7 +119,7 @@ CREATE TABLE IF NOT EXISTS promotions (
 
 -- Create order_promotions table
 CREATE TABLE IF NOT EXISTS order_promotions (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   order_id UUID REFERENCES orders(id) ON DELETE CASCADE,
   promotion_id UUID REFERENCES promotions(id),
   discount_amount DECIMAL(10,2) NOT NULL,
@@ -122,7 +128,7 @@ CREATE TABLE IF NOT EXISTS order_promotions (
 
 -- Create delivery_zones table
 CREATE TABLE IF NOT EXISTS delivery_zones (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   postal_codes TEXT[], -- array of postal codes
   delivery_fee DECIMAL(10,2) DEFAULT 0,
@@ -134,7 +140,7 @@ CREATE TABLE IF NOT EXISTS delivery_zones (
 
 -- Create notifications table
 CREATE TABLE IF NOT EXISTS notifications (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID REFERENCES auth.users(id),
   customer_id UUID REFERENCES customers(id),
   type TEXT NOT NULL, -- 'order_status', 'promotion', 'general'
@@ -147,7 +153,7 @@ CREATE TABLE IF NOT EXISTS notifications (
 
 -- Create restaurant_settings table
 CREATE TABLE IF NOT EXISTS restaurant_settings (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   key TEXT UNIQUE NOT NULL,
   value JSONB,
   description TEXT,
@@ -362,11 +368,11 @@ $$ LANGUAGE plpgsql;
 
 -- Function to create notification
 CREATE OR REPLACE FUNCTION create_notification(
-  p_user_id UUID DEFAULT NULL,
-  p_customer_id UUID DEFAULT NULL,
   p_type TEXT,
   p_title TEXT,
   p_message TEXT,
+  p_user_id UUID DEFAULT NULL,
+  p_customer_id UUID DEFAULT NULL,
   p_data JSONB DEFAULT NULL
 )
 RETURNS UUID AS $$
@@ -458,8 +464,8 @@ INSERT INTO menu_items (name, description, price, image_url, category, spice_lev
 ('Poulet Braisé', 'Tender chicken braised in rich tomato sauce with African spices.', 21.99, '/assets/food/poulet-braise.jpg', 'braise', 2, true, 30, ARRAY['chicken']),
 ('Porc Braisé', 'Slow-braised pork in spicy palm oil sauce with vegetables.', 25.99, '/assets/food/porc-braise.jpg', 'braise', 3, false, 35, ARRAY['pork']),
 ('Plantain Fries', 'Crispy fried plantains served with spicy dipping sauce.', 8.99, '/assets/food/plantain-fries.jpg', 'sides', 2, false, 10, ARRAY['soy']),
-('Attiéké', 'Steamed fermented cassava couscous, traditional West African side.', 7.99, '/assets/food/attieke.jpg', 'sides', 1, false, 8, ARRAY[]),
-('Jollof Rice', 'Fragrant rice cooked in rich tomato sauce with peppers and spices.', 9.99, '/assets/food/jollof-rice.jpg', 'sides', 2, true, 15, ARRAY[]),
+('Attiéké', 'Steamed fermented cassava couscous, traditional West African side.', 7.99, '/assets/food/attieke.jpg', 'sides', 1, false, 8, ARRAY[]::TEXT[]),
+('Jollof Rice', 'Fragrant rice cooked in rich tomato sauce with peppers and spices.', 9.99, '/assets/food/jollof-rice.jpg', 'sides', 2, true, 15, ARRAY[]::TEXT[]),
 ('Grilled Corn', 'Sweet corn grilled over open flames with herb butter.', 6.99, '/assets/food/grilled-corn.jpg', 'sides', 1, false, 12, ARRAY['dairy']);
 
 -- Insert sample promotions

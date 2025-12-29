@@ -30,7 +30,7 @@ serve(async (req) => {
       }
     )
 
-    const { customerData, cartItems, deliveryAddress, specialInstructions, promotionCode } = await req.json()
+    const { customerData, cartItems, deliveryAddress, specialInstructions, promotionCode, requestedDeliveryDate, estimatedDeliveryTime } = await req.json()
 
     // Calculate totals
     const subtotal = cartItems.reduce((sum: number, item: CartItem) => sum + (item.price * item.quantity), 0)
@@ -93,7 +93,9 @@ serve(async (req) => {
         delivery_address: deliveryAddress,
         delivery_fee: deliveryFee,
         special_instructions: specialInstructions,
-        estimated_delivery_time: new Date(Date.now() + 45 * 60 * 1000).toISOString()
+        requested_delivery_date: requestedDeliveryDate,
+        estimated_delivery_time: estimatedDeliveryTime,
+        payment_status: 'pending' // Payment will be collected immediately after order confirmation
       })
       .select('id')
       .single()
