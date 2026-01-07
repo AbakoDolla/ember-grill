@@ -380,33 +380,7 @@ export default function AuthScreen() {
               }}></div>
             </div>
 
-            {/* Toggle */}
-            <div className="mt-6 text-center">
-              <p className="text-white/70 text-sm">
-                {isLogin ? "Don't have an account? " : "Already have an account? "}
-                <button
-                  type="button"
-                  onClick={() => setIsLogin(!isLogin)}
-                  className="font-bold transition-all"
-                  style={{
-                    color: '#ffa600'
-                  }}
-                >
-                  {isLogin ? 'Sign Up' : 'Sign In'}
-                </button>
-              </p>
-            </div>
-
-            <div className="mt-6 flex items-center">
-              <div className="flex-1 h-px" style={{
-                background: 'linear-gradient(to right, transparent, rgba(255, 255, 255, 0.15), transparent)'
-              }}></div>
-              <span className="px-4 text-xs text-white/40 font-bold tracking-wider">OR</span>
-              <div className="flex-1 h-px" style={{
-                background: 'linear-gradient(to right, transparent, rgba(255, 255, 255, 0.15), transparent)'
-              }}></div>
-            </div>
-
+            
             {/* Social Login */}
             <div className="mt-6 space-y-3">
               <button 
