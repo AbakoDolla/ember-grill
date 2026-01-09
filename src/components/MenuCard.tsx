@@ -105,7 +105,7 @@ export default function MenuCard({ item, index }: MenuCardProps) {
               onClick={handleAddToCart}
               className="group/btn"
             >
-              <Plus className="w-4 h-4 group-hover/btn:rotate-90 transition-transform duration-300" />
+              <Plus className="w-4 h-4" />
               {t('common.addToCart')}
             </Button>
           </div>
