@@ -14,6 +14,12 @@ import DeliveryDatePicker from '@/components/DeliveryDatePicker';
 import PayPalPayment from '@/components/PayPalPaymentSimple';
 import { Minus, Plus, Trash2, ArrowRight, ShoppingBag, CreditCard, User, Phone, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
+import { loadStripe } from '@stripe/stripe-js';
+import supabase from '@/lib/supabase';
+
+// Initialize Stripe (add this below your imports, before the component)
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
 
 export default function CartPage() {
   const { t } = useTranslation();
@@ -36,66 +42,74 @@ export default function CartPage() {
   const deliveryFee = total > 50 ? 0 : 4.99;
   const grandTotal = total + deliveryFee;
 
-  const handleCheckout = async (paymentData?: any) => {
-    if (!selectedDate || !selectedTime) {
-      toast.error('Veuillez sélectionner une date et une heure de livraison');
-      return;
-    }
+const handleCheckout = async () => {
+  // Validation
+  if (!selectedDate || !selectedTime) {
+    toast.error('Veuillez sélectionner une date et une heure de livraison');
+    return;
+  }
 
-    // Validation des informations selon que l'utilisateur est connecté ou non
-    if (!user) {
-      if (!customerInfo.email || !customerInfo.firstName || !customerInfo.lastName || !customerInfo.phone || !customerInfo.address) {
-        toast.error('Veuillez remplir toutes les informations de livraison');
-        return;
-      }
-    }
+  if (!user && (!customerInfo.email || !customerInfo.firstName || 
+      !customerInfo.lastName || !customerInfo.phone || !customerInfo.address)) {
+    toast.error('Veuillez remplir toutes les informations de livraison');
+    return;
+  }
 
-    setIsProcessing(true);
-    try {
-      // Utiliser les infos de l'utilisateur connecté ou les infos du formulaire
-      const orderCustomer = user ? {
-        email: user.email || '',
-        firstName: user.firstName || customerInfo.firstName,
-        lastName: user.lastName || customerInfo.lastName,
-        phone: user.phone || customerInfo.phone
-      } : {
-        email: customerInfo.email,
-        firstName: customerInfo.firstName,
-        lastName: customerInfo.lastName,
-        phone: customerInfo.phone
-      };
+  setIsProcessing(true);
+  
+  try {
+    // Prepare customer info
+    const orderCustomer = user ? {
+      email: user.email || '',
+      firstName: (user as any).firstName || customerInfo.firstName,
+      lastName: (user as any).lastName || customerInfo.lastName,
+      phone: (user as any).phone || customerInfo.phone
+    } : customerInfo;
 
-      // Créer la commande
-      const orderData = await createOrder(
-        orderCustomer,
-        items,
-        user?.address || customerInfo.address,
-        specialInstructions,
-        undefined, // promotionCode
-        selectedDate.toISOString().split('T')[0], // requestedDeliveryDate
-        selectedTime // estimatedDeliveryTime
-      );
+    // Prepare order data
+    const orderData = {
+      user_id: user?.id || null,
+      total_amount: grandTotal,
+      delivery_fee: deliveryFee,
+      status: 'pending',
+      payment_status: 'pending',
+      delivery_address: user?.address || customerInfo.address,
+      requested_delivery_date: selectedDate.toISOString().split('T')[0],
+      estimated_delivery_time: `${selectedDate.toISOString().split('T')[0]} ${selectedTime}`,
+      special_instructions: specialInstructions,
+      payment_method: 'card',
+    };
 
-      toast.success('Commande créée avec succès !');
+    // Send everything to Edge Function - let it create the order
+    const { data: sessionData, error: sessionError } = await supabase.functions
+      .invoke('create-checkout-session', {
+        body: {
+          items: items,
+          orderData: orderData,
+          customerEmail: orderCustomer.email,
+          successUrl: `${window.location.origin}/order-success?session_id={CHECKOUT_SESSION_ID}`,
+          cancelUrl: `${window.location.origin}/cart`,
+        }
+      });
 
-      // Traiter le paiement
-      const paymentType = paymentMethod === 'paypal' ? 'paypal' : 'card';
-      await processPayment(orderData.id, paymentType, paymentData || {});
+    if (sessionError) throw sessionError;
 
-      toast.success('Paiement traité avec succès ! Votre commande est confirmée.');
+    // Redirect to Stripe Checkout
+    const stripe = await stripePromise;
+    if (!stripe) throw new Error("Stripe n'a pas pu se charger");
 
-      // Vider le panier
-      clearCart();
+    const { error: redirectError } = await stripe.redirectToCheckout({
+      sessionId: sessionData.sessionId
+    });
 
-      // Rediriger vers la page des commandes
-      window.location.href = '/orders';
+    if (redirectError) throw redirectError;
 
-    } catch (error) {
-      toast.error('Erreur lors du traitement de la commande : ' + error.message);
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+  } catch (error) {
+    console.error('Checkout error:', error);
+    toast.error('Erreur lors du traitement: ' + (error as any).message);
+    setIsProcessing(false);
+  }
+};
 
   if (items.length === 0) {
     return (
@@ -319,38 +333,17 @@ export default function CartPage() {
                   Méthode de paiement
                 </h3>
                 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3">
                   <Button
                     variant={paymentMethod === 'card' ? 'default' : 'outline'}
                     onClick={() => setPaymentMethod('card')}
                     className="h-12"
                   >
                     <CreditCard className="w-4 h-4 mr-2" />
-                    Carte bancaire
-                  </Button>
-                  <Button
-                    variant={paymentMethod === 'paypal' ? 'default' : 'outline'}
-                    onClick={() => setPaymentMethod('paypal')}
-                    className="h-12"
-                  >
-                    <div className="w-4 h-4 mr-2 bg-blue-600 rounded" />
-                    PayPal
+                    Payement Stripe
                   </Button>
                 </div>
               </div>
-
-              {/* PayPal Payment Component */}
-              {paymentMethod === 'paypal' && (
-                <div className="mb-6">
-                  <PayPalPayment
-                    amount={grandTotal}
-                    onSuccess={(data) => handleCheckout(data)}
-                    onError={(error) => console.error('PayPal error:', error)}
-                    onCancel={() => toast.info('Paiement PayPal annulé')}
-                    disabled={!selectedDate || !selectedTime || (!user && (!customerInfo.email || !customerInfo.firstName || !customerInfo.lastName || !customerInfo.phone || !customerInfo.address))}
-                  />
-                </div>
-              )}
 
               {/* Cart Payment Button */}
               {paymentMethod === 'card' && (
@@ -359,7 +352,7 @@ export default function CartPage() {
                   className="w-full"
                   size="lg"
                   disabled={!selectedDate || !selectedTime || isProcessing}
-                  onClick={() => handleCheckout()}
+                  onClick={handleCheckout}
                 >
                   <CreditCard className="w-5 h-5 mr-2" />
                   {isProcessing ? 'Traitement...' : 'Confirmer la commande et payer'}

@@ -10,6 +10,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import AdminRoute from "@/components/AdminRoute";
 import WelcomeCelebration from "@/components/WelcomeCelebration";
 import { Suspense } from "react";
+import OrderSuccessPage from "@/pages/OrderSuccessPage";
 
 import MainLayout from "@/layout/MainLayout";
 
@@ -112,6 +113,7 @@ const AppContent = () => {
                   <Route path="/contact" element={<ContactPage />} />
                   <Route path="/faq" element={<FAQPage />} />
                   <Route path="/privacy" element={<PrivacyPage />} />
+                  <Route path="/order-success" element={<OrderSuccessPage />} />
                 </Route>
 
                 <Route path="*" element={<NotFound />} />
