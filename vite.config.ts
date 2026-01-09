@@ -4,9 +4,20 @@ import path from "path";
 
 export default defineConfig(() => ({
   server: {
-    host: "::",
-    port: 8080,
-    allowedHosts: [".trycloudflare.com"],
+    host: "0.0.0.0",
+    port: 3000,
+    allowedHosts: [
+      ".trycloudflare.com",
+      "10.151.199.45",
+      "localhost",
+      "127.0.0.1"
+    ],
+    strictPort: true,
+    open: false,
+    cors: true,
+    hmr: {
+      port: 3000
+    }
   },
   plugins: [react()],
   resolve: {
@@ -14,4 +25,15 @@ export default defineConfig(() => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+          ui: ['@radix-ui/react-slot']
+        }
+      }
+    }
+  }
 }));
