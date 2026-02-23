@@ -203,14 +203,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       
       // Update profile in database if needed
       if (data.phone || data.address) {
+        // Utiliser une assertion de type explicite pour contourner l'inférence stricte
+        const updateData = {
+          updated_at: new Date().toISOString(),
+          ...(data.phone !== undefined && { phone: data.phone })
+        } as Database['public']['Tables']['profiles']['Update'];
+        
         const { error: profileError } = await supabase
           .from('profiles')
-          .update({
-            phone: data.phone || null,
-            address: data.address || null,
-            updated_at: new Date().toISOString()
-          } as any)
-          .eq('id', user.id)
+          .update(updateData)
+          .eq('id', user.id);
         
         if (profileError) console.error('Profile update error:', profileError)
       }
