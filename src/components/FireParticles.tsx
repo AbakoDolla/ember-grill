@@ -1,4 +1,4 @@
-import { useRef, useMemo, Suspense } from 'react';
+import { useRef, useMemo, Suspense, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -93,17 +93,21 @@ function Particles({ count = 100 }: { count?: number }) {
 }
 
 export default function FireParticles() {
-  const handleContextLoss = (gl: THREE.WebGLRenderer) => {
-    console.warn('WebGL context lost in FireParticles component');
-    // Optionally handle context restoration
-    gl.domElement.addEventListener('webglcontextrestored', () => {
-      console.log('WebGL context restored in FireParticles component');
-    }, { once: true });
-  };
+  const [webglSupported, setWebglSupported] = useState(true);
 
   const handleContextCreationError = () => {
     console.warn('WebGL context creation failed in FireParticles component');
+    setWebglSupported(false);
   };
+
+  const handleContextLoss = () => {
+    console.warn('WebGL context lost in FireParticles component');
+    setWebglSupported(false);
+  };
+
+  if (!webglSupported) {
+    return <WebGLFallback />;
+  }
 
   return (
     <div className="absolute inset-0 pointer-events-none">
@@ -119,11 +123,10 @@ export default function FireParticles() {
         onCreated={({ gl }) => {
           gl.domElement.addEventListener('webglcontextlost', (event) => {
             event.preventDefault();
-            handleContextLoss(gl);
+            handleContextLoss();
           });
         }}
-        onError={() => console.warn('WebGL context creation failed in FireParticles')}
-        fallback={WebGLFallback}
+        onError={handleContextCreationError}
       >
         <Suspense fallback={null}>
           <Particles count={80} />

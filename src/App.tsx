@@ -76,10 +76,12 @@ const AppContent = () => {
 
                 {/* AUTH ROUTES (NO NAVBAR) */}
                 <Route path="/auth" element={<AuthScreen />} />
+                <Route path="/auth/callback" element={<AuthScreen />} />
 
                 {/* APP ROUTES (WITH NAVBAR) */}
                 <Route element={<MainLayout />}>
                   <Route path="/" element={<HomePage />} />
+                  <Route path="/home" element={<HomePage />} />
                   <Route path="/menu" element={
                     <ProtectedRoute>
                       <MenuPage />

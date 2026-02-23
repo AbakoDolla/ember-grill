@@ -149,19 +149,19 @@ const handleCheckout = async () => {
   }
 
   return (
-    <div className="min-h-screen bg-background pt-24 pb-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+    <div className="min-h-screen bg-background pt-20 sm:pt-24 pb-8 sm:pb-12">
+      <div className="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-display text-3xl md:text-4xl font-bold mb-8 text-center"
+          className="font-display text-2xl xs:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center"
         >
           {t('cart.title')} <span className="text-fire">{t('common.cart')}</span>
         </motion.h1>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Cart Items */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="lg:col-span-2 space-y-3 sm:space-y-4">
             {items.map((item, i) => (
               <motion.div
                 key={item.id}
@@ -169,43 +169,43 @@ const handleCheckout = async () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
               >
-                <Card variant="glass" className="p-4 md:p-6">
-                  <div className="flex gap-4">
+                <Card variant="glass" className="p-3 sm:p-4 md:p-6">
+                  <div className="flex gap-3 sm:gap-4">
                     {/* Image */}
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-20 h-20 md:w-24 md:h-24 rounded-xl object-cover shrink-0"
+                      className="w-16 h-16 xs:w-18 xs:h-18 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl object-cover shrink-0"
                     />
 
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-display font-bold text-lg truncate">
+                      <h3 className="font-display font-bold text-base sm:text-lg truncate">
                         {item.name}
                       </h3>
-                      <p className="text-primary font-bold text-lg">
+                      <p className="text-primary font-bold text-base sm:text-lg">
                         €{item.price.toFixed(2)}
                       </p>
                     </div>
 
                     <div className="flex flex-col items-end gap-2">
                       {/* Quantity controls */}
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1 sm:gap-2">
                         <Button
                           variant="ghost"
                           size="icon"
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="h-8 w-8"
+                          className="h-7 w-7 sm:h-8 sm:w-8"
                         >
-                          <Minus className="w-4 h-4" />
+                          <Minus className="w-3 h-3 sm:w-4 sm:h-4" />
                         </Button>
-                        <span className="font-bold w-8 text-center">{item.quantity}</span>
+                        <span className="font-bold w-6 sm:w-8 text-center text-sm sm:text-base">{item.quantity}</span>
                         <Button
                           variant="ghost"
                           size="icon"
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="h-8 w-8"
+                          className="h-7 w-7 sm:h-8 sm:w-8"
                         >
-                          <Plus className="w-4 h-4" />
+                          <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
                         </Button>
                       </div>
 
@@ -213,9 +213,9 @@ const handleCheckout = async () => {
                         variant="ghost"
                         size="sm"
                         onClick={() => removeItem(item.id)}
-                        className="text-destructive hover:text-destructive"
+                        className="text-destructive hover:text-destructive h-7 w-7 sm:h-8 sm:w-8 p-0"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
                       </Button>
                     </div>
                   </div>
@@ -238,8 +238,8 @@ const handleCheckout = async () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <Card variant="fire" className="p-6 sticky top-28">
-              <h2 className="font-display font-bold text-xl mb-6">{t('cart.orderSummary')}</h2>
+            <Card variant="fire" className="p-4 sm:p-6 sticky top-20 lg:top-28">
+              <h2 className="font-display font-bold text-lg sm:text-xl mb-4 sm:mb-6">{t('cart.orderSummary')}</h2>
 
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-muted-foreground">

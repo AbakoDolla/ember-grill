@@ -48,37 +48,37 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto">
       <div className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl px-2 sm:px-3 md:px-4 py-1 flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-6 group relative">
+          <Link to="/" className="flex items-center gap-2 sm:gap-4 md:gap-6 group relative">
             {/* Logo avec effets visuels */}
             <div className="relative">
               <img 
                 src={logo} 
                 alt="BrazaFish Logo" 
-                className="w-12 h-12 md:w-14 md:h-14 object-cover rounded-full drop-shadow-lg transition-transform duration-300 group-hover:scale-105 border-2 border-white/20"
+                className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-cover rounded-full drop-shadow-lg transition-transform duration-300 group-hover:scale-105 border-2 border-white/20"
               />
               {/* Effet de brillance */}
               <div className="absolute inset-0 bg-gradient-to-br from-orange-400/20 via-red-500/10 to-yellow-400/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             </div>
             
             {/* Nom de la marque */}
-            <div className="flex flex-col">
-              <div className="flex items-baseline gap-2">
-                <span className="font-display font-black text-lg md:text-xl bg-gradient-to-r from-orange-600 via-red-600 to-yellow-600 bg-clip-text text-transparent leading-none">
+            <div className="flex flex-col hidden xs:block">
+              <div className="flex items-baseline gap-1 sm:gap-2">
+                <span className="font-display font-black text-sm sm:text-base md:text-lg lg:text-xl bg-gradient-to-r from-orange-600 via-red-600 to-yellow-600 bg-clip-text text-transparent leading-none">
                   BrazaFish
                 </span>
-                <span className="font-display font-bold text-sm md:text-base text-blue-600 leading-none">
+                <span className="font-display font-bold text-xs sm:text-sm md:text-base lg:text-base text-blue-600 leading-none">
                   elora
                 </span>
               </div>
-              <span className="text-xs text-muted-foreground font-medium tracking-wide uppercase">
+              <span className="text-xs text-muted-foreground font-medium tracking-wide uppercase hidden sm:block">
                 Poisson Braisé Camerounais
               </span>
             </div>
             
-            {/* Particules décoratives */}
-            <div className="absolute -top-2 -right-2 w-2 h-2 bg-orange-500 rounded-full animate-pulse opacity-60"></div>
-            <div className="absolute -bottom-1 -right-4 w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse opacity-40" style={{animationDelay: '0.5s'}}></div>
-            <div className="absolute top-1 -left-3 w-1 h-1 bg-yellow-500 rounded-full animate-pulse opacity-50" style={{animationDelay: '1s'}}></div>
+            {/* Particules décoratives - cachées sur mobile */}
+            <div className="hidden sm:block absolute -top-2 -right-2 w-2 h-2 bg-orange-500 rounded-full animate-pulse opacity-60"></div>
+            <div className="hidden sm:block absolute -bottom-1 -right-4 w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse opacity-40" style={{animationDelay: '0.5s'}}></div>
+            <div className="hidden sm:block absolute top-1 -left-3 w-1 h-1 bg-yellow-500 rounded-full animate-pulse opacity-50" style={{animationDelay: '1s'}}></div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -105,17 +105,17 @@ export default function Navbar() {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
             <LanguageSwitcher />
             
             <Link to="/cart">
-              <Button variant="glass" size="icon" className="relative">
-                <ShoppingCart className="w-5 h-5" />
+              <Button variant="glass" size="icon" className="relative h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10">
+                <ShoppingCart className="w-4 h-4 sm:w-4 sm:h-4" />
                 {cartCount > 0 && (
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground text-xs font-bold rounded-full flex items-center justify-center"
+                    className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-primary text-primary-foreground text-xs font-bold rounded-full flex items-center justify-center"
                   >
                     {cartCount}
                   </motion.span>
@@ -127,8 +127,8 @@ export default function Navbar() {
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                    <Avatar className="h-10 w-10">
+                  <Button variant="ghost" className="relative h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 rounded-full">
+                    <Avatar className="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10">
                       <AvatarImage src={user.user_metadata?.avatar_url} alt={user.user_metadata?.name || user.email} />
                       <AvatarFallback className="bg-gradient-to-br from-primary to-secondary text-primary-foreground">
                         {(user.user_metadata?.name || user.email || 'U')[0].toUpperCase()}
@@ -181,7 +181,7 @@ export default function Navbar() {
               </DropdownMenu>
             ) : (
               <Link to="/auth">
-                <Button variant="fire" size="sm" className="hidden sm:flex">
+                <Button variant="fire" size="sm" className="hidden xs:flex px-2 sm:px-4">
                   {t('common.orderNow')}
                 </Button>
               </Link>
@@ -191,10 +191,10 @@ export default function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
+              className="xs:hidden h-8 w-8 sm:h-9 sm:w-9"
               onClick={() => setIsOpen(!isOpen)}
             >
-              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </Button>
           </div>
         </div>
@@ -207,7 +207,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden mt-2 bg-card/95 backdrop-blur-xl border border-border/50 rounded-2xl p-4"
+              className="xs:hidden mt-2 bg-card/95 backdrop-blur-xl border border-border/50 rounded-2xl p-3 sm:p-4"
             >
               <div className="flex flex-col gap-2">
                 {navLinks.map((link) => (

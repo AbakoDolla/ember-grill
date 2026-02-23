@@ -1,4 +1,4 @@
-import { useRef, Suspense } from 'react';
+import { useRef, Suspense, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
@@ -95,17 +95,21 @@ function EmberGlow() {
 }
 
 export default function Food3D() {
-  const handleContextLoss = (gl: THREE.WebGLRenderer) => {
-    console.warn('WebGL context lost in Food3D component');
-    // Optionally handle context restoration
-    gl.domElement.addEventListener('webglcontextrestored', () => {
-      console.log('WebGL context restored in Food3D component');
-    }, { once: true });
-  };
+  const [webglSupported, setWebglSupported] = useState(true);
 
   const handleContextCreationError = () => {
     console.warn('WebGL context creation failed in Food3D component');
+    setWebglSupported(false);
   };
+
+  const handleContextLoss = () => {
+    console.warn('WebGL context lost in Food3D component');
+    setWebglSupported(false);
+  };
+
+  if (!webglSupported) {
+    return <WebGLFallback />;
+  }
 
   return (
     <div className="w-full h-full">
@@ -121,11 +125,10 @@ export default function Food3D() {
         onCreated={({ gl }) => {
           gl.domElement.addEventListener('webglcontextlost', (event) => {
             event.preventDefault();
-            handleContextLoss(gl);
+            handleContextLoss();
           });
         }}
-        onError={() => console.warn('WebGL context creation failed in Food3D')}
-        fallback={WebGLFallback}
+        onError={handleContextCreationError}
       >
         <Suspense fallback={null}>
           <ambientLight intensity={0.3} />

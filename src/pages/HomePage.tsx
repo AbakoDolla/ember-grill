@@ -42,7 +42,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 pt-20 sm:pt-24 pb-8 sm:pb-12">
+      <section className="relative min-h-screen flex items-center justify-center px-3 sm:px-4 md:px-6 lg:px-8 pt-16 sm:pt-20 md:pt-24 pb-6 sm:pb-8 md:pb-12">
         {/* Background effects */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-card" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(18_100%_60%/0.1),transparent_70%)]" />
@@ -77,7 +77,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
+                className="font-display text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-4 sm:mb-6"
               >
                 BRAZZA
                 <br />
@@ -90,7 +90,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto lg:mx-0 mb-8"
+                className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-lg xs:max-w-xl sm:max-w-xl mx-auto lg:mx-0 mb-6 sm:mb-8"
               >
                 {t('hero.description')}
               </motion.p>
@@ -99,15 +99,15 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+                className="flex flex-col xs:flex-row gap-3 xs:gap-4 justify-center lg:justify-start"
               >
                 <Link to="/auth">
-                  <Button variant="hero" size="xl">
+                  <Button variant="hero" size="xl" className="px-4 sm:px-6 md:px-8 text-sm sm:text-base">
                     {t('common.viewMenu')}
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                   </Button>
                 </Link>
-                <Button variant="heroOutline" size="xl">
+                <Button variant="heroOutline" size="xl" className="px-4 sm:px-6 md:px-8 text-sm sm:text-base">
                   {t('hero.howItWorks')}
                 </Button>
               </motion.div>
@@ -117,7 +117,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="flex justify-center lg:justify-start gap-8 md:gap-12 mt-12"
+                className="flex justify-center lg:justify-start gap-4 xs:gap-6 sm:gap-8 md:gap-12 mt-8 xs:mt-10 sm:mt-12"
               >
                 {[
                   { value: '10K+', label: t('hero.stats.customers') },
@@ -125,10 +125,10 @@ export default function HomePage() {
                   { value: '30min', label: t('hero.stats.delivery') },
                 ].map((stat, i) => (
                   <div key={i} className="text-center lg:text-left">
-                    <div className="font-display text-2xl md:text-3xl font-bold text-foreground">
+                    <div className="font-display text-xl xs:text-2xl md:text-3xl font-bold text-foreground">
                       {stat.value}
                     </div>
-                    <div className="text-muted-foreground text-sm">{stat.label}</div>
+                    <div className="text-muted-foreground text-xs sm:text-sm">{stat.label}</div>
                   </div>
                 ))}
               </motion.div>
@@ -139,7 +139,7 @@ export default function HomePage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative h-[400px] lg:h-[500px]"
+              className="relative h-[300px] xs:h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px]"
             >
               {/* Glow behind 3D */}
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(18_100%_60%/0.2),transparent_60%)]" />
@@ -170,7 +170,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-8 bg-card">
+      <section className="py-8 sm:py-12 md:py-16 lg:py-24 px-3 sm:px-4 md:px-6 lg:px-8 bg-card">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -178,15 +178,15 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="font-display text-2xl xs:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
               {t('features.title')} <span className="text-fire">BRAZZAFLAME</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-sm sm:text-base max-w-lg xs:max-w-2xl mx-auto">
               {t('features.subtitle')}
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 xs:gap-6">
             {features.map((feature, i) => (
               <motion.div
                 key={i}
@@ -194,7 +194,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-background/50 backdrop-blur-sm border border-border/50 rounded-2xl p-6 text-center hover:border-primary/30 hover:shadow-fire transition-all duration-300"
+                className="bg-background/50 backdrop-blur-sm border border-border/50 rounded-2xl p-4 xs:p-6 text-center hover:border-primary/30 hover:shadow-fire transition-all duration-300"
               >
                 <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center">
                   <feature.icon className="w-7 h-7 text-primary" />

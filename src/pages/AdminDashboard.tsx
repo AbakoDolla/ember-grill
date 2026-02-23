@@ -80,19 +80,19 @@ export default function AdminDashboard() {
   };
 
   const StatCard = ({ title, value, icon: Icon, change, color = 'primary' }: any) => (
-    <Card variant="glass" className="p-6 hover:scale-105 transition-all duration-300">
+    <Card variant="glass" className="p-4 xs:p-5 sm:p-6 hover:scale-105 transition-all duration-300">
       <div className="flex items-center justify-between">
-        <div>
-          <p className="text-muted-foreground text-sm">{title}</p>
-          <p className="text-2xl font-bold text-foreground">{value}</p>
+        <div className="flex-1 min-w-0">
+          <p className="text-muted-foreground text-xs sm:text-sm truncate">{title}</p>
+          <p className="text-xl xs:text-2xl font-bold text-foreground truncate">{value}</p>
           {change && (
-            <p className={`text-sm ${change > 0 ? 'text-green-600' : 'text-red-600'}`}>
+            <p className={`text-xs sm:text-sm ${change > 0 ? 'text-green-600' : 'text-red-600'}`}>
               {change > 0 ? '+' : ''}{change}%
             </p>
           )}
         </div>
-        <div className={`w-12 h-12 rounded-full bg-${color}/10 flex items-center justify-center`}>
-          <Icon className={`w-6 h-6 text-${color}`} />
+        <div className={`w-10 h-10 xs:w-12 xs:h-12 rounded-full bg-${color}/10 flex items-center justify-center flex-shrink-0`}>
+          <Icon className={`w-5 h-5 xs:w-6 xs:h-6 text-${color}`} />
         </div>
       </div>
     </Card>
@@ -102,25 +102,25 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="bg-card border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4">
-              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                <Shield className="w-4 h-4 text-primary-foreground" />
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16">
+            <div className="flex items-center gap-2 sm:gap-4">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-primary rounded-full flex items-center justify-center">
+                <Shield className="w-3 h-3 sm:w-4 sm:h-4 text-primary-foreground" />
               </div>
-              <h1 className="font-display font-bold text-xl">Ember Grill Admin</h1>
+              <h1 className="font-display font-bold text-lg sm:text-xl">Ember Grill Admin</h1>
             </div>
-            <Button variant="outline" onClick={handleLogout} className="interactive-scale">
-              <LogOut className="w-4 h-4 mr-2" />
-              Déconnexion
+            <Button variant="outline" onClick={handleLogout} className="interactive-scale h-8 sm:h-10 px-2 sm:px-4">
+              <LogOut className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+              <span className="hidden xs:inline">Déconnexion</span>
             </Button>
           </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
         {/* Navigation Tabs */}
-        <div className="flex gap-2 mb-8 overflow-x-auto">
+        <div className="flex gap-1 sm:gap-2 mb-6 sm:mb-8 overflow-x-auto pb-2">
           {[
             { id: 'overview', label: 'Aperçu', icon: BarChart3 },
             { id: 'orders', label: 'Commandes', icon: ShoppingCart },
@@ -133,10 +133,10 @@ export default function AdminDashboard() {
               key={tab.id}
               variant={activeTab === tab.id ? 'default' : 'outline'}
               onClick={() => setActiveTab(tab.id)}
-              className="flex items-center gap-2 whitespace-nowrap"
+              className="flex items-center gap-1 sm:gap-2 whitespace-nowrap h-8 sm:h-10 px-2 sm:px-4 text-xs sm:text-sm"
             >
-              <tab.icon className="w-4 h-4" />
-              {tab.label}
+              <tab.icon className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden xs:inline">{tab.label}</span>
             </Button>
           ))}
         </div>
