@@ -316,6 +316,9 @@ export default function AuthScreen() {
                 <div className="flex justify-center mt-4">
                   <div className="bg-white/10 p-4 rounded-lg border border-white/20">
                     <p className="text-white text-sm mb-2 text-center">Veuillez compléter le captcha :</p>
+                    <div className="text-xs text-white/50 mb-2 text-center">
+                      Debug: Sitekey = {import.meta.env.VITE_HCAPTCHA_SITE_KEY || 'undefined'}
+                    </div>
                     <HCaptcha
                       ref={captcha}
                       sitekey={import.meta.env.VITE_HCAPTCHA_SITE_KEY || '4ba8fc82-825e-4270-91b2-8026808ecb0e'}
@@ -340,23 +343,23 @@ export default function AuthScreen() {
                   </div>
                 </div>
               )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3.5 rounded-xl font-bold text-base text-white transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 relative overflow-hidden group mt-6 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                style={{
-                  background: 'linear-gradient(135deg, #ff6b35, #ff4820)',
-                  boxShadow: '0 6px 24px rgba(255, 107, 53, 0.4)'
-                }}
-              >
-                <span className="relative z-10">
-                  {loading ? 'Chargement...' : (isLogin ? 'Sign In' : 'Create Account')}
-                </span>
-                {!loading && <span className="text-xl relative z-10">🔥</span>}
-                <div className="absolute inset-0 shimmer opacity-20"></div>
-              </button>
             </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3.5 rounded-xl font-bold text-base text-white transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 relative overflow-hidden group mt-6 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              style={{
+                background: 'linear-gradient(135deg, #ff6b35, #ff4820)',
+                boxShadow: '0 6px 24px rgba(255, 107, 53, 0.4)'
+              }}
+            >
+              <span className="relative z-10">
+                {loading ? 'Chargement...' : (isLogin ? 'Sign In' : 'Create Account')}
+              </span>
+              {!loading && <span className="text-xl relative z-10">🔥</span>}
+              <div className="absolute inset-0 shimmer opacity-20"></div>
+            </button>
 
             {/* Toggle */}
             <div className="mt-6 text-center">
