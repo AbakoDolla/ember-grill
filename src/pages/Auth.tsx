@@ -318,7 +318,7 @@ export default function AuthScreen() {
                     <p className="text-white text-sm mb-2 text-center">Veuillez compléter le captcha :</p>
                     <HCaptcha
                       ref={captcha}
-                      sitekey={import.meta.env.VITE_HCAPTCHA_SITE_KEY}
+                      sitekey={import.meta.env.VITE_HCAPTCHA_SITE_KEY || '4ba8fc82-825e-4270-91b2-8026808ecb0e'}
                       onVerify={(token, ekey) => {
                         console.log('HCaptcha token received:', token);
                         setCaptchaToken(token);
