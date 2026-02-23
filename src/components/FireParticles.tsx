@@ -1,6 +1,15 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+
+// Fallback component when WebGL is not supported
+function WebGLFallback() {
+  return (
+    <div className="absolute inset-0 pointer-events-none">
+      <div className="w-full h-full bg-gradient-to-t from-orange-500/20 to-red-500/20 animate-pulse" />
+    </div>
+  );
+}
 
 function Particles({ count = 100 }: { count?: number }) {
   const mesh = useRef<THREE.Points>(null);
@@ -92,19 +101,33 @@ export default function FireParticles() {
     }, { once: true });
   };
 
+  const handleContextCreationError = () => {
+    console.warn('WebGL context creation failed in FireParticles component');
+  };
+
   return (
     <div className="absolute inset-0 pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 10], fov: 60 }}
         style={{ background: 'transparent' }}
+        gl={{ 
+          antialias: false,
+          powerPreference: 'low-power',
+          failIfMajorPerformanceCaveat: false,
+          preserveDrawingBuffer: false
+        }}
         onCreated={({ gl }) => {
           gl.domElement.addEventListener('webglcontextlost', (event) => {
             event.preventDefault();
             handleContextLoss(gl);
           });
         }}
+        onError={() => console.warn('WebGL context creation failed in FireParticles')}
+        fallback={WebGLFallback}
       >
-        <Particles count={80} />
+        <Suspense fallback={null}>
+          <Particles count={80} />
+        </Suspense>
       </Canvas>
     </div>
   );

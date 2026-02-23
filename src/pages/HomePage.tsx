@@ -1,13 +1,16 @@
 import { motion } from 'framer-motion';
+import { Suspense, lazy } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Flame, Clock, Truck, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import FireParticles from '@/components/FireParticles';
-import Food3D from '@/components/Food3D';
 import MenuCard from '@/components/MenuCard';
 import Footer from '@/components/Footer';
 import { menuItems } from '@/data/menu';
+
+// Lazy load heavy 3D components
+const FireParticles = lazy(() => import('@/components/FireParticles'));
+const Food3D = lazy(() => import('@/components/Food3D'));
 
 export default function HomePage() {
   const { t } = useTranslation();
@@ -43,7 +46,13 @@ export default function HomePage() {
         {/* Background effects */}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-card" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(18_100%_60%/0.1),transparent_70%)]" />
-        <FireParticles />
+        <Suspense fallback={
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="w-full h-full bg-gradient-to-t from-orange-500/10 to-red-500/10" />
+          </div>
+        }>
+          <FireParticles />
+        </Suspense>
         
         <div className="relative z-10 max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -134,7 +143,11 @@ export default function HomePage() {
             >
               {/* Glow behind 3D */}
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(18_100%_60%/0.2),transparent_60%)]" />
-              <Food3D />
+              <Suspense fallback={
+                <div className="w-full h-full bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-lg animate-pulse" />
+              }>
+                <Food3D />
+              </Suspense>
             </motion.div>
           </div>
         </div>

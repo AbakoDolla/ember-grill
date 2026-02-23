@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -17,8 +17,15 @@ import { toast } from 'sonner';
 import { loadStripe } from '@stripe/stripe-js';
 import supabase from '@/lib/supabase';
 
-// Initialize Stripe (add this below your imports, before the component)
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+// Lazy load Stripe to prevent blocking
+let stripePromise: Promise<any> | null = null;
+
+const getStripe = () => {
+  if (!stripePromise) {
+    stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+  }
+  return stripePromise;
+};
 
 
 export default function CartPage() {
@@ -95,8 +102,10 @@ const handleCheckout = async () => {
     if (sessionError) throw sessionError;
 
     // Redirect to Stripe Checkout
-    const stripe = await stripePromise;
-    if (!stripe) throw new Error("Stripe n'a pas pu se charger");
+    const stripe = await getStripe();
+    if (!stripe) {
+      throw new Error("Stripe n'a pas pu se charger");
+    }
 
     const { error: redirectError } = await stripe.redirectToCheckout({
       sessionId: sessionData.sessionId

@@ -1,7 +1,16 @@
-import { useRef } from 'react';
+import { useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
+
+// Fallback component when WebGL is not supported
+function WebGLFallback() {
+  return (
+    <div className="w-full h-full">
+      <div className="w-full h-full bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-lg animate-pulse" />
+    </div>
+  );
+}
 
 function FoodSphere({ position, color, scale = 1 }: { position: [number, number, number]; color: string; scale?: number }) {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -94,22 +103,36 @@ export default function Food3D() {
     }, { once: true });
   };
 
+  const handleContextCreationError = () => {
+    console.warn('WebGL context creation failed in Food3D component');
+  };
+
   return (
     <div className="w-full h-full">
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50 }}
         style={{ background: 'transparent' }}
+        gl={{ 
+          antialias: false,
+          powerPreference: 'low-power',
+          failIfMajorPerformanceCaveat: false,
+          preserveDrawingBuffer: false
+        }}
         onCreated={({ gl }) => {
           gl.domElement.addEventListener('webglcontextlost', (event) => {
             event.preventDefault();
             handleContextLoss(gl);
           });
         }}
+        onError={() => console.warn('WebGL context creation failed in Food3D')}
+        fallback={WebGLFallback}
       >
-        <ambientLight intensity={0.3} />
-        <directionalLight position={[5, 5, 5]} intensity={0.8} />
-        <EmberGlow />
-        <GrilledMeat />
+        <Suspense fallback={null}>
+          <ambientLight intensity={0.3} />
+          <directionalLight position={[5, 5, 5]} intensity={0.8} />
+          <EmberGlow />
+          <GrilledMeat />
+        </Suspense>
       </Canvas>
     </div>
   );

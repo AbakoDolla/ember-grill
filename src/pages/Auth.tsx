@@ -319,18 +319,23 @@ export default function AuthScreen() {
                     <HCaptcha
                       ref={captcha}
                       sitekey={import.meta.env.VITE_HCAPTCHA_SITE_KEY}
-                      onVerify={(token) => {
+                      onVerify={(token, ekey) => {
                         console.log('HCaptcha token received:', token);
                         setCaptchaToken(token);
                       }}
                       onError={(error) => {
                         console.error('HCaptcha error:', error);
+                        setCaptchaToken(null);
+                      }}
+                      onExpire={() => {
+                        console.log('HCaptcha expired');
+                        setCaptchaToken(null);
                       }}
                       onLoad={() => {
                         console.log('HCaptcha loaded successfully');
                       }}
                       theme="dark"
-                      size="normal"
+                      size="compact"
                     />
                   </div>
                 </div>
