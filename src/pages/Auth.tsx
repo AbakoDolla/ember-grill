@@ -319,27 +319,9 @@ export default function AuthScreen() {
                     <div className="text-xs text-white/50 mb-2 text-center">
                       Debug: Sitekey = {import.meta.env.VITE_HCAPTCHA_SITE_KEY || 'undefined'}
                     </div>
-                    <HCaptcha
-                      ref={captcha}
-                      sitekey={import.meta.env.VITE_HCAPTCHA_SITE_KEY || '4ba8fc82-825e-4270-91b2-8026808ecb0e'}
-                      onVerify={(token, ekey) => {
-                        console.log('HCaptcha token received:', token);
-                        setCaptchaToken(token);
-                      }}
-                      onError={(error) => {
-                        console.error('HCaptcha error:', error);
-                        setCaptchaToken(null);
-                      }}
-                      onExpire={() => {
-                        console.log('HCaptcha expired');
-                        setCaptchaToken(null);
-                      }}
-                      onLoad={() => {
-                        console.log('HCaptcha loaded successfully');
-                      }}
-                      theme="dark"
-                      size="compact"
-                    />
+                    <div className="bg-yellow-500/20 p-2 rounded border border-yellow-500/30 text-yellow-300 text-xs text-center">
+                      hCaptcha temporairement désactivé - Configuration en cours
+                    </div>
                   </div>
                 </div>
               )}
