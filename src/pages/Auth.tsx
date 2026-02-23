@@ -54,23 +54,22 @@ export default function AuthScreen() {
           return;
         }
 
-        if (formData.password.length < 6) {
+        if (formData.password.length < 8) {
           setError(t('auth.passwordTooShort'));
           return;
         }
 
-        if (!captchaToken) {
-          setError('Veuillez compléter le captcha');
-          return;
-        }
-
-        const { error } = await signUp(formData.email, formData.password, formData.name, captchaToken);
+        const { error } = await signUp(formData.email, formData.password, formData.name);
         if (error) {
-          setError(error);
+          if (error.includes('captcha')) {
+            setError('Configuration du captcha en cours. Veuillez réessayer dans quelques instants.');
+          } else {
+            setError(error);
+          }
         } else {
-          setError(t('auth.checkEmail'));
+          // Succès - l'utilisateur est maintenant connecté
+          // La redirection se fera automatiquement via useEffect
         }
-        captcha.current?.resetCaptcha();
       }
     } catch (err) {
       setError(t('auth.unexpectedError'));
@@ -311,20 +310,7 @@ export default function AuthScreen() {
                   </button>
                 </div>
               )}
-
-              {!isLogin && (
-                <div className="flex justify-center mt-4">
-                  <div className="bg-white/10 p-4 rounded-lg border border-white/20">
-                    <p className="text-white text-sm mb-2 text-center">Veuillez compléter le captcha :</p>
-                    <div className="text-xs text-white/50 mb-2 text-center">
-                      Debug: Sitekey = {import.meta.env.VITE_HCAPTCHA_SITE_KEY || 'undefined'}
-                    </div>
-                    <div className="bg-yellow-500/20 p-2 rounded border border-yellow-500/30 text-yellow-300 text-xs text-center">
-                      hCaptcha temporairement désactivé - Configuration en cours
-                    </div>
-                  </div>
-                </div>
-              )}
+              
             </div>
 
             <button

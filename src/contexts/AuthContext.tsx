@@ -128,16 +128,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // ------------------------
   // Fonction d'inscription
   // ------------------------
-  const signUp = async (email: string, password: string, name: string, captchaToken?: string) => {
+  const signUp = async (email: string, password: string, name: string) => {
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: { 
           data: { name },
-          captchaToken: captchaToken
+          emailRedirectTo: undefined
         }
       })
+      
+      // Connecter automatiquement l'utilisateur après inscription
+      if (!error && data.user) {
+        await supabase.auth.signInWithPassword({ email, password })
+      }
+      
       if (error) return { error: error.message }
       return {}
     } catch {
