@@ -11,6 +11,7 @@ import AdminRoute from "@/components/AdminRoute";
 import WelcomeCelebration from "@/components/WelcomeCelebration";
 import { Suspense } from "react";
 import OrderSuccessPage from "@/pages/OrderSuccessPage";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 import MainLayout from "@/layout/MainLayout";
 
@@ -75,10 +76,12 @@ const AppContent = () => {
 
                 {/* AUTH ROUTES (NO NAVBAR) */}
                 <Route path="/auth" element={<AuthScreen />} />
+                <Route path="/auth/callback" element={<AuthScreen />} />
 
                 {/* APP ROUTES (WITH NAVBAR) */}
                 <Route element={<MainLayout />}>
                   <Route path="/" element={<HomePage />} />
+                  <Route path="/home" element={<HomePage />} />
                   <Route path="/menu" element={
                     <ProtectedRoute>
                       <MenuPage />
@@ -127,13 +130,17 @@ const AppContent = () => {
 }
 
 const App = () => (
-  <AdminProvider>
-    <AuthProvider>
-      <Suspense fallback={<div>Loading...</div>}>
-        <AppContent />
-      </Suspense>
-    </AuthProvider>
-  </AdminProvider>
+  <ErrorBoundary>
+    <AdminProvider>
+      <AuthProvider>
+        <ErrorBoundary>
+          <Suspense fallback={<div>Loading...</div>}>
+            <AppContent />
+          </Suspense>
+        </ErrorBoundary>
+      </AuthProvider>
+    </AdminProvider>
+  </ErrorBoundary>
 );
 
 export default App;

@@ -79,7 +79,7 @@ export default function Navbar() {
                 <span className="font-display font-black text-base sm:text-lg md:text-xl bg-gradient-to-r from-orange-600 via-red-600 to-yellow-600 bg-clip-text text-transparent leading-none">
                   BrazaFish
                 </span>
-                <span className="font-display font-bold text-sm md:text-base text-blue-600 leading-none">
+                <span className="font-display font-bold text-xs sm:text-sm md:text-base lg:text-base text-blue-600 leading-none">
                   elora
                 </span>
               </div>

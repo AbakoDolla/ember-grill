@@ -1,6 +1,15 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, Suspense, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+
+// Fallback component when WebGL is not supported
+function WebGLFallback() {
+  return (
+    <div className="absolute inset-0 pointer-events-none">
+      <div className="w-full h-full bg-gradient-to-t from-orange-500/20 to-red-500/20 animate-pulse" />
+    </div>
+  );
+}
 
 function Particles({ count = 100 }: { count?: number }) {
   const mesh = useRef<THREE.Points>(null);
@@ -84,27 +93,44 @@ function Particles({ count = 100 }: { count?: number }) {
 }
 
 export default function FireParticles() {
-  const handleContextLoss = (gl: THREE.WebGLRenderer) => {
-    console.warn('WebGL context lost in FireParticles component');
-    // Optionally handle context restoration
-    gl.domElement.addEventListener('webglcontextrestored', () => {
-      console.log('WebGL context restored in FireParticles component');
-    }, { once: true });
+  const [webglSupported, setWebglSupported] = useState(true);
+
+  const handleContextCreationError = () => {
+    console.warn('WebGL context creation failed in FireParticles component');
+    setWebglSupported(false);
   };
+
+  const handleContextLoss = () => {
+    console.warn('WebGL context lost in FireParticles component');
+    setWebglSupported(false);
+  };
+
+  if (!webglSupported) {
+    return <WebGLFallback />;
+  }
 
   return (
     <div className="absolute inset-0 pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 10], fov: 60 }}
         style={{ background: 'transparent' }}
+        gl={{ 
+          antialias: false,
+          powerPreference: 'low-power',
+          failIfMajorPerformanceCaveat: false,
+          preserveDrawingBuffer: false
+        }}
         onCreated={({ gl }) => {
           gl.domElement.addEventListener('webglcontextlost', (event) => {
             event.preventDefault();
-            handleContextLoss(gl);
+            handleContextLoss();
           });
         }}
+        onError={handleContextCreationError}
       >
-        <Particles count={80} />
+        <Suspense fallback={null}>
+          <Particles count={80} />
+        </Suspense>
       </Canvas>
     </div>
   );

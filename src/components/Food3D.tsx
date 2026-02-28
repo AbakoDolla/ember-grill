@@ -1,7 +1,16 @@
-import { useRef } from 'react';
+import { useRef, Suspense, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
+
+// Fallback component when WebGL is not supported
+function WebGLFallback() {
+  return (
+    <div className="w-full h-full">
+      <div className="w-full h-full bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-lg animate-pulse" />
+    </div>
+  );
+}
 
 function FoodSphere({ position, color, scale = 1 }: { position: [number, number, number]; color: string; scale?: number }) {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -86,30 +95,47 @@ function EmberGlow() {
 }
 
 export default function Food3D() {
-  const handleContextLoss = (gl: THREE.WebGLRenderer) => {
-    console.warn('WebGL context lost in Food3D component');
-    // Optionally handle context restoration
-    gl.domElement.addEventListener('webglcontextrestored', () => {
-      console.log('WebGL context restored in Food3D component');
-    }, { once: true });
+  const [webglSupported, setWebglSupported] = useState(true);
+
+  const handleContextCreationError = () => {
+    console.warn('WebGL context creation failed in Food3D component');
+    setWebglSupported(false);
   };
+
+  const handleContextLoss = () => {
+    console.warn('WebGL context lost in Food3D component');
+    setWebglSupported(false);
+  };
+
+  if (!webglSupported) {
+    return <WebGLFallback />;
+  }
 
   return (
     <div className="w-full h-full">
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50 }}
         style={{ background: 'transparent' }}
+        gl={{ 
+          antialias: false,
+          powerPreference: 'low-power',
+          failIfMajorPerformanceCaveat: false,
+          preserveDrawingBuffer: false
+        }}
         onCreated={({ gl }) => {
           gl.domElement.addEventListener('webglcontextlost', (event) => {
             event.preventDefault();
-            handleContextLoss(gl);
+            handleContextLoss();
           });
         }}
+        onError={handleContextCreationError}
       >
-        <ambientLight intensity={0.3} />
-        <directionalLight position={[5, 5, 5]} intensity={0.8} />
-        <EmberGlow />
-        <GrilledMeat />
+        <Suspense fallback={null}>
+          <ambientLight intensity={0.3} />
+          <directionalLight position={[5, 5, 5]} intensity={0.8} />
+          <EmberGlow />
+          <GrilledMeat />
+        </Suspense>
       </Canvas>
     </div>
   );

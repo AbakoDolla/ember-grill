@@ -30,13 +30,13 @@ export default function OrdersPage() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'pending': return <Clock className="h-5 w-5 text-yellow-500" />
-      case 'confirmed': return <CheckCircle className="h-5 w-5 text-blue-500" />
-      case 'preparing': return <ChefHat className="h-5 w-5 text-orange-500" />
-      case 'ready': return <CheckCircle className="h-5 w-5 text-green-500" />
-      case 'delivered': return <Truck className="h-5 w-5 text-emerald-500" />
-      case 'cancelled': return <XCircle className="h-5 w-5 text-red-500" />
-      default: return <Clock className="h-5 w-5 text-gray-500" />
+      case 'pending': return <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-500" />
+      case 'confirmed': return <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500" />
+      case 'preparing': return <ChefHat className="h-4 w-4 sm:h-5 sm:w-5 text-orange-500" />
+      case 'ready': return <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
+      case 'delivered': return <Truck className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-500" />
+      case 'cancelled': return <XCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-500" />
+      default: return <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
     }
   }
 
@@ -89,53 +89,59 @@ export default function OrdersPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
-      <div className="container mx-auto px-4 py-8 pt-24">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 pt-20 sm:pt-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
-          <h1 className="text-3xl font-bold mb-2">Mes Commandes</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl xs:text-3xl sm:text-4xl font-bold mb-2">Mes Commandes</h1>
+          <p className="text-muted-foreground text-sm sm:text-base">
             Suivez l'état de vos commandes BrazzaFlame
           </p>
         </motion.div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 sm:space-y-6">
+          <TabsList className="grid grid-cols-2 xs:grid-cols-4 gap-2 sm:gap-3">
             {statusTabs.map((tab) => (
-              <TabsTrigger key={tab.value} value={tab.value} className="flex items-center gap-2">
-                {tab.label}
-                <Badge variant="secondary" className="ml-1">
+              <TabsTrigger key={tab.value} value={tab.value} className="flex items-center gap-1 sm:gap-2 h-10 sm:h-11 text-xs sm:text-sm">
+                <span className="hidden xs:inline">{tab.label}</span>
+                <span className="xs:hidden">
+                  {tab.label === 'Toutes' ? 'Toutes' : 
+                   tab.label === 'En attente' ? 'Attente' :
+                   tab.label === 'En préparation' ? 'Prép.' :
+                   tab.label === 'Livrées' ? 'Livrées' : tab.label}
+                </span>
+                <Badge variant="secondary" className="ml-1 text-xs">
                   {tab.count}
                 </Badge>
               </TabsTrigger>
             ))}
           </TabsList>
 
-          <TabsContent value={activeTab} className="space-y-4">
+          <TabsContent value={activeTab} className="space-y-3 sm:space-y-4">
             <AnimatePresence mode="popLayout">
               {filteredOrders.length === 0 ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="text-center py-12"
+                  className="text-center py-8 sm:py-12"
                 >
-                  <ShoppingBag className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">Aucune commande trouvée</h3>
-                  <p className="text-muted-foreground mb-6">
+                  <ShoppingBag className="h-12 w-12 sm:h-16 sm:w-16 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg sm:text-xl font-medium mb-2">Aucune commande trouvée</h3>
+                  <p className="text-muted-foreground text-sm sm:text-base mb-4 sm:mb-6">
                     {activeTab === 'all'
                       ? t('orders.emptyDescription')
                       : `Aucune commande ${getStatusText(activeTab).toLowerCase()}`
                     }
                   </p>
-                  <Button asChild>
+                  <Button asChild className="h-10 sm:h-11 px-4 sm:px-6">
                     <a href="/menu">{t('orders.orderNow')}</a>
                   </Button>
                 </motion.div>
               ) : (
-                <div className="grid gap-6">
+                <div className="grid gap-4 sm:gap-6">
                   {filteredOrders.map((order, index) => (
                     <motion.div
                       key={order.id}
@@ -145,19 +151,19 @@ export default function OrdersPage() {
                       transition={{ delay: index * 0.1 }}
                     >
                       <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-                        <CardHeader className="bg-gradient-to-r from-primary/5 to-secondary/5">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
+                        <CardHeader className="bg-gradient-to-r from-primary/5 to-secondary/5 px-3 sm:px-4 py-3 sm:py-4">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
+                            <div className="flex items-center gap-2 sm:gap-3">
                               {getStatusIcon(order.status)}
                               <div>
-                                <CardTitle className="text-lg">
+                                <CardTitle className="text-base sm:text-lg">
                                   Commande #{order.id.slice(-8)}
                                 </CardTitle>
-                                <CardDescription>
+                                <CardDescription className="text-xs sm:text-sm">
                                   {new Date(order.created_at).toLocaleDateString('fr-FR', {
-                                    weekday: 'long',
+                                    weekday: 'short',
                                     year: 'numeric',
-                                    month: 'long',
+                                    month: 'short',
                                     day: 'numeric',
                                     hour: '2-digit',
                                     minute: '2-digit'
@@ -165,28 +171,38 @@ export default function OrdersPage() {
                                 </CardDescription>
                               </div>
                             </div>
-                            <Badge className={`${getStatusColor(order.status)} text-white`}>
-                              {getStatusText(order.status)}
+                            <Badge className={`${getStatusColor(order.status)} text-white text-xs sm:text-sm px-2 py-1`}>
+                              <span className="hidden sm:inline">{getStatusText(order.status)}</span>
+                              <span className="sm:hidden">
+                                {order.status === 'pending' ? 'Attente' :
+                                 order.status === 'confirmed' ? 'Confirm.' :
+                                 order.status === 'preparing' ? 'Prép.' :
+                                 order.status === 'ready' ? 'Prête' :
+                                 order.status === 'delivered' ? 'Livrée' :
+                                 order.status === 'cancelled' ? 'Annulée' : order.status}
+                              </span>
                             </Badge>
                           </div>
                         </CardHeader>
 
-                        <CardContent className="p-6">
-                          <div className="grid md:grid-cols-2 gap-6">
+                        <CardContent className="p-4 sm:p-6">
+                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                             {/* Order Items */}
                             <div>
-                              <h4 className="font-medium mb-3 flex items-center gap-2">
-                                <ShoppingBag className="h-4 w-4" />
+                              <h4 className="font-medium mb-2 sm:mb-3 flex items-center gap-2 text-sm sm:text-base">
+                                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
                                 Articles commandés
                               </h4>
-                              <div className="space-y-2">
+                              <div className="space-y-2 sm:space-y-3">
                                 {order.order_items?.map((item, idx) => (
-                                  <div key={idx} className="flex items-center gap-3 p-2 bg-muted/50 rounded">
-                                    <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-xs font-medium">
+                                  <div key={idx} className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-muted/50 rounded-lg">
+                                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-primary/10 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium">
                                       {item.quantity}
                                     </div>
-                                    <span className="flex-1">{item.menu_items?.name}</span>
-                                    <span className="font-medium">{(item.unit_price * item.quantity).toFixed(2)}€</span>
+                                    <div className="flex-1 min-w-0">
+                                      <span className="text-sm sm:text-base truncate">{item.menu_items?.name}</span>
+                                      <span className="font-medium text-sm sm:text-base block">{(item.unit_price * item.quantity).toFixed(2)}€</span>
+                                    </div>
                                   </div>
                                 ))}
                               </div>
@@ -195,46 +211,26 @@ export default function OrdersPage() {
                             {/* Order Details */}
                             <div className="space-y-4">
                               <div>
-                                <h4 className="font-medium mb-2">Détails de la commande</h4>
-                                <div className="space-y-2 text-sm">
-                                  <div className="flex justify-between">
-                                    <span className="text-muted-foreground">Sous-total:</span>
-                                    <span>{(order.total_amount * 0.85).toFixed(2)}€</span>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="text-muted-foreground">Livraison:</span>
-                                    <span>2.50€</span>
-                                  </div>
-                                  <div className="flex justify-between font-medium border-t pt-2">
-                                    <span>Total:</span>
-                                    <span className="text-lg">{order.total_amount.toFixed(2)}€</span>
-                                  </div>
-                                </div>
+                                <h4 className="font-medium mb-2 flex items-center gap-2 text-sm sm:text-base">
+                                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
+                                  Adresse de livraison
+                                </h4>
+                                <p className="text-sm sm:text-base text-muted-foreground break-words">
+                                  {order.delivery_address}
+                                </p>
                               </div>
-
-                              {order.delivery_address && (
-                                <div>
-                                  <h4 className="font-medium mb-2 flex items-center gap-2">
-                                    <MapPin className="h-4 w-4" />
-                                    Adresse de livraison
-                                  </h4>
-                                  <p className="text-sm text-muted-foreground">
-                                    {order.delivery_address}
-                                  </p>
-                                </div>
-                              )}
 
                               {order.requested_delivery_date && (
                                 <div>
-                                  <h4 className="font-medium mb-2 flex items-center gap-2">
-                                    <Clock className="h-4 w-4" />
+                                  <h4 className="font-medium mb-2 flex items-center gap-2 text-sm sm:text-base">
+                                    <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
                                     Livraison demandée
                                   </h4>
-                                  <p className="text-sm text-muted-foreground">
+                                  <p className="text-sm sm:text-base text-muted-foreground">
                                     {new Date(order.requested_delivery_date).toLocaleDateString('fr-FR', {
-                                      weekday: 'long',
+                                      weekday: 'short',
                                       year: 'numeric',
-                                      month: 'long',
+                                      month: 'short',
                                       day: 'numeric'
                                     })}
                                     {order.estimated_delivery_time && ` à ${order.estimated_delivery_time}`}
@@ -242,22 +238,25 @@ export default function OrdersPage() {
                                 </div>
                               )}
                             </div>
-                          </div>
 
-                          {/* Action Buttons */}
-                          <div className="flex gap-3 mt-6 pt-4 border-t">
-                            <Button variant="outline" size="sm">
-                              <Star className="h-4 w-4 mr-2" />
-                              Noter la commande
-                            </Button>
-                            <Button variant="outline" size="sm">
-                              {t('orders.orderAgain')}
-                            </Button>
-                            {order.status === 'delivered' && (
-                              <Button variant="outline" size="sm">
-                                Signaler un problème
+                            {/* Action Buttons */}
+                            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-4 sm:mt-6 pt-4 border-t">
+                              <Button variant="outline" size="sm" className="h-9 sm:h-10 px-3 sm:px-4">
+                                <Star className="h-4 w-4 mr-1 sm:mr-2" />
+                                <span className="hidden sm:inline">Noter la commande</span>
+                                <span className="sm:hidden">Noter</span>
                               </Button>
-                            )}
+                              <Button variant="outline" size="sm" className="h-9 sm:h-10 px-3 sm:px-4">
+                                <span className="hidden sm:inline">{t('orders.orderAgain')}</span>
+                                <span className="sm:hidden">Recommander</span>
+                              </Button>
+                              {order.status === 'delivered' && (
+                                <Button variant="outline" size="sm" className="h-9 sm:h-10 px-3 sm:px-4">
+                                  <span className="hidden sm:inline">Signaler un problème</span>
+                                  <span className="sm:hidden">Signaler</span>
+                                </Button>
+                              )}
+                            </div>
                           </div>
                         </CardContent>
                       </Card>

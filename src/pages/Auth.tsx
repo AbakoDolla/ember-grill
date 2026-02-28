@@ -54,23 +54,22 @@ export default function AuthScreen() {
           return;
         }
 
-        if (formData.password.length < 6) {
+        if (formData.password.length < 8) {
           setError(t('auth.passwordTooShort'));
           return;
         }
 
-        if (!captchaToken) {
-          setError('Veuillez compléter le captcha');
-          return;
-        }
-
-        const { error } = await signUp(formData.email, formData.password, formData.name, captchaToken);
+        const { error } = await signUp(formData.email, formData.password, formData.name);
         if (error) {
-          setError(error);
+          if (error.includes('captcha')) {
+            setError('Configuration du captcha en cours. Veuillez réessayer dans quelques instants.');
+          } else {
+            setError(error);
+          }
         } else {
-          setError(t('auth.checkEmail'));
+          // Succès - l'utilisateur est maintenant connecté
+          // La redirection se fera automatiquement via useEffect
         }
-        captcha.current?.resetCaptcha();
       }
     } catch (err) {
       setError(t('auth.unexpectedError'));
@@ -311,47 +310,24 @@ export default function AuthScreen() {
                   </button>
                 </div>
               )}
-
-              {!isLogin && (
-                <div className="flex justify-center mt-4">
-                  <div className="bg-white/10 p-4 rounded-lg border border-white/20">
-                    <p className="text-white text-sm mb-2 text-center">Veuillez compléter le captcha :</p>
-                    <HCaptcha
-                      ref={captcha}
-                      sitekey={import.meta.env.VITE_HCAPTCHA_SITE_KEY}
-                      onVerify={(token) => {
-                        console.log('HCaptcha token received:', token);
-                        setCaptchaToken(token);
-                      }}
-                      onError={(error) => {
-                        console.error('HCaptcha error:', error);
-                      }}
-                      onLoad={() => {
-                        console.log('HCaptcha loaded successfully');
-                      }}
-                      theme="dark"
-                      size="normal"
-                    />
-                  </div>
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3.5 rounded-xl font-bold text-base text-white transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 relative overflow-hidden group mt-6 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                style={{
-                  background: 'linear-gradient(135deg, #ff6b35, #ff4820)',
-                  boxShadow: '0 6px 24px rgba(255, 107, 53, 0.4)'
-                }}
-              >
-                <span className="relative z-10">
-                  {loading ? 'Chargement...' : (isLogin ? 'Sign In' : 'Create Account')}
-                </span>
-                {!loading && <span className="text-xl relative z-10">🔥</span>}
-                <div className="absolute inset-0 shimmer opacity-20"></div>
-              </button>
+              
             </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3.5 rounded-xl font-bold text-base text-white transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 relative overflow-hidden group mt-6 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              style={{
+                background: 'linear-gradient(135deg, #ff6b35, #ff4820)',
+                boxShadow: '0 6px 24px rgba(255, 107, 53, 0.4)'
+              }}
+            >
+              <span className="relative z-10">
+                {loading ? 'Chargement...' : (isLogin ? 'Sign In' : 'Create Account')}
+              </span>
+              {!loading && <span className="text-xl relative z-10">🔥</span>}
+              <div className="absolute inset-0 shimmer opacity-20"></div>
+            </button>
 
             {/* Toggle */}
             <div className="mt-6 text-center">

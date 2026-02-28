@@ -226,12 +226,12 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background pt-24 pb-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+    <div className="min-h-screen bg-background pt-20 sm:pt-24 pb-8 sm:pb-12">
+      <div className="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-display text-3xl md:text-4xl font-bold mb-8 text-center"
+          className="font-display text-2xl xs:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center"
         >
           {t("cart.title")}{" "}
           <span className="text-fire">{t("common.cart")}</span>
@@ -253,13 +253,13 @@ export default function CartPage() {
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-20 h-20 md:w-24 md:h-24 rounded-xl object-cover shrink-0"
+                      className="w-16 h-16 xs:w-18 xs:h-18 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl object-cover shrink-0"
                     />
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-display font-bold text-lg truncate">
+                      <h3 className="font-display font-bold text-base sm:text-lg truncate">
                         {item.name}
                       </h3>
-                      <p className="text-primary font-bold text-lg">
+                      <p className="text-primary font-bold text-base sm:text-lg">
                         €{item.price.toFixed(2)}
                       </p>
                     </div>
@@ -273,7 +273,7 @@ export default function CartPage() {
                             updateQuantity(item.id, item.quantity - 1)
                           }
                         >
-                          <Minus className="w-4 h-4" />
+                          <Minus className="w-3 h-3 sm:w-4 sm:h-4" />
                         </Button>
                         <span className="font-bold w-8 text-center">
                           {item.quantity}
@@ -286,16 +286,16 @@ export default function CartPage() {
                             updateQuantity(item.id, item.quantity + 1)
                           }
                         >
-                          <Plus className="w-4 h-4" />
+                          <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
                         </Button>
                       </div>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => removeItem(item.id)}
-                        className="text-destructive hover:text-destructive"
+                        className="text-destructive hover:text-destructive h-7 w-7 sm:h-8 sm:w-8 p-0"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
                       </Button>
                     </div>
                   </div>
