@@ -21,9 +21,10 @@ import {
   CalendarDays,
   Clock,
   CheckCircle2,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { toast } from "sonner";
-import supabase from "@/lib/supabase";
 
 // ── Calendar helpers ──────────────────────────────────────────────
 const DAYS = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
@@ -45,7 +46,6 @@ const MONTHS = [
 function getDaysInMonth(year: number, month: number) {
   return new Date(year, month + 1, 0).getDate();
 }
-
 function getFirstDayOfMonth(year: number, month: number) {
   return new Date(year, month, 1).getDay();
 }
@@ -75,27 +75,22 @@ const TIME_SLOTS = [
   "19:30",
 ];
 
-// ─────────────────────────────────────────────────────────────────
-
 export default function CartPage() {
   const { t } = useTranslation();
   const { items, updateQuantity, removeItem, total, clearCart } = useCart();
   const { user } = useAuth();
   const { createOrder } = useOrders();
 
-  // Calendar state
   const today = new Date();
   const [calMonth, setCalMonth] = useState(today.getMonth());
   const [calYear, setCalYear] = useState(today.getFullYear());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string>("");
+  const [summaryOpen, setSummaryOpen] = useState(false);
 
-  // Delivery location
   const [deliveryAddress, setDeliveryAddress] = useState(
     (user as any)?.address || ""
   );
-
-  // Customer info (guests)
   const [customerInfo, setCustomerInfo] = useState({
     firstName: "",
     lastName: "",
@@ -108,7 +103,6 @@ export default function CartPage() {
   const deliveryFee = total > 50 ? 0 : 4.99;
   const grandTotal = total + deliveryFee;
 
-  // ── Calendar navigation ───────────────────────────────────────
   const prevMonth = () => {
     if (calMonth === 0) {
       setCalMonth(11);
@@ -132,7 +126,6 @@ export default function CartPage() {
     t2.setHours(0, 0, 0, 0);
     return d < t2;
   };
-
   const isDateSelected = (day: number) =>
     selectedDate?.getDate() === day &&
     selectedDate?.getMonth() === calMonth &&
@@ -141,10 +134,9 @@ export default function CartPage() {
   const handleDayClick = (day: number) => {
     if (isDateDisabled(day)) return;
     setSelectedDate(new Date(calYear, calMonth, day));
-    setSelectedTime(""); // reset time when date changes
+    setSelectedTime("");
   };
 
-  // ── Submit order ──────────────────────────────────────────────
   const handleConfirm = async () => {
     if (!selectedDate || !selectedTime) {
       toast.error("Veuillez sélectionner une date et une heure de livraison");
@@ -164,7 +156,6 @@ export default function CartPage() {
       toast.error("Veuillez remplir toutes les informations de livraison");
       return;
     }
-
     setIsProcessing(true);
     try {
       const orderData = {
@@ -185,7 +176,6 @@ export default function CartPage() {
         customer_last_name: (user as any)?.lastName || customerInfo.lastName,
         customer_phone: (user as any)?.phone || customerInfo.phone,
       };
-
       await createOrder(orderData, items);
       clearCart();
       toast.success("Commande confirmée ! Paiement à la livraison.");
@@ -199,24 +189,23 @@ export default function CartPage() {
   // ── Empty cart ────────────────────────────────────────────────
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-background pt-24 pb-12">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 md:px-8 text-center">
+      <div className="min-h-screen bg-background pt-20 pb-12">
+        <div className="max-w-2xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="py-24"
+            className="py-20"
           >
-            <ShoppingBag className="w-20 h-20 text-muted-foreground mx-auto mb-6" />
-            <h1 className="font-display text-3xl md:text-4xl font-bold mb-4">
+            <ShoppingBag className="w-16 h-16 sm:w-20 sm:h-20 text-muted-foreground mx-auto mb-6" />
+            <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
               {t("cart.empty")}
             </h1>
-            <p className="text-muted-foreground mb-8">
+            <p className="text-muted-foreground mb-8 text-sm sm:text-base">
               {t("cart.emptyDescription")}
             </p>
             <Link to="/menu">
-              <Button size="lg">
-                {t("cart.browseMenu")}
-                <ArrowRight className="w-5 h-5" />
+              <Button size="lg" className="w-full sm:w-auto">
+                {t("cart.browseMenu")} <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
           </motion.div>
@@ -225,46 +214,220 @@ export default function CartPage() {
     );
   }
 
+  // ── Reusable summary content ──────────────────────────────────
+  const SummaryContent = () => (
+    <>
+      <div className="space-y-2.5 mb-4">
+        <div className="flex justify-between text-muted-foreground text-sm">
+          <span>{t("cart.subtotal")}</span>
+          <span>€{total.toFixed(2)}</span>
+        </div>
+        <div className="flex justify-between text-muted-foreground text-sm">
+          <span>{t("cart.deliveryFee")}</span>
+          <span>
+            {deliveryFee === 0
+              ? t("cart.freeDelivery")
+              : `€${deliveryFee.toFixed(2)}`}
+          </span>
+        </div>
+        {deliveryFee > 0 && (
+          <p className="text-secondary text-xs">
+            {t("cart.addForFreeDelivery", { amount: (50 - total).toFixed(2) })}
+          </p>
+        )}
+        <div className="border-t border-border pt-2.5 flex justify-between font-display font-bold text-lg">
+          <span>{t("cart.total")}</span>
+          <span className="text-primary">€{grandTotal.toFixed(2)}</span>
+        </div>
+      </div>
+
+      {(selectedDate || selectedTime || deliveryAddress) && (
+        <div className="bg-muted/50 rounded-xl p-3 mb-4 space-y-1.5 text-xs">
+          {selectedDate && (
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <CalendarDays className="w-3.5 h-3.5 text-primary shrink-0" />
+              {selectedDate.toLocaleDateString("fr-FR", {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+              })}
+            </div>
+          )}
+          {selectedTime && (
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Clock className="w-3.5 h-3.5 text-primary shrink-0" />
+              {selectedTime}
+            </div>
+          )}
+          {deliveryAddress && (
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
+              <span className="truncate">{deliveryAddress}</span>
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className="flex items-center gap-2 bg-secondary/10 text-secondary rounded-xl px-3 py-2.5 mb-4 text-xs font-medium">
+        <CheckCircle2 className="w-4 h-4 shrink-0" />
+        Paiement à la livraison
+      </div>
+
+      <Button
+        className="w-full"
+        size="lg"
+        disabled={
+          !selectedDate ||
+          !selectedTime ||
+          !deliveryAddress.trim() ||
+          isProcessing
+        }
+        onClick={handleConfirm}
+      >
+        {isProcessing ? "Traitement..." : "Confirmer la commande"}
+        <ArrowRight className="w-5 h-5 ml-2" />
+      </Button>
+      <p className="text-muted-foreground text-xs text-center mt-2">
+        Vous paierez en espèces à la livraison
+      </p>
+    </>
+  );
+
   return (
     <div className="min-h-screen bg-background pt-20 sm:pt-24 pb-8 sm:pb-12">
       <div className="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-display text-2xl xs:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center"
+          className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-5 sm:mb-8 text-center"
         >
           {t("cart.title")}{" "}
           <span className="text-fire">{t("common.cart")}</span>
         </motion.h1>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* ── Left column: items + date/time + location ── */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Cart Items */}
+        {/* ── Mobile sticky bottom bar ── */}
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 shadow-2xl">
+          {/* Expandable full summary */}
+          {summaryOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-card border-t border-border px-4 py-4 max-h-[70vh] overflow-y-auto"
+            >
+              <h2 className="font-display font-bold text-base mb-4">
+                {t("cart.orderSummary")}
+              </h2>
+              <SummaryContent />
+            </motion.div>
+          )}
+
+          {/* Toggle bar */}
+          <div className="bg-card border-t border-border">
+            <button
+              onClick={() => setSummaryOpen((o) => !o)}
+              className="w-full flex items-center justify-between px-4 py-2.5 border-b border-border/40"
+            >
+              <span className="font-semibold text-sm flex items-center gap-2">
+                {t("cart.orderSummary")}
+                <span className="text-xs bg-primary/10 text-primary rounded-full px-2 py-0.5 font-bold">
+                  €{grandTotal.toFixed(2)}
+                </span>
+              </span>
+              {summaryOpen ? (
+                <ChevronDown className="w-4 h-4 text-muted-foreground" />
+              ) : (
+                <ChevronUp className="w-4 h-4 text-muted-foreground" />
+              )}
+            </button>
+
+            {/* Always-visible confirm CTA */}
+            <div className="px-4 py-3">
+              <Button
+                className="w-full"
+                size="lg"
+                disabled={
+                  !selectedDate ||
+                  !selectedTime ||
+                  !deliveryAddress.trim() ||
+                  isProcessing
+                }
+                onClick={handleConfirm}
+              >
+                {isProcessing
+                  ? "Traitement..."
+                  : `Confirmer · €${grandTotal.toFixed(2)}`}
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Page grid ── */}
+        <div className="grid lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 pb-44 lg:pb-0">
+          {/* ── Left: items + forms ── */}
+          <div className="lg:col-span-2 space-y-4 sm:space-y-5">
+            {/* Cart items */}
             {items.map((item, i) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.07 }}
               >
-                <Card variant="glass" className="p-4 md:p-6">
-                  <div className="flex gap-4">
+                <Card variant="glass" className="p-3 sm:p-4 md:p-5">
+                  <div className="flex gap-3 sm:gap-4">
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-16 h-16 xs:w-18 xs:h-18 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl object-cover shrink-0"
+                      className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl object-cover shrink-0"
                     />
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-display font-bold text-base sm:text-lg truncate">
+                      <h3 className="font-display font-bold text-sm sm:text-base md:text-lg leading-tight line-clamp-2">
                         {item.name}
                       </h3>
-                      <p className="text-primary font-bold text-base sm:text-lg">
+                      <p className="text-primary font-bold text-sm sm:text-base mt-0.5">
                         €{item.price.toFixed(2)}
                       </p>
+                      {/* Mobile: controls inline below name */}
+                      <div className="flex items-center gap-2 mt-2 sm:hidden">
+                        <div className="flex items-center gap-0.5 bg-muted rounded-lg p-0.5">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7"
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity - 1)
+                            }
+                          >
+                            <Minus className="w-3 h-3" />
+                          </Button>
+                          <span className="font-bold w-6 text-center text-sm">
+                            {item.quantity}
+                          </span>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7"
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity + 1)
+                            }
+                          >
+                            <Plus className="w-3 h-3" />
+                          </Button>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 text-destructive"
+                          onClick={() => removeItem(item.id)}
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </Button>
+                      </div>
                     </div>
-                    <div className="flex flex-col items-end gap-2">
-                      <div className="flex items-center gap-2">
+                    {/* sm+: controls on the right */}
+                    <div className="hidden sm:flex flex-col items-end gap-2 shrink-0">
+                      <div className="flex items-center gap-0.5 bg-muted rounded-lg p-0.5">
                         <Button
                           variant="ghost"
                           size="icon"
@@ -273,7 +436,7 @@ export default function CartPage() {
                             updateQuantity(item.id, item.quantity - 1)
                           }
                         >
-                          <Minus className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <Minus className="w-3.5 h-3.5" />
                         </Button>
                         <span className="font-bold w-8 text-center">
                           {item.quantity}
@@ -286,16 +449,16 @@ export default function CartPage() {
                             updateQuantity(item.id, item.quantity + 1)
                           }
                         >
-                          <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <Plus className="w-3.5 h-3.5" />
                         </Button>
                       </div>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => removeItem(item.id)}
-                        className="text-destructive hover:text-destructive h-7 w-7 sm:h-8 sm:w-8 p-0"
+                        className="text-destructive hover:text-destructive h-8 w-8 p-0"
                       >
-                        <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
                   </div>
@@ -303,56 +466,48 @@ export default function CartPage() {
               </motion.div>
             ))}
 
-            {/* ── Calendar ── */}
+            {/* Calendar */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.2 }}
             >
-              <Card variant="glass" className="p-6">
-                <h3 className="font-display font-bold text-lg mb-5 flex items-center gap-2">
-                  <CalendarDays className="w-5 h-5 text-primary" />
+              <Card variant="glass" className="p-4 sm:p-6">
+                <h3 className="font-display font-bold text-base sm:text-lg mb-4 flex items-center gap-2">
+                  <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                   Date de livraison
                 </h3>
-
-                {/* Month navigation */}
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3">
                   <button
                     onClick={prevMonth}
-                    className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+                    className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-muted transition-colors text-xl font-bold leading-none"
                   >
                     ‹
                   </button>
-                  <span className="font-semibold text-base">
+                  <span className="font-semibold text-sm sm:text-base">
                     {MONTHS[calMonth]} {calYear}
                   </span>
                   <button
                     onClick={nextMonth}
-                    className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+                    className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-muted transition-colors text-xl font-bold leading-none"
                   >
                     ›
                   </button>
                 </div>
-
-                {/* Day headers */}
-                <div className="grid grid-cols-7 mb-2">
+                <div className="grid grid-cols-7 mb-1">
                   {DAYS.map((d) => (
                     <div
                       key={d}
-                      className="text-center text-xs font-semibold text-muted-foreground py-1"
+                      className="text-center text-[10px] sm:text-xs font-semibold text-muted-foreground py-1"
                     >
                       {d}
                     </div>
                   ))}
                 </div>
-
-                {/* Day grid */}
-                <div className="grid grid-cols-7 gap-1">
-                  {/* Empty cells before first day */}
+                <div className="grid grid-cols-7 gap-0.5 sm:gap-1">
                   {Array.from({ length: firstDay }).map((_, i) => (
-                    <div key={`empty-${i}`} />
+                    <div key={`e-${i}`} />
                   ))}
-
                   {Array.from({ length: daysInMonth }).map((_, i) => {
                     const day = i + 1;
                     const disabled = isDateDisabled(day);
@@ -363,10 +518,11 @@ export default function CartPage() {
                         onClick={() => handleDayClick(day)}
                         disabled={disabled}
                         className={`
-                          aspect-square rounded-lg text-sm font-medium transition-all duration-200
+                          aspect-square rounded-lg text-xs sm:text-sm font-medium transition-all duration-150
+                          min-h-[36px] sm:min-h-[40px] active:scale-95
                           ${
                             disabled
-                              ? "text-muted-foreground/40 cursor-not-allowed"
+                              ? "text-muted-foreground/30 cursor-not-allowed"
                               : selected
                               ? "bg-primary text-white shadow-md scale-105"
                               : "hover:bg-primary/10 hover:text-primary"
@@ -378,9 +534,8 @@ export default function CartPage() {
                     );
                   })}
                 </div>
-
                 {selectedDate && (
-                  <p className="mt-4 text-sm text-center text-primary font-medium">
+                  <p className="mt-3 text-xs sm:text-sm text-center text-primary font-medium">
                     ✓{" "}
                     {selectedDate.toLocaleDateString("fr-FR", {
                       weekday: "long",
@@ -393,28 +548,29 @@ export default function CartPage() {
               </Card>
             </motion.div>
 
-            {/* ── Time slots ── */}
+            {/* Time slots */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: 0.28 }}
             >
-              <Card variant="glass" className="p-6">
-                <h3 className="font-display font-bold text-lg mb-5 flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-primary" />
+              <Card variant="glass" className="p-4 sm:p-6">
+                <h3 className="font-display font-bold text-base sm:text-lg mb-4 flex items-center gap-2">
+                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                   Heure de livraison
                 </h3>
-                <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+                <div className="grid grid-cols-4 sm:grid-cols-6 gap-1.5 sm:gap-2">
                   {TIME_SLOTS.map((slot) => (
                     <button
                       key={slot}
                       onClick={() => setSelectedTime(slot)}
                       className={`
-                        py-2 px-1 rounded-lg text-sm font-medium transition-all duration-200 border
+                        py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 border
+                        min-h-[38px] active:scale-95
                         ${
                           selectedTime === slot
                             ? "bg-primary text-white border-primary shadow-md scale-105"
-                            : "border-border hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
+                            : "border-border hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
                         }
                       `}
                     >
@@ -425,30 +581,32 @@ export default function CartPage() {
               </Card>
             </motion.div>
 
-            {/* ── Delivery location ── */}
+            {/* Delivery address */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.33 }}
             >
-              <Card variant="glass" className="p-6">
-                <h3 className="font-display font-bold text-lg mb-5 flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-primary" />
+              <Card variant="glass" className="p-4 sm:p-6">
+                <h3 className="font-display font-bold text-base sm:text-lg mb-4 flex items-center gap-2">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                   Adresse de livraison
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <div>
-                    <Label htmlFor="address">Adresse complète</Label>
+                    <Label htmlFor="address" className="text-sm">
+                      Adresse complète
+                    </Label>
                     <Input
                       id="address"
                       value={deliveryAddress}
                       onChange={(e) => setDeliveryAddress(e.target.value)}
                       placeholder="Numéro, rue, ville, code postal"
-                      className="mt-1"
+                      className="mt-1 text-sm"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="instructions">
+                    <Label htmlFor="instructions" className="text-sm">
                       Instructions spéciales (optionnel)
                     </Label>
                     <Input
@@ -456,65 +614,71 @@ export default function CartPage() {
                       value={specialInstructions}
                       onChange={(e) => setSpecialInstructions(e.target.value)}
                       placeholder="Sonnette cassée, code d'entrée, étage…"
-                      className="mt-1"
+                      className="mt-1 text-sm"
                     />
                   </div>
                 </div>
               </Card>
             </motion.div>
 
-            {/* ── Guest customer info ── */}
+            {/* Guest info */}
             {!user && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
+                transition={{ delay: 0.38 }}
               >
-                <Card variant="glass" className="p-6">
-                  <h3 className="font-display font-bold text-lg mb-5 flex items-center gap-2">
-                    <User className="w-5 h-5 text-primary" />
+                <Card variant="glass" className="p-4 sm:p-6">
+                  <h3 className="font-display font-bold text-base sm:text-lg mb-4 flex items-center gap-2">
+                    <User className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                     Vos informations
                   </h3>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-2 gap-2 sm:gap-3">
                       <div>
-                        <Label htmlFor="firstName">Prénom</Label>
+                        <Label htmlFor="firstName" className="text-sm">
+                          Prénom
+                        </Label>
                         <Input
                           id="firstName"
                           value={customerInfo.firstName}
-                          className="mt-1"
+                          className="mt-1 text-sm"
                           onChange={(e) =>
                             setCustomerInfo((p) => ({
                               ...p,
                               firstName: e.target.value,
                             }))
                           }
-                          placeholder="Votre prénom"
+                          placeholder="Prénom"
                         />
                       </div>
                       <div>
-                        <Label htmlFor="lastName">Nom</Label>
+                        <Label htmlFor="lastName" className="text-sm">
+                          Nom
+                        </Label>
                         <Input
                           id="lastName"
                           value={customerInfo.lastName}
-                          className="mt-1"
+                          className="mt-1 text-sm"
                           onChange={(e) =>
                             setCustomerInfo((p) => ({
                               ...p,
                               lastName: e.target.value,
                             }))
                           }
-                          placeholder="Votre nom"
+                          placeholder="Nom"
                         />
                       </div>
                     </div>
                     <div>
-                      <Label htmlFor="email">Email</Label>
+                      <Label htmlFor="email" className="text-sm">
+                        Email
+                      </Label>
                       <Input
                         id="email"
                         type="email"
                         value={customerInfo.email}
-                        className="mt-1"
+                        className="mt-1 text-sm"
                         onChange={(e) =>
                           setCustomerInfo((p) => ({
                             ...p,
@@ -525,11 +689,13 @@ export default function CartPage() {
                       />
                     </div>
                     <div>
-                      <Label htmlFor="phone">Téléphone</Label>
+                      <Label htmlFor="phone" className="text-sm">
+                        Téléphone
+                      </Label>
                       <Input
                         id="phone"
                         value={customerInfo.phone}
-                        className="mt-1"
+                        className="mt-1 text-sm"
                         onChange={(e) =>
                           setCustomerInfo((p) => ({
                             ...p,
@@ -545,106 +711,24 @@ export default function CartPage() {
             )}
           </div>
 
-          {/* ── Right column: order summary ── */}
+          {/* ── Right: desktop-only summary ── */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
+            className="hidden lg:block"
           >
             <Card variant="fire" className="p-6 sticky top-28">
               <h2 className="font-display font-bold text-xl mb-6">
                 {t("cart.orderSummary")}
               </h2>
-
-              <div className="space-y-3 mb-6">
-                <div className="flex justify-between text-muted-foreground">
-                  <span>{t("cart.subtotal")}</span>
-                  <span>€{total.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-muted-foreground">
-                  <span>{t("cart.deliveryFee")}</span>
-                  <span>
-                    {deliveryFee === 0
-                      ? t("cart.freeDelivery")
-                      : `€${deliveryFee.toFixed(2)}`}
-                  </span>
-                </div>
-                {deliveryFee > 0 && (
-                  <p className="text-fresh text-sm">
-                    {t("cart.addForFreeDelivery", {
-                      amount: (50 - total).toFixed(2),
-                    })}
-                  </p>
-                )}
-                <div className="border-t border-border pt-3">
-                  <div className="flex justify-between font-display font-bold text-xl">
-                    <span>{t("cart.total")}</span>
-                    <span className="text-primary">
-                      €{grandTotal.toFixed(2)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Delivery summary */}
-              {(selectedDate || selectedTime || deliveryAddress) && (
-                <div className="bg-muted/50 rounded-xl p-4 mb-6 space-y-2 text-sm">
-                  {selectedDate && (
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <CalendarDays className="w-4 h-4 text-primary shrink-0" />
-                      {selectedDate.toLocaleDateString("fr-FR", {
-                        weekday: "long",
-                        day: "numeric",
-                        month: "long",
-                      })}
-                    </div>
-                  )}
-                  {selectedTime && (
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Clock className="w-4 h-4 text-primary shrink-0" />
-                      {selectedTime}
-                    </div>
-                  )}
-                  {deliveryAddress && (
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <MapPin className="w-4 h-4 text-primary shrink-0" />
-                      <span className="truncate">{deliveryAddress}</span>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Cash on delivery badge */}
-              <div className="flex items-center gap-2 bg-secondary/10 text-secondary rounded-xl px-4 py-3 mb-6 text-sm font-medium">
-                <CheckCircle2 className="w-4 h-4 shrink-0" />
-                Paiement à la livraison
-              </div>
-
-              {/* Confirm button */}
-              <Button
-                className="w-full"
-                size="lg"
-                disabled={
-                  !selectedDate ||
-                  !selectedTime ||
-                  !deliveryAddress.trim() ||
-                  isProcessing
-                }
-                onClick={handleConfirm}
-              >
-                {isProcessing ? "Traitement..." : "Confirmer la commande"}
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-
-              <p className="text-muted-foreground text-xs text-center mt-3">
-                Vous paierez en espèces à la livraison
-              </p>
+              <SummaryContent />
             </Card>
           </motion.div>
         </div>
       </div>
 
-      <div className="mt-16">
+      <div className="mt-12 pb-44 lg:pb-0">
         <Footer />
       </div>
     </div>
