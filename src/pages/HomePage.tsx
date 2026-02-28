@@ -1,13 +1,13 @@
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Flame, Clock, Truck, Star } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
-import FireParticles from '@/components/FireParticles';
-import Food3D from '@/components/Food3D';
-import MenuCard from '@/components/MenuCard';
-import Footer from '@/components/Footer';
-import { menuItems } from '@/data/menu';
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { ArrowRight, Flame, Clock, Truck, Star } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import FireParticles from "@/components/FireParticles";
+import Food3D from "@/components/Food3D";
+import MenuCard from "@/components/MenuCard";
+import Footer from "@/components/Footer";
+import { menuItems } from "@/data/menu";
 
 export default function HomePage() {
   const { t } = useTranslation();
@@ -16,23 +16,23 @@ export default function HomePage() {
   const features = [
     {
       icon: Flame,
-      title: t('features.charcoal.title'),
-      description: t('features.charcoal.description'),
+      title: t("features.charcoal.title"),
+      description: t("features.charcoal.description"),
     },
     {
       icon: Clock,
-      title: t('features.delivery.title'),
-      description: t('features.delivery.description'),
+      title: t("features.delivery.title"),
+      description: t("features.delivery.description"),
     },
     {
       icon: Truck,
-      title: t('features.belgium.title'),
-      description: t('features.belgium.description'),
+      title: t("features.belgium.title"),
+      description: t("features.belgium.description"),
     },
     {
       icon: Star,
-      title: t('features.quality.title'),
-      description: t('features.quality.description'),
+      title: t("features.quality.title"),
+      description: t("features.quality.description"),
     },
   ];
 
@@ -44,14 +44,14 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-card" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(18_100%_60%/0.1),transparent_70%)]" />
         <FireParticles />
-        
+
         <div className="relative z-10 max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Text Content */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-center lg:text-left"
             >
               <motion.div
@@ -61,9 +61,11 @@ export default function HomePage() {
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
               >
                 <Flame className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium text-primary">{t('hero.badge')}</span>
+                <span className="text-sm font-medium text-primary">
+                  {t("hero.badge")}
+                </span>
               </motion.div>
-              
+
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -72,20 +74,20 @@ export default function HomePage() {
               >
                 BRAZZA
                 <br />
-                <span className="text-fire">{t('hero.title2')}</span>
+                <span className="text-fire">{t("hero.title2")}</span>
                 <br />
-                {t('hero.title3')}
+                {t("hero.title3")}
               </motion.h1>
-              
+
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
                 className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto lg:mx-0 mb-8"
               >
-                {t('hero.description')}
+                {t("hero.description")}
               </motion.p>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -93,13 +95,13 @@ export default function HomePage() {
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               >
                 <Link to="/auth">
-                  <Button variant="hero" size="xl">
-                    {t('common.viewMenu')}
+                  <Button variant="default" size="xl">
+                    {t("common.viewMenu")}
                     <ArrowRight className="w-5 h-5" />
                   </Button>
                 </Link>
-                <Button variant="heroOutline" size="xl">
-                  {t('hero.howItWorks')}
+                <Button variant="outline" size="xl">
+                  {t("hero.howItWorks")}
                 </Button>
               </motion.div>
 
@@ -111,15 +113,17 @@ export default function HomePage() {
                 className="flex justify-center lg:justify-start gap-8 md:gap-12 mt-12"
               >
                 {[
-                  { value: '10K+', label: t('hero.stats.customers') },
-                  { value: '4.9', label: t('hero.stats.rating') },
-                  { value: '30min', label: t('hero.stats.delivery') },
+                  { value: "10K+", label: t("hero.stats.customers") },
+                  { value: "4.9", label: t("hero.stats.rating") },
+                  { value: "30min", label: t("hero.stats.delivery") },
                 ].map((stat, i) => (
                   <div key={i} className="text-center lg:text-left">
                     <div className="font-display text-2xl md:text-3xl font-bold text-foreground">
                       {stat.value}
                     </div>
-                    <div className="text-muted-foreground text-sm">{stat.label}</div>
+                    <div className="text-muted-foreground text-sm">
+                      {stat.label}
+                    </div>
                   </div>
                 ))}
               </motion.div>
@@ -166,10 +170,11 @@ export default function HomePage() {
             className="text-center mb-12"
           >
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-              {t('features.title')} <span className="text-fire">BRAZZAFLAME</span>
+              {t("features.title")}{" "}
+              <span className="text-fire">BRAZZAFLAME</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              {t('features.subtitle')}
+              {t("features.subtitle")}
             </p>
           </motion.div>
 
@@ -186,8 +191,12 @@ export default function HomePage() {
                 <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center">
                   <feature.icon className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="font-display font-bold text-lg mb-2">{feature.title}</h3>
-                <p className="text-muted-foreground text-sm">{feature.description}</p>
+                <h3 className="font-display font-bold text-lg mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-muted-foreground text-sm">
+                  {feature.description}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -205,15 +214,16 @@ export default function HomePage() {
           >
             <div>
               <h2 className="font-display text-3xl md:text-4xl font-bold mb-2">
-                {t('favorites.title')} <span className="text-fire">{t('favorites.titleHighlight')}</span>
+                {t("favorites.title")}{" "}
+                <span className="text-fire">
+                  {t("favorites.titleHighlight")}
+                </span>
               </h2>
-              <p className="text-muted-foreground">
-                {t('favorites.subtitle')}
-              </p>
+              <p className="text-muted-foreground">{t("favorites.subtitle")}</p>
             </div>
             <Link to="/menu">
               <Button variant="outline" className="group">
-                {t('favorites.viewAll')}
+                {t("favorites.viewAll")}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
@@ -238,18 +248,19 @@ export default function HomePage() {
           >
             {/* Background glow */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(18_100%_60%/0.2),transparent_70%)]" />
-            
+
             <div className="relative z-10">
               <Flame className="w-12 h-12 text-primary mx-auto mb-6" />
               <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-                {t('cta.title')} <span className="text-fire">{t('cta.titleHighlight')}</span>?
+                {t("cta.title")}{" "}
+                <span className="text-fire">{t("cta.titleHighlight")}</span>?
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-                {t('cta.description')}
+                {t("cta.description")}
               </p>
               <Link to="/auth">
-                <Button variant="hero" size="xl">
-                  {t('common.orderNow')}
+                <Button variant="default" size="xl">
+                  {t("common.orderNow")}
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>

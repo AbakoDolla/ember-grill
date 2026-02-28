@@ -1,9 +1,9 @@
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import Footer from '@/components/Footer';
-import { Flame, Users, Award, Heart, ArrowRight } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import Footer from "@/components/Footer";
+import { Flame, Users, Award, Heart, ArrowRight } from "lucide-react";
 
 export default function AboutPage() {
   const { t } = useTranslation();
@@ -11,30 +11,30 @@ export default function AboutPage() {
   const values = [
     {
       icon: Flame,
-      title: t('about.authenticFire.title'),
-      description: t('about.authenticFire.description'),
+      title: t("about.authenticFire.title"),
+      description: t("about.authenticFire.description"),
     },
     {
       icon: Users,
-      title: t('about.communityFirst.title'),
-      description: t('about.communityFirst.description'),
+      title: t("about.communityFirst.title"),
+      description: t("about.communityFirst.description"),
     },
     {
       icon: Award,
-      title: t('about.premiumQuality.title'),
-      description: t('about.premiumQuality.description'),
+      title: t("about.premiumQuality.title"),
+      description: t("about.premiumQuality.description"),
     },
     {
       icon: Heart,
-      title: t('about.madeWithLove.title'),
-      description: t('about.madeWithLove.description'),
+      title: t("about.madeWithLove.title"),
+      description: t("about.madeWithLove.description"),
     },
   ];
 
   const team = [
-    { name: 'Amara Diallo', role: t('about.founder'), emoji: '👨‍🍳' },
-    { name: 'Kofi Mensah', role: t('about.grillMaster'), emoji: '🔥' },
-    { name: 'Fatima Ndiaye', role: t('about.operations'), emoji: '📋' },
+    { name: "Amara Diallo", role: t("about.founder"), emoji: "👨‍🍳" },
+    { name: "Kofi Mensah", role: t("about.grillMaster"), emoji: "🔥" },
+    { name: "Fatima Ndiaye", role: t("about.operations"), emoji: "📋" },
   ];
 
   return (
@@ -47,12 +47,12 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
           >
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              {t('about.title')}
+              {t("about.title")}
               <br />
-              <span className="text-fire">{t('about.brand')}</span>
+              <span className="text-fire">{t("about.brand")}</span>
             </h1>
             <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
-              {t('story.subtitle')}
+              {t("story.subtitle")}
             </p>
           </motion.div>
         </div>
@@ -79,17 +79,11 @@ export default function AboutPage() {
               className="space-y-6"
             >
               <h2 className="font-display text-3xl md:text-4xl font-bold">
-                {t('story.title')}
+                {t("story.title")}
               </h2>
-              <p className="text-muted-foreground">
-                {t('story.p1')}
-              </p>
-              <p className="text-muted-foreground">
-                {t('story.p2')}
-              </p>
-              <p className="text-muted-foreground">
-                {t('story.p3')}
-              </p>
+              <p className="text-muted-foreground">{t("story.p1")}</p>
+              <p className="text-muted-foreground">{t("story.p2")}</p>
+              <p className="text-muted-foreground">{t("story.p3")}</p>
             </motion.div>
           </div>
         </div>
@@ -125,8 +119,12 @@ export default function AboutPage() {
                 <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center">
                   <value.icon className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="font-display font-bold text-lg mb-2">{value.title}</h3>
-                <p className="text-muted-foreground text-sm">{value.description}</p>
+                <h3 className="font-display font-bold text-lg mb-2">
+                  {value.title}
+                </h3>
+                <p className="text-muted-foreground text-sm">
+                  {value.description}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -163,7 +161,9 @@ export default function AboutPage() {
                 <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-4xl">
                   {member.emoji}
                 </div>
-                <h3 className="font-display font-bold text-lg">{member.name}</h3>
+                <h3 className="font-display font-bold text-lg">
+                  {member.name}
+                </h3>
                 <p className="text-muted-foreground text-sm">{member.role}</p>
               </motion.div>
             ))}
@@ -181,13 +181,15 @@ export default function AboutPage() {
             className="bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/5 rounded-3xl p-8 md:p-12 text-center"
           >
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-              Ready to Experience the <span className="text-fire">Difference</span>?
+              Ready to Experience the{" "}
+              <span className="text-fire">Difference</span>?
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-              Join thousands of satisfied customers who've discovered the best African grill in Belgium.
+              Join thousands of satisfied customers who've discovered the best
+              African grill in Belgium.
             </p>
             <Link to="/menu">
-              <Button variant="hero" size="xl">
+              <Button size="xl">
                 Explore Our Menu
                 <ArrowRight className="w-5 h-5" />
               </Button>

@@ -1,31 +1,31 @@
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import Footer from '@/components/Footer';
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import Footer from "@/components/Footer";
+import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 
 const contactInfo = [
   {
     icon: MapPin,
-    label: 'Address',
-    value: 'Rue du Marché 123, 1000 Brussels, Belgium',
+    label: "Address",
+    value: "Rue du Marché 123, 1000 Brussels, Belgium",
   },
   {
     icon: Phone,
-    label: 'Phone',
-    value: '+32 2 123 4567',
+    label: "Phone",
+    value: "+32 2 123 4567",
   },
   {
     icon: Mail,
-    label: 'Email',
-    value: 'hello@braiseroyale.be',
+    label: "Email",
+    value: "hello@braiseroyale.be",
   },
   {
     icon: Clock,
-    label: 'Hours',
-    value: 'Daily: 11:00 AM - 11:00 PM',
+    label: "Hours",
+    value: "Daily: 11:00 AM - 11:00 PM",
   },
 ];
 
@@ -42,7 +42,8 @@ export default function ContactPage() {
             Get in <span className="text-fire">Touch</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Questions, catering inquiries, or just want to say hello? We'd love to hear from you.
+            Questions, catering inquiries, or just want to say hello? We'd love
+            to hear from you.
           </p>
         </motion.div>
 
@@ -54,8 +55,10 @@ export default function ContactPage() {
             transition={{ delay: 0.1 }}
           >
             <Card variant="glass" className="p-6 md:p-8">
-              <h2 className="font-display font-bold text-2xl mb-6">Send us a Message</h2>
-              
+              <h2 className="font-display font-bold text-2xl mb-6">
+                Send us a Message
+              </h2>
+
               <form className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
@@ -110,7 +113,7 @@ export default function ContactPage() {
                   />
                 </div>
 
-                <Button variant="hero" size="lg" className="w-full">
+                <Button size="lg" className="w-full">
                   Send Message
                   <Send className="w-5 h-5" />
                 </Button>
@@ -126,8 +129,10 @@ export default function ContactPage() {
             className="space-y-6"
           >
             <Card variant="fire" className="p-6 md:p-8">
-              <h2 className="font-display font-bold text-2xl mb-6">Contact Information</h2>
-              
+              <h2 className="font-display font-bold text-2xl mb-6">
+                Contact Information
+              </h2>
+
               <div className="space-y-6">
                 {contactInfo.map((info, i) => (
                   <div key={i} className="flex gap-4">
@@ -135,8 +140,12 @@ export default function ContactPage() {
                       <info.icon className="w-6 h-6 text-primary" />
                     </div>
                     <div>
-                      <p className="text-muted-foreground text-sm">{info.label}</p>
-                      <p className="font-medium text-foreground">{info.value}</p>
+                      <p className="text-muted-foreground text-sm">
+                        {info.label}
+                      </p>
+                      <p className="font-medium text-foreground">
+                        {info.value}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -148,7 +157,9 @@ export default function ContactPage() {
               <div className="w-full h-full bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 flex items-center justify-center">
                 <div className="text-center">
                   <MapPin className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-muted-foreground">Map integration coming soon</p>
+                  <p className="text-muted-foreground">
+                    Map integration coming soon
+                  </p>
                 </div>
               </div>
             </Card>
