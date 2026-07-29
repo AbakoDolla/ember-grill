@@ -9,6 +9,9 @@
   de page 404 sur Netlify.
 - Les secrets ne sont pas stockés dans Git. Consultez `.env.example` pour les
   seules variables publiques nécessaires au client.
+- Un contrôle avant build bloque explicitement le déploiement si les variables
+  Supabase indispensables ne sont pas renseignées, au lieu de publier une
+  application dont l’authentification ne pourrait pas démarrer.
 
 ## Variables Netlify à renseigner
 
