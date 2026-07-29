@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Clock3, Mail, MapPin, Phone, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,17 +16,17 @@ const contactInfo = [
 ];
 
 export default function ContactPage() {
-  const [isSending, setIsSending] = useState(false);
-
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const form = event.currentTarget;
-    setIsSending(true);
-    window.setTimeout(() => {
-      setIsSending(false);
-      form.reset();
-      toast.success("Message envoyé", { description: "Notre équipe vous répondra dès que possible." });
-    }, 450);
+    const formData = new FormData(event.currentTarget);
+    const name = `${formData.get("firstName")} ${formData.get("lastName")}`;
+    const subject = String(formData.get("subject"));
+    const message = String(formData.get("message"));
+    const email = String(formData.get("email"));
+    const body = `Bonjour BrazaFish Elora,\n\n${message}\n\n---\n${name}\n${email}`;
+
+    window.location.href = `mailto:hello@brazzaflame.be?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    toast.info("Ouverture de votre application e-mail…");
   };
 
   return (
@@ -54,7 +54,7 @@ export default function ContactPage() {
               <label className="block text-sm font-bold">E-mail *<Input required type="email" name="email" autoComplete="email" placeholder="vous@exemple.com" className="mt-2 h-11 rounded-xl bg-background" /></label>
               <label className="block text-sm font-bold">Sujet *<Input required name="subject" placeholder="Comment pouvons-nous vous aider ?" className="mt-2 h-11 rounded-xl bg-background" /></label>
               <label className="block text-sm font-bold">Votre message *<Textarea required name="message" placeholder="Écrivez votre message ici…" rows={6} className="mt-2 resize-none rounded-xl bg-background" /></label>
-              <Button type="submit" size="lg" className="w-full" disabled={isSending}>{isSending ? "Envoi en cours…" : "Envoyer le message"}<Send className="h-4 w-4" /></Button>
+              <Button type="submit" size="lg" className="w-full">Envoyer par e-mail<Send className="h-4 w-4" /></Button>
             </form>
           </Card>
         </motion.div>
