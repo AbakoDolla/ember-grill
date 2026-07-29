@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAdmin } from '@/contexts/AdminContext';
-import { useAdminData } from '@/hooks/useAdminData';
+import { useAdminData, type Order } from '@/hooks/useAdminData';
 import ProductManagement from '@/components/ProductManagement';
 import AdminCharts from '@/components/AdminCharts';
 import PlatformCustomization from '@/components/PlatformCustomization';
@@ -24,7 +24,8 @@ import {
   Clock,
   AlertCircle,
   Shield,
-  RefreshCw
+  RefreshCw,
+  type LucideIcon
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -51,6 +52,14 @@ const mockUsers = [
   { id: 3, name: 'Pierre Martin', email: 'pierre.martin@email.com', orders: 15, spent: 2340.80, joined: '2023-12-10' },
 ];
 
+interface StatCardProps {
+  title: string;
+  value: string | number;
+  icon: LucideIcon;
+  change?: number;
+  color?: string;
+}
+
 export default function AdminDashboard() {
   const { logoutAdmin } = useAdmin();
   const navigate = useNavigate();
@@ -73,13 +82,13 @@ export default function AdminDashboard() {
     refreshData
   } = useAdminData();
 
-  const handleLogout = () => {
-    logoutAdmin();
+  const handleLogout = async () => {
+    await logoutAdmin();
     navigate('/admin/login');
     toast.info('Déconnexion administrateur');
   };
 
-  const StatCard = ({ title, value, icon: Icon, change, color = 'primary' }: any) => (
+  const StatCard = ({ title, value, icon: Icon, change, color = 'primary' }: StatCardProps) => (
     <Card variant="glass" className="p-4 xs:p-5 sm:p-6 hover:scale-105 transition-all duration-300">
       <div className="flex items-center justify-between">
         <div className="flex-1 min-w-0">
@@ -256,11 +265,11 @@ export default function AdminDashboard() {
                                 'bg-yellow-100 text-yellow-800'
                               }`}
                               onClick={async () => {
-                                const statusOptions = ['pending', 'preparing', 'ready', 'delivered', 'cancelled'];
+                                const statusOptions: Order['status'][] = ['pending', 'preparing', 'ready', 'delivered', 'cancelled'];
                                 const currentIndex = statusOptions.indexOf(order.status);
                                 const nextStatus = statusOptions[(currentIndex + 1) % statusOptions.length];
                                 
-                                const result = await updateOrderStatus(order.id, nextStatus as any);
+                                const result = await updateOrderStatus(order.id, nextStatus);
                                 if (result.success) {
                                   toast.success(`Statut mis à jour: ${nextStatus}`);
                                 } else {
