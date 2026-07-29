@@ -1,11 +1,9 @@
-import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { useTranslation } from 'react-i18next';
-import { MenuItem } from '@/data/menu';
-import { useCart } from '@/contexts/CartContext';
-import { Plus, Flame } from 'lucide-react';
-import { toast } from 'sonner';
+import { motion } from "framer-motion";
+import { Flame, Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { MenuItem } from "@/data/menu";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "sonner";
 
 interface MenuCardProps {
   item: MenuItem;
@@ -13,104 +11,44 @@ interface MenuCardProps {
 }
 
 export default function MenuCard({ item, index }: MenuCardProps) {
-  const { t } = useTranslation();
   const { addItem } = useCart();
 
   const handleAddToCart = () => {
-    addItem({
-      id: item.id,
-      name: item.name,
-      price: item.price,
-      image: item.image,
-    });
-    toast.success(`${item.name} ${t('cart.addedToCart')}`, {
-      description: t('cart.readyWhenYouAre'),
-    });
+    addItem({ id: item.id, name: item.name, price: item.price, image: item.image });
+    toast.success("Ajouté au panier", { description: `${item.name} a été ajouté à votre commande.` });
   };
 
-  const spiceLevels = Array(3)
-    .fill(0)
-    .map((_, i) => i < item.spiceLevel);
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
+    <motion.article
+      initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.35, delay: Math.min(index * 0.06, 0.24) }}
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-[0_10px_28px_hsl(24_24%_12%/0.06)] transition-shadow duration-300 hover:shadow-[0_16px_36px_hsl(24_24%_12%/0.12)]"
     >
-      <Card variant="fire" className="group overflow-hidden h-full">
-        {/* Image Container */}
-        <div className="relative h-40 xs:h-44 sm:h-48 md:h-52 lg:h-56 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent z-10" />
-          
-          {/* Actual Image */}
-          <img 
-            src={item.image} 
-            alt={item.name} 
-            className="w-full h-full object-cover"
-          />
-          
-          {/* Decorative food icon overlay */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <span className="text-4xl xs:text-5xl sm:text-6xl opacity-20 group-hover:scale-110 transition-transform duration-500">
-              {item.category === 'fish' ? '🐟' : item.category === 'beef' ? '🥩' : item.category === 'braise' ? '🍗' : '🍚'}
-            </span>
-          </div>
-
-          {/* Badges */}
-          <div className="absolute top-2 xs:top-3 left-2 xs:left-3 z-20 flex gap-1 xs:gap-2">
-            {item.popular && (
-              <span className="px-1.5 xs:px-2 py-1 bg-primary text-primary-foreground text-xs font-bold rounded-lg shadow-fire">
-                {t('common.popular')}
-              </span>
-            )}
-            {item.new && (
-              <span className="px-1.5 xs:px-2 py-1 bg-accent text-accent-foreground text-xs font-bold rounded-lg shadow-gold">
-                {t('common.new')}
-              </span>
-            )}
-          </div>
-
-          {/* Spice Level */}
-          <div className="absolute top-2 xs:top-3 right-2 xs:right-3 z-20 flex gap-0.5">
-            {spiceLevels.map((active, i) => (
-              <Flame
-                key={i}
-                className={`w-3 h-3 xs:w-4 xs:h-4 ${
-                  active ? 'text-primary' : 'text-muted-foreground/30'
-                }`}
-              />
-            ))}
-          </div>
+      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+        <img src={item.image} alt={item.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+        <div className="absolute left-3 top-3 flex gap-2">
+          {item.popular && <span className="rounded-full bg-[#242019] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#f8f1e4]">Best-seller</span>}
+          {item.new && <span className="rounded-full bg-[#f4c96b] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#242019]">Nouveau</span>}
         </div>
+        <div className="absolute bottom-3 left-3 flex items-center gap-0.5 rounded-full bg-black/45 px-2 py-1 text-[#f6b24f] backdrop-blur-sm" aria-label={`Intensité pimentée : ${item.spiceLevel} sur 3`}>
+          {Array.from({ length: 3 }, (_, spice) => <Flame key={spice} className={`h-3 w-3 ${spice < item.spiceLevel ? "fill-current" : "text-white/30"}`} />)}
+        </div>
+      </div>
 
-        <CardContent className="p-3 xs:p-4 sm:p-5">
-          <h3 className="font-display font-bold text-base xs:text-lg sm:text-xl text-foreground mb-2 group-hover:text-fire transition-colors duration-300">
-            {item.name}
-          </h3>
-          
-          <p className="text-muted-foreground text-xs sm:text-sm line-clamp-2 mb-3 xs:mb-4">
-            {item.description}
-          </p>
-
-          <div className="flex items-center justify-between">
-            <span className="font-display font-bold text-lg xs:text-xl sm:text-2xl text-primary">
-              €{item.price.toFixed(2)}
-            </span>
-            
-            <Button
-              variant="fire"
-              size="sm"
-              onClick={handleAddToCart}
-              className="group/btn px-2 xs:px-3"
-            >
-              <Plus className="w-3 h-3 xs:w-4 xs:h-4" />
-              <span className="hidden xs:inline ml-1">{t('common.addToCart')}</span>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    </motion.div>
+      <div className="flex flex-1 flex-col p-5">
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="font-display text-2xl leading-[1.05] text-foreground">{item.name}</h3>
+          <p className="shrink-0 text-base font-bold text-primary">{new Intl.NumberFormat("fr-BE", { style: "currency", currency: "EUR" }).format(item.price)}</p>
+        </div>
+        <p className="mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground">{item.description}</p>
+        <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
+          <span className="text-xs font-semibold text-muted-foreground">Braisé au charbon</span>
+          <Button size="sm" onClick={handleAddToCart} aria-label={`Ajouter ${item.name} au panier`} className="rounded-lg px-3"><Plus className="h-4 w-4" />Ajouter</Button>
+        </div>
+      </div>
+    </motion.article>
   );
 }

@@ -3,26 +3,25 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'glass' | 'fire' | 'magnetic' | 'neon' | 'premium';
+  variant?: "default" | "glass" | "fire" | "magnetic" | "neon" | "premium";
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant = 'default', ...props }, ref) => (
+  ({ className, variant = "default", ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
-        "rounded-2xl text-card-foreground transition-all duration-300 transform-gpu backface-hidden",
-        variant === 'default' && "bg-card border border-border shadow-glass hover:shadow-lg hover:scale-105",
-        variant === 'glass' && "glass-card hover:scale-105",
-        variant === 'fire' && "glass-card hover:border-primary/50 hover:shadow-fire hover:scale-105",
-        variant === 'magnetic' && "magnetic-border hover:scale-105",
-        variant === 'neon' && "glass-card border border-primary/30 neon-text hover:border-primary hover:shadow-fire hover:scale-105",
-        variant === 'premium' && "glass-card border border-accent/30 hover:border-accent hover:shadow-gold hover:scale-105",
-        className
+        "rounded-2xl border border-border bg-card text-card-foreground shadow-[0_10px_30px_hsl(24_24%_12%/0.06)]",
+        variant === "glass" && "bg-card/90",
+        variant === "fire" && "border-primary/25",
+        variant === "magnetic" && "border-foreground/15",
+        variant === "neon" && "border-primary/35",
+        variant === "premium" && "border-accent/55",
+        className,
       )}
       {...props}
     />
-  )
+  ),
 );
 Card.displayName = "Card";
 
@@ -35,7 +34,7 @@ CardHeader.displayName = "CardHeader";
 
 const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
   ({ className, ...props }, ref) => (
-    <h3 ref={ref} className={cn("text-xl font-bold leading-none tracking-tight font-display", className)} {...props} />
+    <h3 ref={ref} className={cn("font-display text-xl leading-none", className)} {...props} />
   ),
 );
 CardTitle.displayName = "CardTitle";
