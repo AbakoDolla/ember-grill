@@ -89,7 +89,7 @@ export default function CartPage() {
   const [summaryOpen, setSummaryOpen] = useState(false);
 
   const [deliveryAddress, setDeliveryAddress] = useState(
-    (user as any)?.address || ""
+    user?.user_metadata?.address || ""
   );
   const [customerInfo, setCustomerInfo] = useState({
     firstName: "",
@@ -120,11 +120,14 @@ export default function CartPage() {
   const firstDay = getFirstDayOfMonth(calYear, calMonth);
 
   const isDateDisabled = (day: number) => {
-    const d = new Date(calYear, calMonth, day);
-    d.setHours(0, 0, 0, 0);
-    const t2 = new Date();
-    t2.setHours(0, 0, 0, 0);
-    return d < t2;
+    const date = new Date(calYear, calMonth, day);
+    date.setHours(0, 0, 0, 0);
+    const firstAvailableDate = new Date();
+    firstAvailableDate.setHours(0, 0, 0, 0);
+    firstAvailableDate.setDate(firstAvailableDate.getDate() + 7);
+    const deliveryDay = date.getDay();
+    const isDeliveryDay = deliveryDay === 0 || deliveryDay === 5 || deliveryDay === 6;
+    return date < firstAvailableDate || !isDeliveryDay;
   };
   const isDateSelected = (day: number) =>
     selectedDate?.getDate() === day &&
@@ -172,15 +175,16 @@ export default function CartPage() {
         special_instructions: specialInstructions,
         payment_method: "cash_on_delivery",
         customer_email: user?.email || customerInfo.email,
-        customer_first_name: (user as any)?.firstName || customerInfo.firstName,
-        customer_last_name: (user as any)?.lastName || customerInfo.lastName,
-        customer_phone: (user as any)?.phone || customerInfo.phone,
+        customer_first_name: user?.user_metadata?.firstName || customerInfo.firstName,
+        customer_last_name: user?.user_metadata?.lastName || customerInfo.lastName,
+        customer_phone: user?.user_metadata?.phone || customerInfo.phone,
       };
       await createOrder(orderData, items);
       clearCart();
       toast.success("Commande confirmée ! Paiement à la livraison.");
     } catch (error) {
-      toast.error("Erreur lors de la commande : " + (error as any).message);
+      const message = error instanceof Error ? error.message : "Une erreur inconnue est survenue";
+      toast.error("Erreur lors de la commande : " + message);
     } finally {
       setIsProcessing(false);
     }
@@ -477,6 +481,7 @@ export default function CartPage() {
                   <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                   Date de livraison
                 </h3>
+                <p className="-mt-2 mb-4 text-xs leading-5 text-muted-foreground">Sélectionnez un vendredi, samedi ou dimanche, au minimum 7 jours à l’avance.</p>
                 <div className="flex items-center justify-between mb-3">
                   <button
                     onClick={prevMonth}

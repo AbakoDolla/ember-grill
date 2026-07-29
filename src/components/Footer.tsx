@@ -1,179 +1,65 @@
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Flame, Instagram, Facebook, Twitter, Phone, MessageCircle } from 'lucide-react';
-import logo from '@/assets/logo.jpg';
+import { Link } from "react-router-dom";
+import { Facebook, Flame, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import logo from "@/assets/logo.jpg";
+
+const navigation = [
+  { label: "Accueil", href: "/" },
+  { label: "Le menu", href: "/menu" },
+  { label: "Notre histoire", href: "/about" },
+  { label: "Contact", href: "/contact" },
+];
+
+const help = [
+  { label: "Suivre ma commande", href: "/orders" },
+  { label: "Questions fréquentes", href: "/faq" },
+  { label: "Confidentialité", href: "/privacy" },
+];
 
 export default function Footer() {
-  const { t } = useTranslation();
-
   return (
-    <footer className="relative bg-card border-t border-border">
-      {/* Fire glow effect at top */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
-      
-      {/* Floating WhatsApp & Call Buttons */}
-      <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 flex flex-col gap-3">
-        <motion.a
-          href="tel:+32212345678"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary flex items-center justify-center shadow-lg fire-glow"
-        >
-          <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
-        </motion.a>
-        <motion.a
-          href="https://wa.me/32212345678"
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-fresh flex items-center justify-center shadow-lg"
-        >
-          <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-fresh-foreground" />
-        </motion.a>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
-          {/* Brand */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="space-y-4"
-          >
-            <Link to="/home" className="flex items-center gap-4 group interactive-scale">
-              <div className="relative">
-                <img 
-                  src={logo} 
-                  alt="BrazaFish Logo" 
-                  className="w-16 h-16 object-cover rounded-full drop-shadow-md transition-transform duration-300 group-hover:scale-105 border-2 border-white/20"
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-400/10 via-red-500/5 to-yellow-400/10 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              </div>
-              <div className="flex flex-col">
-                <div className="flex items-baseline gap-2">
-                  <span className="font-display font-bold text-xl bg-gradient-to-r from-orange-600 via-red-600 to-yellow-600 bg-clip-text text-transparent leading-tight">
-                    BrazaFish
-                  </span>
-                  <span className="font-display font-semibold text-base text-blue-600 leading-tight">
-                    elora
-                  </span>
-                </div>
-                <span className="text-xs text-muted-foreground font-medium">
-                  Poisson Braisé Camerounais
-                </span>
-              </div>
-            </Link>
-            <p className="text-muted-foreground text-sm">
-              {t('footer.description')}
-            </p>
-            <div className="flex gap-3">
-              <a
-                href="https://instagram.com/brazzaflame"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href="https://facebook.com/brazzaflame"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-              >
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a
-                href="https://twitter.com/brazzaflame"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-            </div>
-          </motion.div>
-
-          {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-          >
-            <h4 className="font-display font-bold text-foreground mb-4">{t('footer.quickLinks')}</h4>
-            <ul className="space-y-2">
-              {[
-                { label: t('common.menu'), href: '/menu' },
-                { label: t('common.about'), href: '/about' },
-                { label: t('common.contact'), href: '/contact' },
-                { label: 'FAQ', href: '/faq' },
-              ].map((item) => (
-                <li key={item.label}>
-                  <Link to={item.href} className="text-muted-foreground hover:text-primary transition-all duration-300 text-sm hover:translate-x-1 inline-block">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Support */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          >
-            <h4 className="font-display font-bold text-foreground mb-4">{t('footer.support')}</h4>
-            <ul className="space-y-2">
-              {[
-                { label: t('footer.contactUs'), href: '/contact' },
-                { label: t('footer.faq'), href: '/faq' },
-                { label: t('footer.trackOrder'), href: '/orders' },
-                { label: 'Privacy Policy', href: '/privacy' },
-              ].map((item) => (
-                <li key={item.label}>
-                  <Link to={item.href} className="text-muted-foreground hover:text-primary transition-all duration-300 text-sm hover:translate-x-1 inline-block">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Contact */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-          >
-            <h4 className="font-display font-bold text-foreground mb-4">{t('common.contact')}</h4>
-            <ul className="space-y-2 text-muted-foreground text-sm">
-              <li>Brussels, Belgium</li>
-              <li>+32 2 123 4567</li>
-              <li>hello@brazzaflame.be</li>
-              <li className="pt-2">
-                <span className="text-fresh font-medium">{t('footer.openDaily')}</span>
-                <br />
-                11:00 AM - 11:00 PM
-              </li>
-            </ul>
-          </motion.div>
+    <footer className="bg-[#242019] text-[#f8f1e4]">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 sm:py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_.8fr_.8fr_1fr] lg:gap-12 lg:px-8">
+        <div>
+          <Link to="/" className="inline-flex items-center gap-3">
+            <img src={logo} alt="BrazaFish Elora" className="h-12 w-12 rounded-full border border-white/15 object-cover" />
+            <span><span className="block font-display text-2xl leading-none">BrazaFish</span><span className="mt-1 block text-[9px] font-bold uppercase tracking-[0.17em] text-[#f5c05e]">Elora · Braise camerounaise</span></span>
+          </Link>
+          <p className="mt-5 max-w-sm text-sm leading-6 text-[#e8ddcd]/70">Le goût généreux du poisson braisé camerounais, préparé avec soin et livré en Belgique pour vos moments à partager.</p>
+          <div className="mt-6 flex items-center gap-3">
+            <a href="https://instagram.com/brazzaflame" target="_blank" rel="noreferrer" aria-label="Instagram" className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-[#f8f1e4] transition-colors hover:border-[#f5c05e] hover:text-[#f5c05e]"><Instagram className="h-4 w-4" /></a>
+            <a href="https://facebook.com/brazzaflame" target="_blank" rel="noreferrer" aria-label="Facebook" className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-[#f8f1e4] transition-colors hover:border-[#f5c05e] hover:text-[#f5c05e]"><Facebook className="h-4 w-4" /></a>
+          </div>
         </div>
 
-        {/* Bottom */}
-        <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-muted-foreground text-sm">
-            © 2025 BRAZZAFLAME. {t('footer.rights')}
-          </p>
-          <p className="text-muted-foreground text-sm flex items-center gap-1">
-            {t('footer.madeWith')} <Flame className="w-4 h-4 text-primary" /> {t('footer.inBelgium')}
-          </p>
+        <div>
+          <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-[#f5c05e]">Explorer</h2>
+          <ul className="mt-5 space-y-3">
+            {navigation.map((item) => <li key={item.href}><Link to={item.href} className="text-sm text-[#e8ddcd]/75 transition-colors hover:text-white">{item.label}</Link></li>)}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-[#f5c05e]">Besoin d’aide ?</h2>
+          <ul className="mt-5 space-y-3">
+            {help.map((item) => <li key={item.href}><Link to={item.href} className="text-sm text-[#e8ddcd]/75 transition-colors hover:text-white">{item.label}</Link></li>)}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-[#f5c05e]">Nous joindre</h2>
+          <ul className="mt-5 space-y-3 text-sm text-[#e8ddcd]/75">
+            <li className="flex gap-2.5"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#e76e35]" />Bruxelles, Belgique</li>
+            <li><a href="tel:+32212345678" className="flex gap-2.5 transition-colors hover:text-white"><Phone className="h-4 w-4 shrink-0 text-[#e76e35]" />+32 2 123 4567</a></li>
+            <li><a href="mailto:hello@brazzaflame.be" className="flex gap-2.5 transition-colors hover:text-white"><Mail className="h-4 w-4 shrink-0 text-[#e76e35]" />hello@brazzaflame.be</a></li>
+          </ul>
+          <div className="mt-5 rounded-xl border border-white/10 bg-white/5 p-3 text-xs leading-5 text-[#e8ddcd]/75"><span className="font-bold text-[#f5c05e]">Précommande :</span> au minimum 7 jours avant la livraison.</div>
+        </div>
+      </div>
+
+      <div className="border-t border-white/10">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-5 text-xs text-[#e8ddcd]/55 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+          <p>© {new Date().getFullYear()} BrazaFish Elora. Tous droits réservés.</p>
+          <p className="flex items-center gap-1.5">Préparé avec passion <Flame className="h-3.5 w-3.5 text-[#e76e35]" /> en Belgique</p>
         </div>
       </div>
     </footer>

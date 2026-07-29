@@ -82,16 +82,9 @@ const AppContent = () => {
                 <Route element={<MainLayout />}>
                   <Route path="/" element={<HomePage />} />
                   <Route path="/home" element={<HomePage />} />
-                  <Route path="/menu" element={
-                    <ProtectedRoute>
-                      <MenuPage />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/cart" element={
-                    <ProtectedRoute>
-                      <CartPage />
-                    </ProtectedRoute>
-                  } />
+                  {/* Visitors can explore the menu and build a cart before creating an account. */}
+                  <Route path="/menu" element={<MenuPage />} />
+                  <Route path="/cart" element={<CartPage />} />
                   <Route path="/dashboard" element={
                     <ProtectedRoute>
                       <Dashboard />

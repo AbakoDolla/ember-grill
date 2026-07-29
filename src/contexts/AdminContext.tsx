@@ -1,113 +1,117 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { User } from '@supabase/supabase-js';
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import type { User } from "@supabase/supabase-js";
+import supabase from "@/lib/supabase";
+
+type AdminRole = "admin" | "staff";
 
 interface AdminContextType {
   isAdmin: boolean;
   adminUser: User | null;
   isLoading: boolean;
   loginAdmin: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  logoutAdmin: () => void;
-  checkAdminStatus: () => boolean;
+  logoutAdmin: () => Promise<void>;
+  checkAdminStatus: () => Promise<boolean>;
 }
 
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
 export const useAdmin = () => {
   const context = useContext(AdminContext);
-  if (!context) throw new Error('useAdmin must be used within an AdminProvider');
+  if (!context) throw new Error("useAdmin must be used within an AdminProvider");
   return context;
 };
 
-interface AdminProviderProps {
-  children: React.ReactNode;
+async function getAdminRole(user: User): Promise<AdminRole | null> {
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (error || !data || (data.role !== "admin" && data.role !== "staff")) {
+    return null;
+  }
+
+  return data.role;
 }
 
-export const AdminProvider: React.FC<AdminProviderProps> = ({ children }) => {
+export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [adminUser, setAdminUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Check if user is admin based on credentials
-  const checkAdminStatus = () => {
-    const adminEmail = import.meta.env.VITE_ADMIN_EMAIL;
-    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD;
-    const adminSecret = import.meta.env.VITE_ADMIN_SECRET_KEY;
-    
-    // Check localStorage for admin session
-    const storedAdminData = localStorage.getItem('ember_grill_admin_session');
-    
-    if (storedAdminData) {
-      try {
-        const adminData = JSON.parse(storedAdminData);
-        const now = Date.now();
-        
-        // Check if session is still valid (24 hours)
-        if (now - adminData.timestamp < 24 * 60 * 60 * 1000) {
-          setIsAdmin(true);
-          return true;
-        } else {
-          // Session expired, remove it
-          localStorage.removeItem('ember_grill_admin_session');
-        }
-      } catch (error) {
-        console.error('Error parsing admin session:', error);
-        localStorage.removeItem('ember_grill_admin_session');
-      }
-    }
-    
-    return false;
-  };
-
-  // Login admin
-  const loginAdmin = async (email: string, password: string) => {
-    const adminEmail = import.meta.env.VITE_ADMIN_EMAIL;
-    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD;
-    const adminSecret = import.meta.env.VITE_ADMIN_SECRET_KEY;
-
-    // Validate credentials
-    if (email === adminEmail && password === adminPassword) {
-      // Create admin session
-      const adminSession = {
-        email,
-        secret: adminSecret,
-        timestamp: Date.now(),
-        role: 'admin'
-      };
-      
-      // Store in localStorage
-      localStorage.setItem('ember_grill_admin_session', JSON.stringify(adminSession));
-      
-      setIsAdmin(true);
-      return { success: true };
-    }
-    
-    return { success: false, error: 'Identifiants administrateurs invalides' };
-  };
-
-  // Logout admin
-  const logoutAdmin = () => {
+  const clearAdminState = useCallback(() => {
     setIsAdmin(false);
     setAdminUser(null);
-    localStorage.removeItem('ember_grill_admin_session');
-  };
-
-  // Check admin status on mount
-  useEffect(() => {
-    const isAdminUser = checkAdminStatus();
-    setIsLoading(false);
   }, []);
 
-  const value: AdminContextType = {
-    isAdmin,
-    adminUser,
-    isLoading,
-    loginAdmin,
-    logoutAdmin,
-    checkAdminStatus
+  const checkAdminStatus = useCallback(async () => {
+    if (!supabase) {
+      clearAdminState();
+      return false;
+    }
+
+    const { data, error } = await supabase.auth.getUser();
+    if (error || !data.user) {
+      clearAdminState();
+      return false;
+    }
+
+    const role = await getAdminRole(data.user);
+    if (!role) {
+      clearAdminState();
+      return false;
+    }
+
+    setAdminUser(data.user);
+    setIsAdmin(true);
+    return true;
+  }, [clearAdminState]);
+
+  const loginAdmin = async (email: string, password: string) => {
+    if (!supabase) {
+      return { success: false, error: "La configuration Supabase est indisponible." };
+    }
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error || !data.user) {
+      clearAdminState();
+      return { success: false, error: error?.message || "Connexion impossible." };
+    }
+
+    const role = await getAdminRole(data.user);
+    if (!role) {
+      await supabase.auth.signOut();
+      clearAdminState();
+      return { success: false, error: "Ce compte ne possède pas les droits administrateur." };
+    }
+
+    setAdminUser(data.user);
+    setIsAdmin(true);
+    return { success: true };
   };
 
+  const logoutAdmin = async () => {
+    if (supabase) await supabase.auth.signOut();
+    clearAdminState();
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+
+    void checkAdminStatus().finally(() => {
+      if (isMounted) setIsLoading(false);
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [checkAdminStatus]);
+
   return (
-    <AdminContext.Provider value={value}>
+    <AdminContext.Provider value={{ isAdmin, adminUser, isLoading, loginAdmin, logoutAdmin, checkAdminStatus }}>
       {children}
     </AdminContext.Provider>
   );

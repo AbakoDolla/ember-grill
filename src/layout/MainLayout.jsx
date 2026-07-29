@@ -1,25 +1,17 @@
-// layouts/MainLayout.jsx
 import Navbar from "@/components/Navbar";
-import { lazy, Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
-// Lazy load FireParticles to improve performance
-const FireParticles = lazy(() => import("@/components/FireParticles"));
-
+/** Shared public layout.
+ * Pages own their vertical rhythm; keeping this wrapper neutral prevents the
+ * former double top-spacing below the fixed navigation.
+ */
 export default function MainLayout() {
   return (
-    <>
-      <Suspense fallback={
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="w-full h-full bg-gradient-to-t from-orange-500/5 to-red-500/5" />
-        </div>
-      }>
-        <FireParticles />
-      </Suspense>
+    <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="pt-24 sm:pt-28 md:pt-32">
+      <main>
         <Outlet />
-      </div>
-    </>
+      </main>
+    </div>
   );
 }

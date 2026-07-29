@@ -5,30 +5,30 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 min-h-[44px] min-w-[44px] font-display transform-gpu backface-hidden",
+  "inline-flex min-h-[44px] items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-bold transition-[background-color,border-color,color,box-shadow,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-fire hover:shadow-fire-lg active:scale-95",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 active:scale-95",
-        outline: "border border-border bg-transparent hover:bg-muted hover:text-foreground active:scale-95",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 active:scale-95",
-        ghost: "hover:bg-muted hover:text-foreground active:scale-95",
-        link: "text-primary underline-offset-4 hover:underline",
-        fire: "bg-gradient-to-r from-primary via-secondary to-primary text-primary-foreground shadow-fire hover:shadow-fire-lg active:scale-95 animate-glow-pulse",
-        gold: "bg-gradient-to-r from-accent to-accent/80 text-accent-foreground shadow-gold active:scale-95 gold-shimmer",
-        glass: "glass-card active:scale-95 hover:border-primary/50 hover:shadow-fire",
-        hero: "bg-gradient-to-r from-primary via-secondary to-primary text-primary-foreground shadow-fire-lg hover:shadow-[0_0_50px_hsl(18_100%_60%/0.6)] active:scale-95 text-base md:text-lg px-8 py-4 rounded-2xl font-bold tracking-wide magnetic-border",
-        heroOutline: "border-2 border-primary/50 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary hover:shadow-fire active:scale-95 text-base md:text-lg px-8 py-4 rounded-2xl font-bold tracking-wide",
-        neon: "bg-transparent border border-primary/50 text-primary neon-text hover:bg-primary/10 active:scale-95",
-        magnetic: "magnetic-border active:scale-95 text-foreground",
+        default: "bg-primary text-primary-foreground shadow-[0_8px_18px_hsl(var(--primary)/0.2)] hover:bg-primary/90 hover:shadow-[0_10px_24px_hsl(var(--primary)/0.28)] active:translate-y-px",
+        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline: "border border-foreground/20 bg-transparent text-foreground hover:border-foreground/45 hover:bg-foreground/5",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "text-foreground hover:bg-muted",
+        link: "h-auto min-h-0 px-0 text-primary underline-offset-4 hover:underline",
+        fire: "bg-primary text-primary-foreground shadow-[0_8px_18px_hsl(var(--primary)/0.2)] hover:bg-primary/90 hover:shadow-[0_10px_24px_hsl(var(--primary)/0.28)] active:translate-y-px",
+        gold: "bg-accent text-accent-foreground hover:bg-accent/85",
+        glass: "border border-border bg-card text-foreground shadow-sm hover:border-primary/35 hover:bg-background",
+        hero: "rounded-xl bg-primary px-8 py-4 text-base text-primary-foreground shadow-[0_12px_26px_hsl(var(--primary)/0.25)] hover:bg-primary/90 hover:shadow-[0_16px_32px_hsl(var(--primary)/0.3)] active:translate-y-px",
+        heroOutline: "rounded-xl border border-foreground/25 bg-transparent px-8 py-4 text-base text-foreground hover:border-foreground/50 hover:bg-foreground/5",
+        neon: "border border-primary/40 bg-primary/5 text-primary hover:bg-primary/10",
+        magnetic: "border border-border bg-card text-foreground hover:border-primary/40",
       },
       size: {
         default: "h-11 px-5 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-12 rounded-xl px-8 text-base",
-        xl: "h-14 rounded-2xl px-10 text-lg",
-        icon: "h-11 w-11",
+        sm: "h-9 min-h-9 rounded-lg px-3 text-xs",
+        lg: "h-12 px-6 text-base",
+        xl: "h-14 px-8 text-base",
+        icon: "h-11 w-11 px-0",
       },
     },
     defaultVariants: {
