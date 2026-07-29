@@ -23,8 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-# Local environment files and Vercel project metadata
+# Local environment files and Netlify project metadata
 .env
 .env.*
 !.env.example
-.vercel
+.netlify
